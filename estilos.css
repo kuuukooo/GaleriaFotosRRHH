@@ -1,0 +1,126 @@
+/* Sidebar */
+.container {
+        margin-left: 3rem;
+}
+.main-content {
+        margin-left: 0; /* Inicialmente, sin margen para estar al lado de la sidebar oculta */
+        transition:  0.5s; /* Transición suave para el margen */
+    }
+    
+    /* Cuando la sidebar se despliega, ajusta el margen para dejar espacio para la sidebar */
+    .sidebar.open {
+        width: 250px; /* Ancho de la sidebar cuando está desplegada */
+        transition: 0.5s; /* Transición suave para el ancho */
+    }
+    
+    /* Ajusta el margen izquierdo del contenido principal para que esté al lado de la sidebar desplegada */
+    .sidebar.open + .main-content {
+        margin-left: 250px; /* Igual al ancho de la sidebar */
+        transition: 0.5s; /* Transición suave para el margen */
+    }
+    
+.logo img {
+        max-width: 100px;
+        margin-right: 10px;     
+}
+.title {
+        flex: 1;
+}
+
+.image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+}
+.image-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-bottom: 100%;
+}
+
+.image-container{
+        width: 100%;
+        padding-bottom: 75%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+}
+
+/* Paginación */
+.pagination {
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5rem;
+}
+/* Botones */
+.botones-utilidades {
+        position: absolute;
+        bottom: 25%;
+        right: 0;
+        display: flex;
+        margin-right: 5px;
+
+}
+ .btn-edit-description  {
+color: gray;
+background-color: transparent;
+ } 
+.delete-button {
+border: thin;
+background-color: transparent;  
+}
+.card-body {
+position: relative;
+/* Otros estilos para el contenedor de la descripción */
+}
+
+.bi-trash3{
+ color: red ;
+ margin-left: 3px;
+}
+
+.bi-pencil-square{
+margin-left: 3px;
+}
+
+.bi-download{
+color: green ;
+margin-left: 3px;
+}      
+/* Agrega esta regla para ocultar la descripción original */
+.original-description {
+        display: block; /* O utiliza 'none' para ocultar por defecto */
+    }
+    
+    /* Agrega esta regla para ocultar la descripción original cuando el description-edit-container está visible */
+    .description-edit-container.visible .original-description {
+        display: none;
+    }
+    .btn-edit-description{
+        border: thin;
+    }
+.form-control {
+resize: none;
+}
+/* Mostrar el botón con texto "Publicar" en resoluciones mayores a 450x950 */
+@media (min-width: 451px) and (min-height <=951px) {
+        .btn-text {
+                display: block;
+        }
+      }
+@media (max-width: 480px) {
+        .textos-bienv-sesion {
+          display: none;
+        }
+      }
+      /* Mostrar el botón con ícono SVG en resoluciones menores o iguales a 450x950 */
+@media (max-width: 450px) or (max-height: 950px) {
+        .btn-icon {
+                display: block;
+        }
+        /* Ocultar el botón con texto "Publicar" */
+        .btn-text {
+                display: none;
+        }
+      }

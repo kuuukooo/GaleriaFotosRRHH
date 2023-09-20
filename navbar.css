@@ -1,0 +1,29 @@
+/*
+.navbar {
+    padding: 2rem;
+}
+.navbar-collapse {
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar-brand {
+    max-height: 50px;
+    max-width: 50px;    
+}
+.navbar-brand .logoviercinav {
+    height: 70px;
+    width: 70px;
+}
+@media screen and (max-width: 767px) {
+    .navbar-brand {
+        display: none;
+    }
+}
+@media screen and (min-width: 720px) {
+    .hero-inferior-imagen {
+        max-width: 600px;
+    }
+} */
+.nav-brand{
+    background-color: blue;
+}
