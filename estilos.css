@@ -56,11 +56,19 @@
 /* Botones */
 .botones-utilidades {
         position: absolute;
-        bottom: 25%;
+        bottom: 0;
+        padding: 1rem;
+        margin: 0;
         right: 0;
         display: flex;
         margin-right: 5px;
 
+}
+.botones-utilidades button {
+        padding: .2rem;
+}
+.botones-utilidades a {
+        padding: .2rem;
 }
  .btn-edit-description  {
 color: gray;

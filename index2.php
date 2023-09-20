@@ -198,8 +198,8 @@ $stmt->execute();
 
 
             <!-- Imágenes -->
-            <div class="container mt-5 mb-5 py-2" id="image-container">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 justify-content-center">
+            <div class="container mt-5 mb-5 py-2">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 justify-between" id="image-container">
                 </div>
             </div>
 
@@ -315,62 +315,90 @@ $stmt->execute();
                 success: function(data) {
                     console.log("Respuesta exitosa de la solicitud AJAX:", data);
                     // Limpiar el contenedor de imágenes
-                    var $container = $("#image-container .row-cols-1");
-                    $container.empty();
 
                     // Iterar sobre los datos de las imágenes y agregarlas al contenedor
                     data.forEach(function(imagen, index) {
-                        console.log("Creando etiquetas HTML para imagen:", imagen);
+                        // Crear un nuevo elemento .col y .card con jQuery
+                        var colCardContainer = $('<div>');
+                        colCardContainer.addClass('col');
 
-                        // Crear un div para cada columna con clase "col"
-                        var $colDiv = $("<div>").addClass("col");
+                        var cardElement = $('<div>');
+                        cardElement.addClass('card');
+                        // Crear un nuevo elemento div con jQuery
+                        var carouselElement = $('<div>');
 
-                        // Crear un div para el card
-                        var $card = $("<div>").addClass("card").css({
-                            "position": "absolute",
-                            "bottom": 0,
-                            "width": "100%",
+                        // Asignar el ID dinámicamente al elemento carousel
+                        carouselElement.attr('id', 'carousel' + imagen.id_imagen);
+                        carouselElement.addClass('carousel slide');
+                        carouselElement.attr('data-bs-ride', 'false');
+
+                        // Crear el elemento interno carousel-inner
+                        var carouselInner = $('<div>');
+                        carouselInner.addClass('carousel-inner');
+
+                        var cardBodyElement = $('<div>');
+                        var botonesUtilidadesElement = $('<div>');
+
+                        // Recorrer las imágenes y crear los elementos de carousel-item
+                        $.each(imagen.imagenes, function(j, imageName) {
+                            var isActive = j === 0 ? 'active' : '';
+                            var carouselItem = $('<div>');
+                            carouselItem.addClass('carousel-item ' + isActive);
+
+                            // Crear el enlace y el contenedor de la imagen
+                            var link = $('<a>');
+                            link.attr('href', '#');
+                            link.attr('data-bs-toggle', 'modal');
+                            link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
+
+                            var imageContainer = $('<div>');
+                            imageContainer.addClass('image-container');
+                            imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
+                            imageContainer.attr('data-description', imagen.descripcion[j]);
+                            imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
+
+                            link.append(imageContainer);
+                            carouselItem.append(link);
+
+                            carouselInner.append(carouselItem);
+
                         });
 
-                        // Crear un div para el contenedor de la imagen con clase "image-container"
-                        var $imagenContainer = $("<div>")
-                            .addClass("image-container")
-                            .attr('id', 'image-container')
-                            .css({
-                                "width": "100%",
-                                "padding-bottom": "75%",
-                                "background-size": "cover",
-                                "background-repeat": "no-repeat",
-                                "background-position": "center center",
-                                "position": "relative",
-                                "background-image": "url(./assets/images/posts/" + imagen.imagenes[0] + ")"
-                            });
+                        //continuando...
 
-                        // Crear la descripción con un párrafo
-                        var $descripcion = $("<p>").text(imagen.descripcion).css({
-                            "margin": 0,
-                            "padding": ".5rem",
-                        });
+                        // Crear el elemento card-body dentro de la .card
 
-                        // Agregar el card al div de la imagen
-                        $imagenContainer.append($card);
+                        cardBodyElement.addClass('card-body');
+                        cardBodyElement.attr('id', 'card-body-' + imagen.id_imagen);
 
-                        // Agregar la descripción al card
-                        $card.append($descripcion);
+                        // Agregar contenido al card-body
+                        cardBodyElement.append('<div class="original-description">' + imagen.descripcion + '</div>');
 
-                        // Agregar el contenedor de la imagen al contenedor principal
-                        $colDiv.append($imagenContainer);
-                        $container.append($colDiv);
-                    });
+                        // Crear el elemento botones-utilidades
 
-                    // Registrar el controlador de eventos clic para todas las imágenes
-                    $("#image-container").on("click", ".card img", () => {
-                        // Obtener el valor del atributo data-bs-target del modal al que debe abrirse
-                        var modalTarget = $(this).closest(".card").find(".modal").data("bs-target");
+                        botonesUtilidadesElement.addClass('botones-utilidades');
 
-                        console.log("valor del atributo clickeado", modalTarget);
-                        // Abrir el modal correspondiente
-                        $(modalTarget).modal("show");
+                        // Agregar botones al elemento botones-utilidades
+                        botonesUtilidadesElement.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
+                        botonesUtilidadesElement.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-pencil-square"></i></button>');
+
+                        // Crear el elemento de descarga
+                        var downloadButtonElement = $('<a>');
+                        downloadButtonElement.addClass('download-button');
+                        downloadButtonElement.attr('href', '#');
+                        downloadButtonElement.attr('data-images', imagen.imagenes);
+                        downloadButtonElement.attr('data-description', imagen.descripcion);
+                        downloadButtonElement.attr('data-descriptions', imagen.descripcion);
+                        downloadButtonElement.append('<i class="bi bi-download"></i>');
+                        botonesUtilidadesElement.append(downloadButtonElement);
+
+                        carouselElement.append(carouselInner);
+                        cardElement.append(carouselElement, cardBodyElement, botonesUtilidadesElement);
+                        colCardContainer.append(cardElement);
+
+
+                        // Agregar el elemento carousel al DOM (por ejemplo, a un contenedor con clase "container")
+                        $('#image-container').append(colCardContainer);
                     });
                 },
                 error: function(xhr, status, error) {
@@ -394,6 +422,7 @@ $stmt->execute();
 
 
 <script src="cargar_imagenes.php"></script>
+<script src="descarga_imágenes.js"></script>
 </body>
 
 </html>
