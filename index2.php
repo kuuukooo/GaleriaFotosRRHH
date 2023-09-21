@@ -321,6 +321,7 @@ $stmt->execute();
                         // Crear un nuevo elemento .col y .card con jQuery
                         var colCardContainer = $('<div>');
                         colCardContainer.addClass('col');
+                        colCardContainer.attr('id', 'col ' + imagen.id_imagen);
 
                         var cardElement = $('<div>');
                         cardElement.addClass('card');
@@ -380,13 +381,13 @@ $stmt->execute();
 
                         // Agregar botones al elemento botones-utilidades
                         botonesUtilidadesElement.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
-                        botonesUtilidadesElement.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-pencil-square"></i></button>');
+                        botonesUtilidadesElement.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen +'"><i class="bi bi-pencil-square"></i></button>');
 
                         // Crear el elemento de descarga
                         var downloadButtonElement = $('<a>');
                         downloadButtonElement.addClass('download-button');
                         downloadButtonElement.attr('href', '#');
-                        downloadButtonElement.attr('data-images', imagen.imagenes);
+                        downloadButtonElement.attr('data-images', imagen.imagenes.join(','));
                         downloadButtonElement.attr('data-description', imagen.descripcion);
                         downloadButtonElement.attr('data-descriptions', imagen.descripcion);
                         downloadButtonElement.append('<i class="bi bi-download"></i>');
@@ -400,6 +401,12 @@ $stmt->execute();
                         // Agregar el elemento carousel al DOM (por ejemplo, a un contenedor con clase "container")
                         $('#image-container').append(colCardContainer);
                     });
+                    //Descargar Imágenes
+                    downloadimage();
+
+                    //activar el botón de eliminar
+                    BotonEliminar();
+                    console.log("Botón de eliminar correctamente activado");
                 },
                 error: function(xhr, status, error) {
                     console.error("Error en la solicitud AJAX:", error);
@@ -411,6 +418,7 @@ $stmt->execute();
         // Cargar las imágenes iniciales en la página
         cargarImagenes(1);
 
+
         // Manejar la paginación cuando se hace clic en los enlaces de paginación
         $(".pagination a").click(function(e) {
             e.preventDefault();
@@ -418,11 +426,51 @@ $stmt->execute();
             cargarImagenes(pagina);
         });
     });
+
+    //Función BotonEliminar
+    function BotonEliminar() {
+    $(".delete-button").click(function(event) {
+        event.preventDefault(); // Evitar que el enlace navegue a otra página
+
+        const imageId = $(this).data("image-id");
+
+        // Mostrar una alerta de confirmación
+        const confirmacion = confirm("¿Quieres eliminar la imagen?");
+
+        if (confirmacion) {
+            $.ajax({
+                url: "eliminar-imagen.php",
+                method: "POST",
+                data: { id_imagen: imageId },
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+                        // Ocultar tanto el image-container como el card-body específicos
+                        $(`.col-${imageId}`)
+                        .css(
+                            "display", none
+                        )
+                        // Eliminación exitosa, puedes mostrar un mensaje de éxito en la página
+                        alert("Imagen eliminada exitosamente.");
+                    } else {
+                        // Error al eliminar, puedes mostrar un mensaje de error en la página
+                        alert("Error al eliminar la imagen: " + response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Manejar errores de la solicitud AJAX aquí
+                    console.error(error);
+                }
+            });
+        }
+    });
+}
 </script>
 
 
 <script src="cargar_imagenes.php"></script>
 <script src="descarga_imágenes.js"></script>
+<script src="eliminar_imagen.js"></script>
 </body>
 
 </html>
