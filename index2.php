@@ -31,7 +31,7 @@ if (isset($_GET['pagina'])) {
 }
 
 $empieza = ($pagina_actual - 1) * $por_pagina;
-$query = "SELECT * FROM imagenes_sueltas ORDER BY id_imagen DESC LIMIT $empieza, $por_pagina";
+$query = "SELECT * FROM imagenes_sueltas ORDER BY id_imagen DESC LIMIT " . intval($empieza) . ", $por_pagina";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 ?>
@@ -57,10 +57,8 @@ $stmt->execute();
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="estilos.css">
-    </link>
-    <link rel="stylesheet" type="text/css" href="navbar2.css">
-    </link>
+    <link rel="stylesheet" type="text/css" href="estilos.css"></link>
+    <link rel="stylesheet" type="text/css" href="navbar2.css"></link>
     <style>
         /* CSS para limitar el tamaño máximo de las imágenes en el carrusel */
         .carousel-inner img {
@@ -184,7 +182,7 @@ $stmt->execute();
                             </div>
                         <?php unset($_SESSION['success']);
                         } ?>
-                        <form action="controllers/new-post-photo.php" method="POST" enctype="multipart/form-data">
+                        <form id="uploadForm" action="controllers/new-post-photo.php" method="POST" enctype="multipart/form-data">
                             <h5 class="mb-3">Elige tu foto o fotos y añade una descripción</h5>
                             <div class="d-flex justify-content-between">
                                 <input type="file" class="form-control mb-3" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg" style="width: 40%" required>
@@ -195,7 +193,7 @@ $stmt->execute();
                     </div>
                 </div>
             </div>
-
+            
 
             <!-- Imágenes -->
             <div class="container mt-5 mb-5 py-2">
@@ -299,46 +297,42 @@ $stmt->execute();
 <!-- Script de Botones -->
 
 <script>
-    $(document).ready(function() {
-        console.log("El script JavaScript se está ejecutando correctamente.");
+$(document).ready(function() {
+    console.log("Script de edición de Cargado de Imagenes cargado.");
 
-        // Función para cargar las imágenes de forma dinámica
-        function cargarImagenes(pagina) {
-            console.log("Solicitando imágenes para la página: " + pagina);
-            $.ajax({
-                url: "cargar_imagenes.php",
-                method: "GET",
-                data: {
-                    pagina: pagina
-                },
-                dataType: "json",
-                success: function(data) {
-                    console.log("Respuesta exitosa de la solicitud AJAX:", data);
-                    // Limpiar el contenedor de imágenes
+    // Función para cargar las imágenes y luego activar la edición
+    function cargarImagenesYActivarEdicion(pagina) {
+        console.log("Solicitando imágenes para la página: " + pagina);
+        $.ajax({
+            url: "cargar_imagenes.php",
+            method: "GET",
+            data: {
+                pagina: pagina
+            },
+            dataType: "json",
+            success: function(data) {
+                console.log("Respuesta exitosa de la solicitud AJAX:", data);
 
                     // Iterar sobre los datos de las imágenes y agregarlas al contenedor
                     data.forEach(function(imagen, index) {
                         // Crear un nuevo elemento .col y .card con jQuery
                         var colCardContainer = $('<div>');
-                        colCardContainer.addClass('col');
-                        colCardContainer.attr('id', 'col ' + imagen.id_imagen);
+                            colCardContainer.addClass('col');
+                            colCardContainer.attr('id', 'col' + imagen.id_imagen);
 
-                        var cardElement = $('<div>');
-                        cardElement.addClass('card');
-                        // Crear un nuevo elemento div con jQuery
-                        var carouselElement = $('<div>');
+                            var cardElement = $('<div>');
+                            cardElement.addClass('card');
+                            // Crear un nuevo elemento div con jQuery
+                            var carouselElement = $('<div>');
 
-                        // Asignar el ID dinámicamente al elemento carousel
-                        carouselElement.attr('id', 'carousel' + imagen.id_imagen);
-                        carouselElement.addClass('carousel slide');
-                        carouselElement.attr('data-bs-ride', 'false');
+                            // Asignar el ID dinámicamente al elemento carousel
+                            carouselElement.attr('id', 'carousel' + imagen.id_imagen);
+                            carouselElement.addClass('carousel slide');
+                            carouselElement.attr('data-bs-ride', 'false');
 
-                        // Crear el elemento interno carousel-inner
-                        var carouselInner = $('<div>');
-                        carouselInner.addClass('carousel-inner');
-
-                        var cardBodyElement = $('<div>');
-                        var botonesUtilidadesElement = $('<div>');
+                            // Crear el elemento interno carousel-inner
+                            var carouselInner = $('<div>');
+                            carouselInner.addClass('carousel-inner');
 
                         // Recorrer las imágenes y crear los elementos de carousel-item
                         $.each(imagen.imagenes, function(j, imageName) {
@@ -365,58 +359,76 @@ $stmt->execute();
 
                         });
 
-                        //continuando...
-
                         // Crear el elemento card-body dentro de la .card
-
-                        cardBodyElement.addClass('card-body');
+                        var cardBodyElement = $('<div>').addClass('card-body');
                         cardBodyElement.attr('id', 'card-body-' + imagen.id_imagen);
-
-                        // Agregar contenido al card-body
                         cardBodyElement.append('<div class="original-description">' + imagen.descripcion + '</div>');
-
-                        // Crear el elemento botones-utilidades
-
-                        botonesUtilidadesElement.addClass('botones-utilidades');
-
-                        // Agregar botones al elemento botones-utilidades
-                        botonesUtilidadesElement.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
-                        botonesUtilidadesElement.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen +'"><i class="bi bi-pencil-square"></i></button>');
-
-                        // Crear el elemento de descarga
-                        var downloadButtonElement = $('<a>');
-                        downloadButtonElement.addClass('download-button');
-                        downloadButtonElement.attr('href', '#');
-                        downloadButtonElement.attr('data-images', imagen.imagenes.join(','));
-                        downloadButtonElement.attr('data-description', imagen.descripcion);
-                        downloadButtonElement.attr('data-descriptions', imagen.descripcion);
-                        downloadButtonElement.append('<i class="bi bi-download"></i>');
-                        botonesUtilidadesElement.append(downloadButtonElement);
+                        
+                        // Crear el contenedor para botones-utilidades y agregar botones
+                        var botonesUtilidadesContainer = $('<div>').addClass('botones-utilidades');
+                        botonesUtilidadesContainer.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
+                        botonesUtilidadesContainer.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen +'"><i class="bi bi-pencil-square"></i></button>');
+                        botonesUtilidadesContainer.append('<a class="download-button" href="#" data-images="' + imagen.imagenes.join(',') + '" data-description="' + imagen.descripcion + '" data-descriptions="' + imagen.descripcion + '"><i class="bi bi-download"></i></a>');
+                        
+                        // Agregar el contenedor de botones-utilidades al card-body
+                        cardBodyElement.append(botonesUtilidadesContainer);
+                
 
                         carouselElement.append(carouselInner);
-                        cardElement.append(carouselElement, cardBodyElement, botonesUtilidadesElement);
+                        cardElement.append(carouselElement, cardBodyElement);
                         colCardContainer.append(cardElement);
+                        
 
+                        // Crea el elemento .description-edit-container
+                        var descriptionEditContainer = $("<div>").addClass("description-edit-container").attr("id", "description-edit-" + imagen.id_imagen).css("display", "none");
+
+                        // Crea el formulario dentro del contenedor
+                        var formElement = $("<form>").attr("action", "editar-descripcion.php").attr("method", "POST").attr("id", "edit-form-" + imagen.id_imagen);
+
+                        // Crea el textarea dentro del formulario
+                        var textareaElement = $("<textarea>").attr("maxlength", "25").attr("name", "new-description").addClass("form-control").text(imagen.descripcion);
+
+                        // Crea los elementos input ocultos dentro del formulario
+                        var hiddenInputId = $("<input>").attr("type", "hidden").attr("name", "id_imagen").val(imagen.id_imagen);
+                        var hiddenInputEditDescription = $("<input>").attr("type", "hidden").attr("name", "edit-description").val(imagen.descripcion || ''); // Cambia esto según tu necesidad
+                        var hiddenInputPaginaActual = $("<input>").attr("type", "hidden").attr("name", "pagina_actual").val(imagen.pagina_actual); // Cambia esto según tu necesidad
+
+                        // Crea el botón "Guardar" dentro del formulario
+                        var saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary").text("Guardar");
+
+                        // Crea el enlace "Cancelar" dentro del formulario
+                         var cancelButton = $("<a>").attr("href", "#").addClass("btn btn-secondary cancel-edit").attr("data-image-id", imagen.id_imagen).text("Cancelar"); 
+
+                        // Agrega los elementos al formulario
+                        formElement.append(textareaElement, hiddenInputId, hiddenInputEditDescription, hiddenInputPaginaActual, saveButton, cancelButton);
+
+                        // Agrega el formulario al contenedor .description-edit-container
+                        descriptionEditContainer.append(formElement);
+
+                        // Agrega el contenedor al lugar adecuado en tu página (por ejemplo, a un div con un ID específico)
+                        colCardContainer.find('.card-body').append(descriptionEditContainer); // Cambia ".card-body" al selector adecuado dentro del contexto de colCardContainer
 
                         // Agregar el elemento carousel al DOM (por ejemplo, a un contenedor con clase "container")
                         $('#image-container').append(colCardContainer);
                     });
-                    //Descargar Imágenes
-                    downloadimage();
 
-                    //activar el botón de eliminar
-                    BotonEliminar();
-                    console.log("Botón de eliminar correctamente activado");
-                },
+                //Descargar Imágenes
+                downloadimage();
+
+                //activar el botón de eliminar
+                BotonEliminar();
+                console.log("Botón de eliminar correctamente activado");
+            },
                 error: function(xhr, status, error) {
                     console.error("Error en la solicitud AJAX:", error);
                     // Manejar errores de la solicitud AJAX aquí
                 }
-            });
-        }
+        });
+    }
 
-        // Cargar las imágenes iniciales en la página
-        cargarImagenes(1);
+    // Cargar imágenes y activar edición en el documento listo
+    cargarImagenesYActivarEdicion(1);
+});
 
 
         // Manejar la paginación cuando se hace clic en los enlaces de paginación
@@ -425,7 +437,7 @@ $stmt->execute();
             var pagina = $(this).text();
             cargarImagenes(pagina);
         });
-    });
+
 
     //Función BotonEliminar
     function BotonEliminar() {
@@ -446,20 +458,21 @@ $stmt->execute();
                 success: function(response) {
                     if (response.success) {
                         // Ocultar tanto el image-container como el card-body específicos
-                        $(`.col-${imageId}`)
-                        .css(
-                            "display", none
-                        )
+                        $(`#col${imageId}`).remove();
+                        
                         // Eliminación exitosa, puedes mostrar un mensaje de éxito en la página
-                        alert("Imagen eliminada exitosamente.");
+                        //Añadido un delay pequeño para que deje mostrar que se eliminó la foto
+                        setTimeout(function () {
+                            alert("Imágen Eliminada Exitosamente.");
+                        }, 100);
                     } else {
                         // Error al eliminar, puedes mostrar un mensaje de error en la página
                         alert("Error al eliminar la imagen: " + response.error);
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function(error) {
                     // Manejar errores de la solicitud AJAX aquí
-                    console.error(error);
+                    console.log(error);
                 }
             });
         }
@@ -468,9 +481,123 @@ $stmt->execute();
 </script>
 
 
-<script src="cargar_imagenes.php"></script>
+    <script>
+$(document).ready(function() {
+    // Función para guardar el estado del modo en el almacenamiento local
+    function saveDarkModeState(isDarkMode) {
+        localStorage.setItem('darkMode', isDarkMode);
+    }
+
+    // Función para cargar el estado del modo desde el almacenamiento local
+    function loadDarkModeState() {
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            $("body").addClass("dark");
+            $("#darkModeSwitch").prop("checked", true);
+        }
+    }
+
+    // Cargar el estado del modo al cargar la página
+    loadDarkModeState();
+
+    // Manejar el cambio de modo
+    $("#darkModeSwitch").click(function() {
+        const isDarkMode = $("body").hasClass("dark");
+        $("body").toggleClass("dark");
+        $("#darkModeSwitch").prop("checked", !isDarkMode);
+        // Guardar el estado del modo en el almacenamiento local
+        saveDarkModeState(!isDarkMode);
+        // Redirigir a la misma página con el estado del modo como parámetro en la URL
+        const currentPage = window.location.href;
+        const newUrl = currentPage + (currentPage.includes("?") ? "&" : "?") + "darkMode=" + (!isDarkMode ? "1" : "0");
+        window.location.href = newUrl;
+    });
+
+
+// Manejar la paginación
+$(".pagination a").click(function(e) {
+    e.preventDefault(); // Evitar que el enlace navegue a otra página
+
+    var pagina = $(this).text(); // Obtener el número de página
+    $.ajax({
+        url: "./cargar_imagenes.php",
+        method: "GET",
+        data: { pagina: pagina },
+        success: function(data) {
+            // Actualiza el contenido del contenedor de imágenes con el nuevo contenido
+            $("#image-container").html(data);
+        }
+    });
+});
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('#uploadForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: './controllers/new-post-photo.php', // Cambia esto al archivo PHP que manejará la carga de imágenes
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                window.location.href = './index2.php'; // Redirecciona a la página principal
+            },
+            error: function() {
+                alert('Error al cargar imágenes');
+            }
+        });
+    });
+});
+</script>
 <script src="descarga_imágenes.js"></script>
 <script src="eliminar_imagen.js"></script>
+<script>
+    // Función para activar la edición
+    // Eventos click para edición y cancelación
+    $(document).ready(function() {
+        $(document).on("click", ".btn-edit-description", function() {
+            console.log("Botón de edición de descripción clickeado");
+
+            var imageId = $(this).data("image-id");
+            var cardBody = $(this).closest('.card-body'); // Define cardBody aquí
+
+            var descriptionEditContainer = $(`#description-edit-${imageId}`);
+
+            // Agregar la clase 'visible' al description-edit-container
+            descriptionEditContainer.addClass('visible');
+
+
+            // Ocultar descripción original y botones
+            cardBody.find('.botones-utilidades').css("display", "none");
+            cardBody.find('.original-description').css("display","none");  
+
+            // Mover el elemento al div.card-body correspondiente
+            cardBody.append(descriptionEditContainer);
+
+            descriptionEditContainer.toggle();
+        });
+
+        $(document).on("click", ".cancel-edit", function(e) {
+            e.preventDefault(); // Evitar que el enlace navegue a otra página
+
+            var imageId = $(this).data("image-id");
+            var descriptionEditContainer = $(`#description-edit-${imageId}`);
+            var cardBody = descriptionEditContainer.closest('.card-body');
+
+            // Ocultar el formulario de edición y mostrar la descripcións original y botones
+            descriptionEditContainer.hide();
+            cardBody.find('.original-description').show();
+            cardBody.find('.botones-utilidades').show();
+        });
+    });
+</script>
+
+
 </body>
 
 </html>
