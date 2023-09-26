@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require $_SERVER['DOCUMENT_ROOT'] . '/app_images/database/database.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/database/database.php';
 
 $image = "";
 $description = "";
@@ -63,11 +63,11 @@ if(isset($_FILES['files'])){
         if($stmt->execute()){
             $respuesta = "Post publicado correctamente";
             $_SESSION['success'] = $respuesta;
-            header('location: ../index.php');
+            header('location: ../index2.php');
         }else{
             $respuesta = "No ha sido posible publicar el post";
             $_SESSION['error'] = $respuesta;
-            header('location: ../index.php');
+            header('location: ../index2.php');
         }
     }
 }
