@@ -584,7 +584,6 @@ $(document).ready(function() {
 
         $(document).on("click", ".cancel-edit", function(e) {
             e.preventDefault(); // Evitar que el enlace navegue a otra página
-
             var imageId = $(this).data("image-id");
             var descriptionEditContainer = $(`#description-edit-${imageId}`);
             var cardBody = descriptionEditContainer.closest('.card-body');
