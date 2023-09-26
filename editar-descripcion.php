@@ -19,10 +19,10 @@ if (isset($_POST['new-description']) && isset($_POST['id_imagen'])) {
         $_SESSION['error'] = "Error al actualizar la descripción: " . $e->getMessage();
     }
 
-    header("Location: index.php?pagina=" . $_POST['pagina_actual']);
+    header("Location: index2.php?pagina=" . $_POST['pagina_actual']);
 } else {
     $_SESSION['error'] = "Falta información para editar la descripción.";
-    header("Location: index.php"); // Redirige de vuelta a la página principal
+    header("Location: index2.php"); // Redirige de vuelta a la página principal
     exit();
 }
 ?>
