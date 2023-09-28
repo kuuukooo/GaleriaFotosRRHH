@@ -8,10 +8,6 @@ if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_PO
     $newDescription = $_POST['new-description'];
     $imageId = $_POST['id_imagen'];
 
-    var_dump($newDescription); // Agregado para depuración
-    var_dump($imageId); // Agregado para depuración
-    
-
     try {
         // Actualiza la descripción en la base de datos utilizando PDO
         $updateQuery = "UPDATE imagenes_sueltas SET descripcion = :newDescription WHERE id_imagen = :imageId";
@@ -20,8 +16,11 @@ if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_PO
         $stmt->bindParam(':imageId', $imageId, PDO::PARAM_INT);
         $stmt->execute();
 
+        // Después de actualizar la descripción en la base de datos
+
         $response['status'] = "success";
-        $response['message'] = "Descripción actualizada con éxito.";
+        $response['message'] = "Descripción actualizada con éxito. + $newDescription";
+        $response['newDescription'] = $newDescription; // Agrega la nueva descripción al JSON
     } catch (PDOException $e) {
         $response['status'] = "error";
         $response['message'] = "Error al actualizar la descripción: " . $e->getMessage();
