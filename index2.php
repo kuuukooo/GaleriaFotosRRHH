@@ -23,14 +23,18 @@ if ($stmt->rowCount() > 0) {
 }
 
 $por_pagina = 12;
+$pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 
-if (isset($_GET['pagina'])) {
-    $pagina_actual = $_GET['pagina'];
+// Ajustamos la lógica para obtener el valor de $empieza
+if ($pagina_actual > 1) {
+    $empieza = ($pagina_actual - 1) * $por_pagina;
 } else {
-    $pagina_actual = 1;
+    $empieza = 0;
 }
 
-$empieza = ($pagina_actual - 1) * $por_pagina;
+// Usamos una variable adicional para llevar registro de la página actual
+$pagina_mostrada = $pagina_actual;
+
 $query = "SELECT * FROM imagenes_sueltas ORDER BY id_imagen DESC LIMIT " . intval($empieza) . ", $por_pagina";
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -223,9 +227,12 @@ $stmt->execute();
                     // Define cuántos enlaces quieres mostrar antes y después de la página actual
                     $num_enlaces_mostrados = 2;
 
-                    // Calcula el rango de páginas a mostrar
+                    $pagina_actual = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
+                    $num_enlaces_mostrados = 2;
+                    
                     $rango_inicio = max(1, $pagina_actual - $num_enlaces_mostrados);
                     $rango_fin = min($total_paginas, $pagina_actual + $num_enlaces_mostrados);
+                    
 
                     if ($pagina_actual > 1) {
                         echo "<a href='index2.php?pagina=" . ($pagina_actual - 1) . "' class='btn btn-outline-primary'>&lt;</a>";
@@ -394,7 +401,7 @@ $(document).ready(function() {
                         var hiddenInputPaginaActual = $("<input>").attr("type", "hidden").attr("name", "pagina_actual").val(imagen.pagina_actual); // Cambia esto según tu necesidad
 
                         // Crea el botón "Guardar" dentro del formulario
-                        var saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary").text("Guardar");
+                        var saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary").attr("id","guardar-btn").text("Guardar");
 
                         // Crea el enlace "Cancelar" dentro del formulario
                          var cancelButton = $("<a>").attr("href", "#").addClass("btn btn-secondary cancel-edit").attr("data-image-id", imagen.id_imagen).text("Cancelar"); 
@@ -418,6 +425,9 @@ $(document).ready(function() {
                 //activar el botón de eliminar
                 BotonEliminar();
                 console.log("Botón de eliminar correctamente activado");
+
+                // Llama a la función para adjuntar el manejador de eventos
+                GuardarAJAX(); 
             },
                 error: function(xhr, status, error) {
                     console.error("Error en la solicitud AJAX:", error);
@@ -435,7 +445,7 @@ $(document).ready(function() {
         $(".pagination a").click(function(e) {
             e.preventDefault();
             var pagina = $(this).text();
-            cargarImagenes(pagina);
+            cargarImagenesYActivarEdicion(pagina);
         });
 
 
@@ -478,6 +488,48 @@ $(document).ready(function() {
         }
     });
 }
+function GuardarAJAX() {
+    $('body').on('click', '#guardar-btn', function(event) {
+        event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+
+        // Obtener los valores del formulario
+        var form = $(this).closest('form');
+        var newDescription = form.find('textarea[name="new-description"]').val();
+        var imageId = form.find('input[name="id_imagen"]').val();
+        var paginaActual = form.find('input[name="pagina_actual"]').val();
+
+        console.log('newDescription:', newDescription);
+        console.log('imageId:', imageId);
+        console.log('paginaActual:', paginaActual);
+
+    $.ajax({
+        url: 'editar-descripcion.php',
+        type: 'POST',
+        data: {
+            'new-description': newDescription,
+            'id_imagen': imageId,
+            'pagina_actual': paginaActual
+        },
+        dataType: 'json',
+        success: function (response) {
+            if (response.status === 'success') {
+                // Actualiza la descripción en la página sin recargarla
+                form.closest('.description-edit-container').find('.description').text(newDescription);
+                // Muestra un mensaje de éxito
+                alert(response.message);
+            } else {
+                // Muestra un mensaje de error
+                alert(response.message);
+            }
+    },
+        error: function (xhr, status, error) {
+        console.log('Error en la solicitud AJAX:');
+        console.log('Status:', status);
+        console.log('Error:', error);
+        }
+    });
+    }
+)};
 </script>
 
 
@@ -595,8 +647,6 @@ $(document).ready(function() {
         });
     });
 </script>
-
-
 </body>
 
 </html>

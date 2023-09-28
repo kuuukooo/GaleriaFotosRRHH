@@ -2,9 +2,15 @@
 session_start();
 require "./database/database.php"; // Asegúrate de incluir tu archivo de conexión a la base de datos
 
-if (isset($_POST['new-description']) && isset($_POST['id_imagen'])) {
+$response = []; // Inicializar una respuesta vacía
+
+if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_POST['pagina_actual'])) {
     $newDescription = $_POST['new-description'];
     $imageId = $_POST['id_imagen'];
+
+    var_dump($newDescription); // Agregado para depuración
+    var_dump($imageId); // Agregado para depuración
+    
 
     try {
         // Actualiza la descripción en la base de datos utilizando PDO
@@ -14,15 +20,17 @@ if (isset($_POST['new-description']) && isset($_POST['id_imagen'])) {
         $stmt->bindParam(':imageId', $imageId, PDO::PARAM_INT);
         $stmt->execute();
 
-        $_SESSION['success'] = "Descripción actualizada con éxito.";
+        $response['status'] = "success";
+        $response['message'] = "Descripción actualizada con éxito.";
     } catch (PDOException $e) {
-        $_SESSION['error'] = "Error al actualizar la descripción: " . $e->getMessage();
+        $response['status'] = "error";
+        $response['message'] = "Error al actualizar la descripción: " . $e->getMessage();
     }
-
-    header("Location: index2.php?pagina=" . $_POST['pagina_actual']);
 } else {
-    $_SESSION['error'] = "Falta información para editar la descripción.";
-    header("Location: index2.php"); // Redirige de vuelta a la página principal
-    exit();
+    $response['status'] = "error";
+    $response['message'] = "Falta información para editar la descripción.";
 }
-?>
+
+header("Content-Type: application/json");
+echo json_encode($response);
+
