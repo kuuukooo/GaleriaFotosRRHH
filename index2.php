@@ -404,7 +404,7 @@ $(document).ready(function() {
                         var saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary").attr("id","guardar-btn").text("Guardar");
 
                         // Crea el enlace "Cancelar" dentro del formulario
-                         var cancelButton = $("<a>").attr("href", "#").addClass("btn btn-secondary cancel-edit").attr("data-image-id", imagen.id_imagen).text("Cancelar"); 
+                        var cancelButton = $("<a>").attr("href", "#").addClass("btn btn-secondary cancel-edit").attr("data-image-id", imagen.id_imagen).text("Cancelar"); 
 
                         // Agrega los elementos al formulario
                         formElement.append(textareaElement, hiddenInputId, hiddenInputEditDescription, hiddenInputPaginaActual, saveButton, cancelButton);
@@ -490,18 +490,19 @@ $(document).ready(function() {
 }
 function GuardarAJAX() {
     $('body').on('click', '#guardar-btn', function(event) {
-        event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+    event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
-        // Obtener los valores del formulario
-        var form = $(this).closest('form');
-        var newDescription = form.find('textarea[name="new-description"]').val();
-        var imageId = form.find('input[name="id_imagen"]').val();
-        var paginaActual = form.find('input[name="pagina_actual"]').val();
+    // Obtener los valores del formulario
+    var form = $(this).closest('form');
+    var newDescription = form.find('textarea[name="new-description"]').val();
+    var imageId = form.find('input[name="id_imagen"]').val();
+    var paginaActual = form.find('input[name="pagina_actual"]').val();
 
-        console.log('newDescription:', newDescription);
-        console.log('imageId:', imageId);
-        console.log('paginaActual:', paginaActual);
+    console.log('newDescription:', newDescription);
+    console.log('imageId:', imageId);
+    console.log('paginaActual:', paginaActual);
 
+    // Realizar la solicitud AJAX
     $.ajax({
         url: 'editar-descripcion.php',
         type: 'POST',
@@ -514,22 +515,29 @@ function GuardarAJAX() {
         success: function (response) {
             if (response.status === 'success') {
                 // Actualiza la descripción en la página sin recargarla
-                form.closest('.description-edit-container').find('.description').text(newDescription);
+                var originalDescription = form.closest('.card-body').find('.original-description');
+                originalDescription.text(newDescription);
+
+                // Restaura la visibilidad de la descripción original y los botones
+                form.closest('.description-edit-container').hide();
+                originalDescription.show();
+                form.closest('.card-body').find('.botones-utilidades').show();
+
                 // Muestra un mensaje de éxito
                 alert(response.message);
             } else {
                 // Muestra un mensaje de error
                 alert(response.message);
             }
-    },
+        },
         error: function (xhr, status, error) {
-        console.log('Error en la solicitud AJAX:');
-        console.log('Status:', status);
-        console.log('Error:', error);
+            console.log('Error en la solicitud AJAX:');
+            console.log('Status:', status);
+            console.log('Error:', error);
         }
     });
-    }
-)};
+});
+}
 </script>
 
 
