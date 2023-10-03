@@ -30,6 +30,8 @@ if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_PO
     $response['message'] = "Falta información para editar la descripción.";
 }
 
+
+
 header("Content-Type: application/json");
 echo json_encode($response);
 
