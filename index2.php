@@ -614,8 +614,6 @@ $(document).ready(function() {
     });
 });
 </script>
-<script src="descarga_imágenes.js"></script>
-<script src="eliminar_imagen.js"></script>
 <script>
     // Función para activar la edición
     // Eventos click para edición y cancelación
@@ -655,6 +653,8 @@ $(document).ready(function() {
         });
     });
 </script>
+<script src="descarga_imágenes.js"></script>
+<script src="eliminar_imagen.js"></script>
+<script src="navbar2.js"></script>
 </body>
-
 </html>
