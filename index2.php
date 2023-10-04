@@ -117,10 +117,11 @@ $stmt->execute();
                 <div class="menu">
 
                     <li class="search-box">
-                        <i class='bx bx-search icon'></i>
-                        <form class="d-flex" role="search" action="index2.php" method="GET">
-                            <input class="form-control me-2" type="search" name="search" placeholder="Buscar..." aria-label="Search">
-                        </form>
+                    <i class='bx bx-search icon'></i>
+                    <form class="d-flex" id="search-form" action="buscar_img.php" method="POST">
+                        <input class="form-control me-2" type="search" name="search" id="search-input" placeholder="Buscar..." aria-label="Search">
+                        <button type="submit" style="display: none;"></button>
+                    </form>
                     </li>
 
                     <ul class="menu-links">
@@ -204,8 +205,6 @@ $stmt->execute();
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5 justify-between" id="image-container">
                 </div>
             </div>
-
-
 
 
 
@@ -369,7 +368,8 @@ $(document).ready(function() {
                         // Crear el elemento card-body dentro de la .card
                         var cardBodyElement = $('<div>').addClass('card-body');
                         cardBodyElement.attr('id', 'card-body-' + imagen.id_imagen);
-                        cardBodyElement.append('<div class="original-description">' + imagen.descripcion + '</div>');
+                        cardBodyElement.append('<div class="original-description" id="DescriptionID-' + imagen.id_imagen + '">' + imagen.descripcion + '</div>');
+
                         
                         // Crear el contenedor para botones-utilidades y agregar botones
                         var botonesUtilidadesContainer = $('<div>').addClass('botones-utilidades');
@@ -448,6 +448,21 @@ $(document).ready(function() {
             cargarImagenesYActivarEdicion(pagina);
         });
 
+        // Manejar la búsqueda
+        $("#search-form").on("submit", function(e) {
+            e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+            var searchTerm = $("#search-input").val().toLowerCase();
+
+            // Itera sobre todas las imágenes y muestra u oculta según la búsqueda
+            $(".col").each(function() {
+                var descripcion = $(this).find('.original-description').text().toLowerCase();
+                if (descripcion.includes(searchTerm)) {
+                    $(this).show(); // Mostrar imágenes que coinciden con la búsqueda
+                } else {
+                    $(this).hide(); // Ocultar imágenes que no coinciden con la búsqueda
+                }
+            });
+        });
 
     //Función BotonEliminar
     function BotonEliminar() {
