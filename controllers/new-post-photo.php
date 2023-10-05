@@ -6,6 +6,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/database/database.php';
 $image = "";
 $description = "";
 $date = date('Y-m-d H:i:s');
+$response = array();
 
 if(isset($_POST['description'])){
     $description = $_POST['description'];
@@ -21,7 +22,7 @@ if(isset($_FILES['files'])){
 
     if($countfiles > 0){
         for($i = 0; $i < $countfiles; $i++){
-            $fileTmpPath = $_FILES['files']['tmp_name'][$i];
+                        $fileTmpPath = $_FILES['files']['tmp_name'][$i];
             $fileName = $_FILES['files']['name'][$i];
             $fileType = $_FILES['files']['type'][$i];
             $fileNameCmps = explode(".", $fileName);
@@ -32,7 +33,7 @@ if(isset($_FILES['files'])){
             $allowedFileExtensions = array('png', 'jpg', 'jpeg');
 
             if(in_array($fileExtension, $allowedFileExtensions)){
-                // Directorio donde guardamos la imagen
+                              // Directorio donde guardamos la imagen
                 $uploadFileDir = '../assets/images/posts/';
                 $dest_path = $uploadFileDir . $newFileName;
 
@@ -46,10 +47,10 @@ if(isset($_FILES['files'])){
                 }
 
                 if($originalImage !== false && imagejpeg($originalImage, $dest_path, $calidad)){
-                    array_push($images, $image);
-                }
+                array_push($images, $image);
             }
         }
+     }
 
         $imagesList = implode(",", $images);
 
@@ -61,15 +62,14 @@ if(isset($_FILES['files'])){
         $stmt->bindParam(':fecha_carga', $date);
 
         if($stmt->execute()){
-            $respuesta = "Post publicado correctamente";
-            $_SESSION['success'] = $respuesta;
-            header('location: ../index2.php');
+            $response['success'] = "Post publicado correctamente";
         }else{
-            $respuesta = "No ha sido posible publicar el post";
-            $_SESSION['error'] = $respuesta;
-            header('location: ../index2.php');
+            $response['error'] = "No ha sido posible publicar el post";
         }
     }
 }
-?>
 
+// Devolver la respuesta como JSON
+header('Content-Type: application/json');
+echo json_encode($response);
+?>

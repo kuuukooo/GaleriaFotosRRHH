@@ -192,7 +192,7 @@ $stmt->execute();
                             <div class="d-flex justify-content-between">
                                 <input type="file" class="form-control mb-3" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg" style="width: 40%" required>
                                 <textarea name="description" id="description" rows="1" class="form-control mb-3 mx-3" style="resize: none;" placeholder="Añade una descripción" required></textarea>
-                                <button class="btn btn-primary mb-3" type="submit" style="width: 20%;" name="btn-new-post-photo">Publicar</button>
+                                <button class="btn btn-primary mb-3" type="button" style="width: 20%;" name="btn-new-post-photo" id="btn-new-post-photo">Publicar</button>
                             </div>
                         </form>
                     </div>
@@ -248,9 +248,6 @@ $stmt->execute();
                     ?>
                 </div>
             </section>
-
-
-
 
             <!-- Modales -->
             <?php
@@ -438,6 +435,41 @@ $(document).ready(function() {
 
     // Cargar imágenes y activar edición en el documento listo
     cargarImagenesYActivarEdicion(1);
+    // Controlador de la carga de imágenes
+
+$(document).ready(function () {
+    $("#btn-new-post-photo").click(function () {
+        var formData = new FormData($("#uploadForm")[0]);
+
+        $(this).prop('disabled', true);
+
+        $.ajax({
+            type: "POST",
+            url: "controllers/new-post-photo.php",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+                    // Elimina todas las imágenes existentes antes de agregar las nuevas
+                    $("#image-container").empty();
+                    //Carga las imágenes que se quieran cargar
+                    cargarImagenesYActivarEdicion(1);
+                    // Mostrar mensaje de éxito
+                    alert(response.success); 
+                    $("#btn-new-post-photo").prop('disabled', false);
+                } else if (response.error) {
+                    alert(response.error); // Mostrar mensaje de error
+                    $("#btn-new-post-photo").prop('disabled', false);
+                }
+            },
+            error: function () {
+                // Maneja errores aquí.
+                alert("Hubo un error al subir las imágenes." + error);
+            }
+        });
+    });
+});
 });
 
 
@@ -556,7 +588,7 @@ function GuardarAJAX() {
 </script>
 
 
-    <script>
+<script>
 $(document).ready(function() {
     // Función para guardar el estado del modo en el almacenamiento local
     function saveDarkModeState(isDarkMode) {
@@ -604,29 +636,6 @@ $(".pagination a").click(function(e) {
         }
     });
 });
-});
-</script>
-<script>
-$(document).ready(function() {
-    $('#uploadForm').on('submit', function(e) {
-        e.preventDefault();
-        
-        var formData = new FormData(this);
-
-        $.ajax({
-            type: 'POST',
-            url: './controllers/new-post-photo.php', // Cambia esto al archivo PHP que manejará la carga de imágenes
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                window.location.href = './index2.php'; // Redirecciona a la página principal
-            },
-            error: function() {
-                alert('Error al cargar imágenes');
-            }
-        });
-    });
 });
 </script>
 <script>
