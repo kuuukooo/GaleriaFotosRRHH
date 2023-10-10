@@ -63,35 +63,6 @@ $stmt->execute();
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="estilos.css"></link>
     <link rel="stylesheet" type="text/css" href="navbar2.css"></link>
-    <style>
-        /* CSS para limitar el tamaño máximo de las imágenes en el carrusel */
-        .carousel-inner img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Estilos CSS para el contenedor de imágenes */
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
-        .image-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            padding-bottom: 100%;
-        }
-
-        .image-container {
-            width: 100%;
-            padding-bottom: 75%;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center center;
-        }
-    </style>
 </head>
 
 <body>
@@ -434,9 +405,9 @@ $(document).ready(function() {
     }
 
     // Cargar imágenes y activar edición en el documento listo
-    cargarImagenesYActivarEdicion(1);
-    // Controlador de la carga de imágenes
+    cargarImagenesYActivarEdicion(1);  
 
+// Controlador de la carga de imágenes
 $(document).ready(function () {
     $("#btn-new-post-photo").click(function () {
         var formData = new FormData($("#uploadForm")[0]);
@@ -586,8 +557,6 @@ function GuardarAJAX() {
 });
 }
 </script>
-
-
 <script>
 $(document).ready(function() {
     // Función para guardar el estado del modo en el almacenamiento local

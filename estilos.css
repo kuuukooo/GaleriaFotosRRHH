@@ -5,19 +5,19 @@
 .main-content {
         margin-left: 0; /* Inicialmente, sin margen para estar al lado de la sidebar oculta */
         transition:  0.5s; /* Transición suave para el margen */
-    }
+}
     
     /* Cuando la sidebar se despliega, ajusta el margen para dejar espacio para la sidebar */
-    .sidebar.open {
+.sidebar.open {
         width: 250px; /* Ancho de la sidebar cuando está desplegada */
         transition: 0.5s; /* Transición suave para el ancho */
-    }
+}
     
     /* Ajusta el margen izquierdo del contenido principal para que esté al lado de la sidebar desplegada */
-    .sidebar.open + .main-content {
+.sidebar.open + .main-content {
         margin-left: 250px; /* Igual al ancho de la sidebar */
         transition: 0.5s; /* Transición suave para el margen */
-    }
+}
     
 .logo img {
         max-width: 100px;
@@ -26,27 +26,6 @@
 .title {
         flex: 1;
 }
-
-.image-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 10px;
-}
-.image-container {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        padding-bottom: 100%;
-}
-
-.image-container{
-        width: 100%;
-        padding-bottom: 75%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
-}
-
 /* Paginación */
 .pagination {
         justify-content: center;
@@ -110,6 +89,31 @@ margin-left: 3px;
 .form-control {
 resize: none;
 }
+/* CSS para las imágenes */
+.carousel-inner img {
+        max-width: 100%;
+        height: auto;
+}
+.image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+}
+.image-container {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-bottom: 100%;
+}
+
+.image-container{
+        width: 100%;
+        padding-bottom: 75%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+}
+        
 /* Mostrar el botón con texto "Publicar" en resoluciones mayores a 450x950 */
 @media (min-width: 451px) and (min-height <=951px) {
         .btn-text {
