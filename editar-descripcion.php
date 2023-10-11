@@ -19,7 +19,7 @@ if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_PO
         // Después de actualizar la descripción en la base de datos
 
         $response['status'] = "success";
-        $response['message'] = "Descripción actualizada con éxito. + $newDescription";
+        $response['message'] = "Descripción actualizada con éxito.";
         $response['newDescription'] = $newDescription; // Agrega la nueva descripción al JSON
     } catch (PDOException $e) {
         $response['status'] = "error";
