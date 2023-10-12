@@ -15,7 +15,7 @@ $stmt = $conn->prepare($query);
 $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->execute();
 
-if ($stmt->rowCount() > 0) {
+if ($stmt->rowCount() > 0) { 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     $nombre_usuario = $row['Usuario'];
 } else {
@@ -266,7 +266,7 @@ $stmt->execute();
         </div>
     </div>
 <?php } ?>
-<?php } ?>
+<?php }  ?>
 
 <!-- Script de Botones -->
 
