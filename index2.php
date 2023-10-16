@@ -220,53 +220,6 @@ $stmt->execute();
                 </div>
             </section>
 
-            <!-- Modales -->
-            <?php
-            $stmt = $conn->prepare($query); // Usar la misma consulta con PDO
-            $stmt->execute(); // Ejecutar la consulta
-            while ($post = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $imagesName = explode(",", $post['imagen']);
-                foreach ($imagesName as $j => $imageName) { ?>
-                    <!-- Código del Modal -->
-                    <div class="modal fade" id="modal<?= $post['id_imagen'] ?>-<?= $j ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <div id="carouselModal<?= $post['id_imagen'] ?>-<?= $j ?>" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <?php for ($k = 0; $k < count($imagesName); $k++) {
-                                                $isActive = $k == $j ? 'active' : '';
-                                            ?>
-                                                <div class="carousel-item <?= $isActive ?>">
-                                                    <img src="./assets/images/posts/<?= $imagesName[$k] ?>" class="d-block w-100" alt="Imagen <?= $k ?>">
-                                                </div>
-                                            <?php } ?>
-                                        </div>
-                                        <?php if (count($imagesName) > 1) { ?>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselModal<?= $post['id_imagen'] ?>-<?= $j ?>" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Anterior</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselModal<?= $post['id_imagen'] ?>-<?= $j ?>" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Siguiente</span>
-                                            </button>
-                                            <!-- Indicadores dentro del Modal -->
-                                            <ol class="carousel-indicators">
-                                                <?php for ($k = 0; $k < count($imagesName); $k++) { ?>
-                                                    <li data-bs-target="#carouselModal<?= $post['id_imagen'] ?>-<?= $j ?>" data-bs-slide-to="<?= $k ?>" <?= $k == 0 ? 'class="active"' : '' ?>></li>
-                                                <?php } ?>
-                                            </ol>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        </div>
-    </div>
-<?php } ?>
-<?php }  ?>
 
 <!-- Script de Botones -->
 
