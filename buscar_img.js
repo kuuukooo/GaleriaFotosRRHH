@@ -12,7 +12,7 @@ $(document).ready(function() {
             success: function(data) {
                 if (data.error) {
                     // Manejar el caso de que no se encontraron resultados
-                    console.log(data.error);
+                        console.log(data.error);
                 } else {
                     // Manejar el caso de que se encontró una imagen
                     console.log("Imagen encontrada:", data);

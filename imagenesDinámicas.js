@@ -14,9 +14,9 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("Respuesta exitosa de la solicitud AJAX:", data);
 
-                    // Iterar sobre los datos de las imágenes y agregarlas al contenedor
-                    data.forEach(function(imagen, index) {
-                                                         // Crear un nuevo elemento .col y .card con jQuery
+                // Create a new carousel item for each image uploaded
+                data.forEach(function(imagen, index) {
+                    // Create a new element .col and .card with jQuery
                     var colCardContainer = $('<div>');
                     colCardContainer.addClass('col');
                     colCardContainer.attr('id', 'col' + imagen.id_imagen);
@@ -24,79 +24,99 @@ $(document).ready(function() {
                     var cardElement = $('<div>');
                     cardElement.addClass('card');
 
-                    // Crear un nuevo elemento div con jQuery
+                    // Create a new element div with jQuery
                     var carouselElement = $('<div>');
 
-                    // Asignar el ID dinámicamente al elemento carousel
+                    // Assign the ID dynamically to the carousel element
                     carouselElement.attr('id', 'carousel' + imagen.id_imagen);
                     carouselElement.addClass('carousel slide');
                     carouselElement.attr('data-bs-ride', 'carousel');
 
-                    // Crear el contenedor del carrusel fuera del bucle
+                    // Create the carousel container outside the loop
                     var carouselInner = $('<div class="carousel-inner"></div>');
 
-                        // Recorrer las imágenes y crear los elementos de carousel-item
-                        $.each(imagen.imagenes, function(j, imageName) {
-                            var isActive = j === 0 ? 'active' : '';
-                            
-                            // Create the carousel item
-                            var carouselItem = $('<div>');
-                            carouselItem.addClass('carousel-item ' + isActive);
-                        
-                            // Create the link and the image container
-                            var link = $('<a>');
-                            link.attr('href', '#');
-                            link.attr('data-bs-toggle', 'modal');
-                            link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
-                        
-                            var imageContainer = $('<div>');
-                            imageContainer.addClass('image-container');
-                            imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
-                            imageContainer.attr('data-description', imagen.descripcion[j]);
-                            imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
-                        
-                            link.append(imageContainer);
-                            carouselItem.append(link);
-                        
-                            carouselInner.append(carouselItem);
-                        
-                            // Create the modal dynamically
-                            var modal = $('<div class="modal fade" id="modal' + imagen.id_imagen + '-' + j + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">');
-                            var modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg">');
-                            var modalContent = $('<div class="modal-content">');
-                            var modalBody = $('<div class="modal-body">');
+                    // Loop through the images and create the carousel-item elements
+                    $.each(imagen.imagenes, function(j, imageName) {
+                    var isActive = j === 0 ? 'active' : '';
 
-                            // Create the element <img> inside the modal
-                            var imgElement = $('<img>');
-                            imgElement.attr('src', './assets/images/posts/' + imageName); // Set the source of the image
-                            imgElement.addClass('img-fluid');
+                    // Create the carousel item
+                    var carouselItem = $('<div>');
+                    carouselItem.addClass('carousel-item ' + isActive);
 
-                            // Create navigation buttons
-                            var prevButton = $('<button class="carousel-control-prev" data-bs-slide="prev">');
-                            prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
-                            var nextButton = $('<button class="carousel-control-next" data-bs-slide="next">');
-                            nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
-                            
+                    // Create the link and the image container
+                    var link = $('<a>');
+                    link.attr('href', '#');
+                    link.attr('data-bs-toggle', 'modal');
+                    link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
 
-                            // Add the image to the modal body
-                            modalBody.append(imgElement);
-                            modalBody.append(prevButton);
-                            modalBody.append(nextButton);
+                    var imageContainer = $('<div>');
+                    imageContainer.addClass('image-container');
+                    imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
+                    imageContainer.attr('data-description', imagen.descripcion[j]);
+                    imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
 
-                            // Add CSS to the modal body to make it fill the entire modal
-                            modalBody.css('display', 'flex');
-                            modalBody.css('justify-content', 'center');
-                            modalBody.css('align-items', 'center');
+                    link.append(imageContainer);
+                    carouselItem.append(link);
 
-                            modalContent.append(modalBody);
-                            modalDialog.append(modalContent);
-                            modal.append(modalDialog);
- 
-                            // Add the modal to the end of the document
-                            $('body').append(modal);    
-                        });  
-                                    
+                    carouselInner.append(carouselItem);
 
+                    // Create the modal dynamically
+                    var modal = $('<div class="modal fade" id="modal' + imagen.id_imagen + '-' + j + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">');
+                    var modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg">');
+                    var modalContent = $('<div class="modal-content">');
+                    var modalBody = $('<div class="modal-body">');
+
+                    // Create the element <img> inside the modal
+                    var imgElement = $('<img>');
+                    imgElement.attr('src', './assets/images/posts/' + imageName); // Set the source of the image
+                    imgElement.addClass('img-fluid');
+
+                    // Create navigation buttons
+                    var prevButton = $('<button class="carousel-control-prev" data-bs-slide="prev">');
+                    prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
+                    var nextButton = $('<button class="carousel-control-next" data-bs-slide="next">');
+                    nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
+
+                    // Add the image to the modal body
+                    modalBody.append(imgElement);
+                    modalBody.append(prevButton);
+                    modalBody.append(nextButton);
+
+                    // Add CSS to the modal body to make it fill the entire modal
+                    modalBody.css('display', 'flex');
+                    modalBody.css('justify-content', 'center');
+                    modalBody.css('align-items', 'center');
+
+                    modalContent.append(modalBody);
+                    modalDialog.append(modalContent);
+                    modal.append(modalDialog);
+
+                    // Add the modal to the end of the document
+                    $('body').append(modal);
+                    });
+
+                    // Add the carousel inner to the carousel element
+                    carouselElement.append(carouselInner);
+
+                    // Create navigation buttons for the carousel
+                    var prevButton = $('<button class="carousel-control-prev" data-bs-target="#carousel' + imagen.id_imagen + '" data-bs-slide="prev">');
+                    prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
+                    var nextButton = $('<button class="carousel-control-next" data-bs-target="#carousel' + imagen.id_imagen + '" data-bs-slide="next">');
+                    nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
+
+                    // Add the navigation buttons to the carousel
+                    carouselElement.append(prevButton);
+                    carouselElement.append(nextButton);
+
+                    // Add the carousel to the card element
+                    cardElement.append(carouselElement);
+
+                    // Add the card to the column container
+                    colCardContainer.append(cardElement);
+
+                    // Add the column container to the row container
+                    $('#row').append(colCardContainer);
+    
                         // Crear el elemento card-body dentro de la .card
                         var cardBodyElement = $('<div>').addClass('card-body');
                         cardBodyElement.attr('id', 'card-body-' + imagen.id_imagen);
