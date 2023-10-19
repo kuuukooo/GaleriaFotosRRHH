@@ -37,76 +37,97 @@ $(document).ready(function() {
 
                     // Loop through the images and create the carousel-item elements
                     $.each(imagen.imagenes, function(j, imageName) {
-                    var isActive = j === 0 ? 'active' : '';
+                        var isActive = j === 0 ? 'active' : '';
 
-                    // Create the carousel item
-                    var carouselItem = $('<div>');
-                    carouselItem.addClass('carousel-item ' + isActive);
+                        // Create the carousel item
+                        var carouselItem = $('<div>');
+                        carouselItem.addClass('carousel-item ' + isActive);
 
-                    // Create the link and the image container
-                    var link = $('<a>');
-                    link.attr('href', '#');
-                    link.attr('data-bs-toggle', 'modal');
-                    link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
+                        // Add the carousel item to the carousel inner
+                        carouselInner.append(carouselItem);
 
-                    var imageContainer = $('<div>');
-                    imageContainer.addClass('image-container');
-                    imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
-                    imageContainer.attr('data-description', imagen.descripcion[j]);
-                    imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
+                        // Create the modal dynamically
+                        var modal = $('<div class="modal fade" id="modal' + imagen.id_imagen + '-' + j + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">');
+                        var modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg">');
+                        var modalContent = $('<div class="modal-content">');
+                        var modalBody = $('<div class="modal-body">');
 
-                    link.append(imageContainer);
-                    carouselItem.append(link);
+                        // Create the carousel element
+                        var carouselElement = $('<div>');
+                        carouselElement.addClass('carousel slide');
+                        carouselElement.attr('id', 'carousel' + imagen.id_imagen + '-' + j);
+                        carouselElement.attr('data-bs-ride', 'carousel');
 
-                    carouselInner.append(carouselItem);
+                        // Create the carousel inner element
+                        var modalCarouselInner = $('<div>');
+                        modalCarouselInner.addClass('carousel-inner');
 
-                    // Create the modal dynamically
-                    var modal = $('<div class="modal fade" id="modal' + imagen.id_imagen + '-' + j + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">');
-                    var modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg">');
-                    var modalContent = $('<div class="modal-content">');
-                    var modalBody = $('<div class="modal-body">');
+                         // Create the link and the image container
+                         var link = $('<a>');
+                         link.attr('href', '#');
+                         link.attr('data-bs-toggle', 'modal');
+                         link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
+                     
+                         var imageContainer = $('<div>');
+                         imageContainer.addClass('image-container');
+                         imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
+                         imageContainer.attr('data-description', imagen.descripcion[j]);
+                         imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
+                     
+                         link.append(imageContainer);
+                         carouselItem.append(link);
 
-                    // Create the element <img> inside the modal
-                    var imgElement = $('<img>');
-                    imgElement.attr('src', './assets/images/posts/' + imageName); // Set the source of the image
-                    imgElement.addClass('img-fluid');
+                        // Loop through the images and create the carousel-item elements
+                        $.each(imagen.imagenes, function(k, modalImageName) {
+                            var modalIsActive = k === j ? 'active' : '';
 
-                    // Create navigation buttons
-                    var prevButton = $('<button class="carousel-control-prev" data-bs-slide="prev">');
-                    prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
-                    var nextButton = $('<button class="carousel-control-next" data-bs-slide="next">');
-                    nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
+                            // Create the carousel item
+                            var modalCarouselItem = $('<div>');
+                            modalCarouselItem.addClass('carousel-item ' + modalIsActive);
 
-                    // Add the image to the modal body
-                    modalBody.append(imgElement);
-                    modalBody.append(prevButton);
-                    modalBody.append(nextButton);
+                            // Create the image element
+                            var modalImageElement = $('<img>');
+                            modalImageElement.attr('src', './assets/images/posts/' + modalImageName);
+                            modalImageElement.addClass('d-block w-100');
 
-                    // Add CSS to the modal body to make it fill the entire modal
-                    modalBody.css('display', 'flex');
-                    modalBody.css('justify-content', 'center');
-                    modalBody.css('align-items', 'center');
+                            // Add the image to the carousel item
+                            modalCarouselItem.append(modalImageElement);
 
-                    modalContent.append(modalBody);
-                    modalDialog.append(modalContent);
-                    modal.append(modalDialog);
+                            // Add the carousel item to the carousel inner
+                            modalCarouselInner.append(modalCarouselItem);
+                        });
 
-                    // Add the modal to the end of the document
-                    $('body').append(modal);
+                        // Add the carousel inner to the carousel element
+                        carouselElement.append(modalCarouselInner);
+
+                        // Create navigation buttons for the carousel
+                        var prevButton = $('<button class="carousel-control-prev" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="prev">');
+                        prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
+                        var nextButton = $('<button class="carousel-control-next" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="next">');
+                        nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
+
+                        // Add the navigation buttons to the carousel
+                        carouselElement.append(prevButton);
+                        carouselElement.append(nextButton);
+
+                        // Add the carousel to the modal body
+                        modalBody.append(carouselElement);
+
+                        // Add CSS to the modal body to make it fill the entire modal
+                        modalBody.css('display', 'flex');
+                        modalBody.css('justify-content', 'center');
+                        modalBody.css('align-items', 'center');
+
+                        modalContent.append(modalBody);
+                        modalDialog.append(modalContent);
+                        modal.append(modalDialog);
+
+                        // Add the modal to the end of the document
+                        $('body').append(modal);
                     });
 
                     // Add the carousel inner to the carousel element
                     carouselElement.append(carouselInner);
-
-                    // Create navigation buttons for the carousel
-                    var prevButton = $('<button class="carousel-control-prev" data-bs-target="#carousel' + imagen.id_imagen + '" data-bs-slide="prev">');
-                    prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
-                    var nextButton = $('<button class="carousel-control-next" data-bs-target="#carousel' + imagen.id_imagen + '" data-bs-slide="next">');
-                    nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
-
-                    // Add the navigation buttons to the carousel
-                    carouselElement.append(prevButton);
-                    carouselElement.append(nextButton);
 
                     // Add the carousel to the card element
                     cardElement.append(carouselElement);
@@ -181,7 +202,7 @@ $(document).ready(function() {
                 // Llama a la función para adjuntar el manejador de eventos
                 GuardarAJAX(); 
             },
-                error: function(xhr, status, error) {
+                error: function(error) {
                     console.error("Error en la solicitud AJAX:", error);
                     // Manejar errores de la solicitud AJAX aquí
                 }
@@ -239,29 +260,29 @@ $(document).ready(function () {
 });
 });
 
+// Manejar la búsqueda
+$("#search-form").on("submit", function(e) {
+    e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+    var searchTerm = $("#search-input").val().toLowerCase();
+    var imagesFound = false;
 
-        // Manejar la paginación cuando se hace clic en los enlaces de paginación
-        $(".pagination a").click(function(e) {
-            e.preventDefault();
-            var pagina = $(this).text();
-            cargarImagenesYActivarEdicion(pagina);
-        });
+    // Itera sobre todas las imágenes y muestra u oculta según la búsqueda
+    $(".col").each(function() {
+        var descripcion = $(this).find('.original-description').text().toLowerCase();
+        if (descripcion.includes(searchTerm)) {
+            $(this).show(); // Mostrar imágenes que coinciden con la búsqueda
+            imagesFound = true;
+        } else {
+            $(this).hide(); // Ocultar imágenes que no coinciden con la búsqueda
+        }
+    });
 
-        // Manejar la búsqueda
-        $("#search-form").on("submit", function(e) {
-            e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
-            var searchTerm = $("#search-input").val().toLowerCase();
+    if (!imagesFound) {
+        alert("Ninguna imagen fue encontrada.");
+         $(".col").show();
+    }
+});
 
-            // Itera sobre todas las imágenes y muestra u oculta según la búsqueda
-            $(".col").each(function() {
-                var descripcion = $(this).find('.original-description').text().toLowerCase();
-                if (descripcion.includes(searchTerm)) {
-                    $(this).show(); // Mostrar imágenes que coinciden con la búsqueda
-                } else {
-                    $(this).hide(); // Ocultar imágenes que no coinciden con la búsqueda
-                }
-            });
-        });
 
     //Función BotonEliminar
     function BotonEliminar() {
@@ -303,6 +324,7 @@ $(document).ready(function () {
     });
 }
 function GuardarAJAX() {
+    $(document).ready(function() {
     $('body').on('click', '#guardar-btn', function(event) {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
@@ -346,9 +368,11 @@ function GuardarAJAX() {
         },
         error: function (xhr, status, error) {
             console.log('Error en la solicitud AJAX:');
+            console.log('xhr:', xhr);
             console.log('Status:', status);
             console.log('Error:', error);
-        }
+            }
+        });
     });
 });
     // Función para activar la edición
@@ -374,18 +398,57 @@ function GuardarAJAX() {
             cardBody.append(descriptionEditContainer);
 
             descriptionEditContainer.toggle();
+            $(".cancel-edit").click(function(e) {
+                e.preventDefault(); // Evitar que el enlace navegue a otra página
+        
+                var imageId = $(this).data("image-id");
+                var descriptionEditContainer = $(`#description-edit-${imageId}`);
+                var cardBody = descriptionEditContainer.closest('.card-body');
+        
+                // Ocultar el formulario de edición y mostrar la descripción original y botones
+                descriptionEditContainer.hide();
+                cardBody.find('.original-description').show();
+                cardBody.find('.botones-utilidades').show();
+            });
         });
 
-        $(document).on("click", ".cancel-edit", function(e) {
-            e.preventDefault(); // Evitar que el enlace navegue a otra página
+        $(document).on("click", ".btn-edit-description", function() {
+            console.log("Botón de edición de descripción clickeado");
+        
             var imageId = $(this).data("image-id");
+            var cardBody = $(this).closest('.card-body');
+        
+            // Hide the original description and buttons
+            cardBody.find('.botones-utilidades, .original-description').hide();
+        
+            // Create the description edit container
             var descriptionEditContainer = $(`#description-edit-${imageId}`);
-            var cardBody = descriptionEditContainer.closest('.card-body');
-
-            // Ocultar el formulario de edición y mostrar la descripcións original y botones
-            descriptionEditContainer.hide();
-            cardBody.find('.original-description').show();
-            cardBody.find('.botones-utilidades').show();
+            if (descriptionEditContainer.length === 0) {
+                descriptionEditContainer = $('<div>', {class: 'description-edit-container', id: `description-edit-${imageId}`})
+                    .append($('<textarea>', {class: 'form-control', rows: '3', placeholder: 'Escribe una descripción...'}))
+                    .append($('<button>', {class: 'btn btn-primary btn-save-description', text: 'Guardar', 'data-image-id': imageId}))
+                    .append($('<button>', {class: 'btn btn-secondary cancel-edit', text: 'Cancelar', 'data-image-id': imageId}));
+                cardBody.append(descriptionEditContainer);
+            }
+        
+            // Show the description edit container
+            descriptionEditContainer.addClass('visible');
         });
-    });
+        
+        $(document).on("click", ".cancel-edit", function() {
+            console.log("Botón de cancelación de descripción clickeado");
+        
+            var imageId = $(this).data("image-id");
+            var cardBody = $(this).closest('.card-body');
+        
+            // Hide the description edit container
+            $(`#description-edit-${imageId}`).removeClass('visible');
+        
+            // Show the original description and buttons
+            cardBody.find('.botones-utilidades, .original-description').show();
+        
+            // Move the description edit container back to its original location
+            $('.original-description').append($(`#description-edit-${imageId}`));
+        });
+}); 
 }
