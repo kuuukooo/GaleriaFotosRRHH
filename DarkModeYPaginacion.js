@@ -28,21 +28,4 @@ $(document).ready(function() {
         const newUrl = currentPage + (currentPage.includes("?") ? "&" : "?") + "darkMode=" + (!isDarkMode ? "1" : "0");
         window.location.href = newUrl;
     });
-
-
-// Manejar la paginación
-$(".pagination a").click(function(e) {
-    e.preventDefault(); // Evitar que el enlace navegue a otra página
-
-    var pagina = $(this).text(); // Obtener el número de página
-    $.ajax({
-        url: "./cargar_imagenes.php",
-        method: "GET",
-        data: { pagina: pagina },
-        success: function(data) {
-            // Actualiza el contenido del contenedor de imágenes con el nuevo contenido
-            $("#image-container").html(data);
-        }
-    });
-});
-});
+}); 
