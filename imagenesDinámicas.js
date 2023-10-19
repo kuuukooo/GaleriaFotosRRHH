@@ -15,7 +15,7 @@ $(document).ready(function() {
                 console.log("Respuesta exitosa de la solicitud AJAX:", data);
 
                 // Create a new carousel item for each image uploaded
-                data.forEach(function(imagen, index) {
+                data.forEach(function(imagen) {
                     // Create a new element .col and .card with jQuery
                     var colCardContainer = $('<div>');
                     colCardContainer.addClass('col');
