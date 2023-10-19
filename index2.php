@@ -177,49 +177,8 @@ $stmt->execute();
                 </div>
             </div>
 
-
-
-
-            <!-- Paginación -->
-            <section class="paginación">
-                <div class="pagination">
-                    <?php
-                    $query_total = "SELECT COUNT(*) as total FROM imagenes_sueltas";
-                    $stmt_total = $conn->prepare($query_total);
-                    $stmt_total->execute();
-                    $row_total = $stmt_total->fetch(PDO::FETCH_ASSOC);
-
-                    $total_imagenes = $row_total['total'];
-                    $total_paginas = ceil($total_imagenes / $por_pagina);
-
-                    $pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-
-                    // Define cuantos enlaces quieres mostrar antes y después de la página actual
-                    $num_enlaces_mostrados = 2;
-
-                    $pagina_actual = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
-                    $num_enlaces_mostrados = 2;
-                    
-                    $rango_inicio = max(1, $pagina_actual - $num_enlaces_mostrados);
-                    $rango_fin = min($total_paginas, $pagina_actual + $num_enlaces_mostrados);
-                    
-
-                    if ($pagina_actual > 1) {
-                        echo "<a href='index2.php?pagina=" . ($pagina_actual - 1) . "' class='btn btn-outline-primary'>&lt;</a>";
-                    }
-
-                    for ($i = $rango_inicio; $i <= $rango_fin; $i++) {
-                        $clase_activo = ($i == $pagina_actual) ? 'active' : '';
-                        echo "<a href='index2.php?pagina=$i' class='btn btn-outline-primary $clase_activo'>$i</a> ";
-                    }
-
-                    if ($pagina_actual < $total_paginas) {
-                        echo "<a href='index2.php?pagina=" . ($pagina_actual + 1) . "' class='btn btn-outline-primary'>&gt;</a>";
-                    }
-                    ?>
-                </div>
-            </section>
-
+            <!-- Aquí solía estar la paginacion -->
+            
 
 <!-- Script de Botones -->
 
