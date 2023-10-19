@@ -114,7 +114,6 @@ $(document).ready(function() {
                         modalBody.append(carouselElement);
 
                         // Add CSS to the modal body to make it fill the entire modal
-                        modalBody.css('display', 'flex');
                         modalBody.css('justify-content', 'center');
                         modalBody.css('align-items', 'center');
 
@@ -214,6 +213,7 @@ $(document).ready(function() {
 
 // Controlador de la carga de imágenes
 $(document).ready(function () {
+    //la función se ejecuta cuando se hace click en el botón de cargar imágenes
     $("#btn-new-post-photo").click(function () {
         var formData = new FormData($("#uploadForm")[0]);
 
@@ -235,7 +235,8 @@ $(document).ready(function () {
                     console.log("Eliminando imágenes existentes...");
                     $("#image-container").empty();
 
-                    //Carga las imágenes que se quieran cargar
+                    //Entonces carga las imágenes cuando se haya eliminado las anteriores
+                    //para despues volver a cargar las imágenes
                     console.log("Cargando imágenes...");
                     cargarImagenesYActivarEdicion(1);
 
@@ -375,80 +376,38 @@ function GuardarAJAX() {
         });
     });
 });
-    // Función para activar la edición
-    // Eventos click para edición y cancelación
-    $(document).ready(function() {
-        $(document).on("click", ".btn-edit-description", function() {
-            console.log("Botón de edición de descripción clickeado");
+//Eventos para la edicición de la descripción
+$(document).ready(function() {
+    $(document).on("click", ".btn-edit-description", function() {
+        console.log("Botón de edición de descripción clickeado");
 
-            var imageId = $(this).data("image-id");
-            var cardBody = $(this).closest('.card-body'); // Define cardBody aquí
+        var imageId = $(this).data("image-id");
+        var cardBody = $(this).closest('.card-body');
 
-            var descriptionEditContainer = $(`#description-edit-${imageId}`);
+        // Hide the original description and buttons
+        cardBody.find('.botones-utilidades, .original-description').hide();
 
-            // Agregar la clase 'visible' al description-edit-container
-            descriptionEditContainer.addClass('visible');
+        // Create the description edit container
+        var descriptionEditContainer = $(`#description-edit-${imageId}`);
 
+        // Show the description edit container
+        descriptionEditContainer.addClass('visible');
+        descriptionEditContainer.css('display', 'block');
+    });
 
-            // Ocultar descripción original y botones
-            cardBody.find('.botones-utilidades').css("display", "none");
-            cardBody.find('.original-description').css("display","none");  
+    $(document).on("click", ".cancel-edit", function() {
+        console.log("Botón de cancelación de descripción clickeado");
 
-            // Mover el elemento al div.card-body correspondiente
-            cardBody.append(descriptionEditContainer);
+        var imageId = $(this).data("image-id");
+        var cardBody = $(this).closest('.card-body');
 
-            descriptionEditContainer.toggle();
-            $(".cancel-edit").click(function(e) {
-                e.preventDefault(); // Evitar que el enlace navegue a otra página
-        
-                var imageId = $(this).data("image-id");
-                var descriptionEditContainer = $(`#description-edit-${imageId}`);
-                var cardBody = descriptionEditContainer.closest('.card-body');
-        
-                // Ocultar el formulario de edición y mostrar la descripción original y botones
-                descriptionEditContainer.hide();
-                cardBody.find('.original-description').show();
-                cardBody.find('.botones-utilidades').show();
-            });
-        });
+        // Hide the description edit container
+        // $(`#description-edit-${imageId}`).removeClass('visible');
+        $(`#description-edit-${imageId}`).hide();
+        // Show the original description and buttons
+        cardBody.find('.botones-utilidades, .original-description').show();
 
-        $(document).on("click", ".btn-edit-description", function() {
-            console.log("Botón de edición de descripción clickeado");
-        
-            var imageId = $(this).data("image-id");
-            var cardBody = $(this).closest('.card-body');
-        
-            // Hide the original description and buttons
-            cardBody.find('.botones-utilidades, .original-description').hide();
-        
-            // Create the description edit container
-            var descriptionEditContainer = $(`#description-edit-${imageId}`);
-            if (descriptionEditContainer.length === 0) {
-                descriptionEditContainer = $('<div>', {class: 'description-edit-container', id: `description-edit-${imageId}`})
-                    .append($('<textarea>', {class: 'form-control', rows: '3', placeholder: 'Escribe una descripción...'}))
-                    .append($('<button>', {class: 'btn btn-primary btn-save-description', text: 'Guardar', 'data-image-id': imageId}))
-                    .append($('<button>', {class: 'btn btn-secondary cancel-edit', text: 'Cancelar', 'data-image-id': imageId}));
-                cardBody.append(descriptionEditContainer);
-            }
-        
-            // Show the description edit container
-            descriptionEditContainer.addClass('visible');
-        });
-        
-        $(document).on("click", ".cancel-edit", function() {
-            console.log("Botón de cancelación de descripción clickeado");
-        
-            var imageId = $(this).data("image-id");
-            var cardBody = $(this).closest('.card-body');
-        
-            // Hide the description edit container
-            $(`#description-edit-${imageId}`).removeClass('visible');
-        
-            // Show the original description and buttons
-            cardBody.find('.botones-utilidades, .original-description').show();
-        
-            // Move the description edit container back to its original location
-            $('.original-description').append($(`#description-edit-${imageId}`));
-        });
-}); 
+    });
+});
+
 }
