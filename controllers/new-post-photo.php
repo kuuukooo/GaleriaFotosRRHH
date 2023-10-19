@@ -22,7 +22,7 @@ if(isset($_FILES['files'])){
 
     if($countfiles > 0){
         for($i = 0; $i < $countfiles; $i++){
-                        $fileTmpPath = $_FILES['files']['tmp_name'][$i];
+            $fileTmpPath = $_FILES['files']['tmp_name'][$i];
             $fileName = $_FILES['files']['name'][$i];
             $fileType = $_FILES['files']['type'][$i];
             $fileNameCmps = explode(".", $fileName);
@@ -33,38 +33,52 @@ if(isset($_FILES['files'])){
             $allowedFileExtensions = array('png', 'jpg', 'jpeg');
 
             if(in_array($fileExtension, $allowedFileExtensions)){
-                              // Directorio donde guardamos la imagen
+                // Directorio donde guardamos la imagen
                 $uploadFileDir = '../assets/images/posts/';
                 $dest_path = $uploadFileDir . $newFileName;
 
-                // Comprimimos la imagen
-                $calidad = 40;
-                $originalImage = "";
-                if($fileExtension == 'png'){
-                    $originalImage = imagecreatefrompng($fileTmpPath);
-                }else{
-                    $originalImage = imagecreatefromjpeg($fileTmpPath);
-                }
+                // Comprobamos si el archivo es una imagen válida
+                $imageType = exif_imagetype($fileTmpPath);
 
-                if($originalImage !== false && imagejpeg($originalImage, $dest_path, $calidad)){
-                array_push($images, $image);
+                if($imageType !== false && ($imageType == IMAGETYPE_JPEG || $imageType == IMAGETYPE_PNG)){
+                    // Comprimimos la imagen
+                    $calidad = 40;
+                    $originalImage = "";
+
+                    if($imageType == IMAGETYPE_PNG){
+                        $originalImage = imagecreatefrompng($fileTmpPath);
+                    }else{
+                        $originalImage = imagecreatefromjpeg($fileTmpPath);
+                    }
+
+                    if($originalImage !== false && imagejpeg($originalImage, $dest_path, $calidad)){
+                        array_push($images, $image);
+                    }
+                } else {
+                    $response['error'] = "El archivo $fileName no es una imagen válida";
+                    break;
+                }
+            } else {
+                $response['error'] = "El archivo $fileName no es una imagen válida";
+                break;
             }
         }
-     }
 
-        $imagesList = implode(",", $images);
+        if(!isset($response['error'])){
+            $imagesList = implode(",", $images);
 
-        $sql = 'INSERT INTO imagenes_sueltas (imagen, descripcion, fecha_carga) VALUES (:imagen, :descripcion, :fecha_carga)';
-        $stmt = $conn->prepare($sql);
+            $sql = 'INSERT INTO imagenes_sueltas (imagen, descripcion, fecha_carga) VALUES (:imagen, :descripcion, :fecha_carga)';
+            $stmt = $conn->prepare($sql);
 
-        $stmt->bindParam(':imagen', $imagesList);
-        $stmt->bindParam(':descripcion', $description);
-        $stmt->bindParam(':fecha_carga', $date);
+            $stmt->bindParam(':imagen', $imagesList);
+            $stmt->bindParam(':descripcion', $description);
+            $stmt->bindParam(':fecha_carga', $date);
 
-        if($stmt->execute()){
-            $response['success'] = "Post publicado correctamente";
-        }else{
-            $response['error'] = "No ha sido posible publicar el post";
+            if($stmt->execute()){
+                $response['success'] = "Post publicado correctamente";
+            }else{
+                $response['error'] = "No ha sido posible publicar el post";
+            }
         }
     }
 }
@@ -72,4 +86,3 @@ if(isset($_FILES['files'])){
 // Devolver la respuesta como JSON
 header('Content-Type: application/json');
 echo json_encode($response);
-?>
