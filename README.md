@@ -7,6 +7,7 @@ Porteado a `Jquery 3.7.1` por **José Ramírez**, **Lucas Noguera** Y **Danny Ay
 ## Contribuidores del proyecto
 - [José Ramírez](https://github.com/kuuukooo)
 - [Lucas Noguera](https://github.com/LucasGabrielNogueraGozlez)
-- [Danny Ayala]((https://github.com/DannyAyalaM)https://github.com/DannyAyalaM)
-## Imágenes Preview de la Galería
-![Imágen de Como se ve el menú principal de la Galeria](assets/GaleriaPreview.png)
+- [Danny Ayala](https://github.com/DannyAyalaM)
+## Preview de la Galería
+![Imágen de como se ve el menú principal de la Galeria](assets/GaleriaPreview.png)
+
