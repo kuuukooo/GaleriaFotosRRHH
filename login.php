@@ -33,7 +33,7 @@
     <div class="login-content">
         <div class="content">
             <form method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?>">  
-                <a href='https://postimg.cc/Wh7nVG7P' target='_blank'><img src='https://i.postimg.cc/Wh7nVG7P/vierci-removebg-preview.png' border='0' class="avatar" alt='vierci-removebg-preview'/></a>
+                <img class="LogoVierci" src="logovierci.png"></img>
                 <h1 class="title">BIENVENIDO</h1>
                 <?php
                     if (isset($_SESSION["mensaje"])) {

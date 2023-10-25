@@ -126,6 +126,12 @@ color: white;
     right: 0;
     z-index: 1000; /* Adjust the z-index as needed */
 }
+
+/*Logo Vierci de la pagina de login*/
+.LogoVierci {
+  width: 60%;
+  height: 60%;
+}
 /* Add media queries for adjusting padding and margins */
 @media (max-width: 768px) {
   .login-content {
