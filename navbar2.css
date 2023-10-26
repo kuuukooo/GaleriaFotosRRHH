@@ -314,3 +314,13 @@ body.dark .home .text{
 .menu-links {
     padding-left: 0;
 }
+
+/*css para que cuando se vea en teléfonos celulares la navbar se despliegue a pantalla completa */
+@media only screen and (max-width: 600px){
+    .sidebar {
+      width: 100%;
+    }
+    .main-content{
+        margin-left: 0px !important;
+    }
+  }

@@ -113,25 +113,36 @@ resize: none;
         background-repeat: no-repeat;
         background-position: center center;
 }
-        
-/* Mostrar el botón con texto "Publicar" en resoluciones mayores a 450x950 */
-@media (min-width: 451px) and (min-height <=951px) {
-        .btn-text {
-                display: block;
-        }
+
+/* CSS para el botón de subir imágenes */
+#LabelElegirImagenes i {
+        display: none;
       }
-@media (max-width: 480px) {
-        .textos-bienv-sesion {
-          display: none;
+
+/* Versión para celulares */
+
+@media only screen and (max-width: 600px){
+         #btn-new-post-photo{
+                width: 25%;
         }
-      }
-      /* Mostrar el botón con ícono SVG en resoluciones menores o iguales a 450x950 */
-@media (max-width: 450px) or (max-height: 950px) {
-        .btn-icon {
-                display: block;
-        }
-        /* Ocultar el botón con texto "Publicar" */
-        .btn-text {
+        #LabelElegirImagenes i {
+                display: inline;
+                border: 1px solid #0d6efd; 
+                border-radius: 4px;
+                position: relative;
+                top: 15%;
+                background: #0d6efd;
+                color: white;
+                padding: 0.3rem 1rem;
+              }
+        #InputElegirImagenes {
                 display: none;
+        }        
+}
+/* Media Query Para dispositivos menores a 480px */
+@media only screen and (max-width: 480px){
+        #btn-new-post-photo{
+                width: 25%;
         }
-      }
+}
+/* Agregar Media Query para dispositivos mas grandes como 1200px y 1000px */
