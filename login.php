@@ -14,8 +14,8 @@
 
 <body>
     <?php
-    include('conexion_bd.php'); // Retrocede un nivel para acceder a la carpeta principal
-    include('controlador.php'); // Retrocede un nivel para acceder a la carpeta principal
+    include('conexion_bd.php'); 
+    include('controlador.php'); 
     ?>        
 <div class="Switch">      
     <div class="position-absolute top-0 end-0">
