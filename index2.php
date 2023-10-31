@@ -159,7 +159,7 @@ $stmt->execute();
                         <?php unset($_SESSION['success']);
                         } ?>
                         <form id="uploadForm" action="controllers/new-post-photo.php" method="POST" enctype="multipart/form-data">
-                            <h5 class="mb-3">Elige tu foto o fotos y añade una descripción</h5>
+                            <h5 class="mb-3">Elige tu foto y añade una descripción</h5>
                             <div class="d-flex justify-content-between">
                                 <input type="file"id="InputElegirImagenes" class="form-control mb-3" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg" style="width: 40%" required>
                                 <!-- Se agregó un label para ocultar el botón de Elegir imágenes en dispositivos móviles -->

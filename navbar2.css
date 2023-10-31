@@ -20,13 +20,13 @@
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
     --tran-04: all 0.3s ease;
-    --tran-05: all 0.3s ease;
+    --tran-05: all 0.3s ease; 
 }
 
 body{
     min-height: 100vh;
     background-color: var(--body-color);
-    transition: var(--tran-05);
+    transition: var(--tran-05); 
 }
 
 ::selection{
@@ -322,5 +322,9 @@ body.dark .home .text{
     }
     .main-content{
         margin-left: 0px !important;
+    }
+    .sidebar header .toggle {
+        height: 2rem;
+        width: 2rem;  
     }
   }
