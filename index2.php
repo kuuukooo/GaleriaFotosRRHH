@@ -21,23 +21,6 @@ if ($stmt->rowCount() > 0) {
 } else {
     $nombre_usuario = "Usuario desconocido";
 }
-
-$por_pagina = 12;
-$pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-
-// Ajustamos la lógica para obtener el valor de $empieza
-if ($pagina_actual > 1) {
-    $empieza = ($pagina_actual - 1) * $por_pagina;
-} else {
-    $empieza = 0;
-}
-
-// Usamos una variable adicional para llevar registro de la página actual
-$pagina_mostrada = $pagina_actual;
-
-$query = "SELECT * FROM imagenes_sueltas ORDER BY id_imagen DESC LIMIT " . intval($empieza) . ", $por_pagina";
-$stmt = $conn->prepare($query);
-$stmt->execute();
 ?>
 <!-- Inicio del Html -->
 <!DOCTYPE html>
