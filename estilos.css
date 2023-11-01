@@ -50,44 +50,44 @@
         padding: .2rem;
 }
  .btn-edit-description  {
-color: gray;
-background-color: transparent;
+        color: gray;
+        background-color: transparent;
  } 
 .delete-button {
-border: thin;
-background-color: transparent;  
+        border: thin;
+        background-color: transparent;  
 }
 .card-body {
-position: relative;
+        position: relative;
 /* Otros estilos para el contenedor de la descripción */
 }
 
 .bi-trash3{
- color: red ;
- margin-left: 3px;
+        color: red ;
+        margin-left: 3px;
 }
 
 .bi-pencil-square{
-margin-left: 3px;
+        margin-left: 3px;
 }
 
 .bi-download{
-color: green ;
-margin-left: 3px;
+        color: green ;
+        margin-left: 3px;
 }      
 .original-description {
         display: block; /* O utiliza 'none' para ocultar por defecto */
-    }
+}
     
     /* Agrega esta regla para ocultar la descripción original cuando el description-edit-container está visible */
-    .description-edit-container.visible .original-description {
+.description-edit-container.visible .original-description {
         display: none;
-    }
-    .btn-edit-description{
+}
+.btn-edit-description{
         border: thin;
-    }
+        }
 .form-control {
-resize: none;
+        resize: none;
 }
 /* CSS para las imágenes */
 .carousel-inner img {
