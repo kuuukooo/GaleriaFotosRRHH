@@ -139,6 +139,9 @@
                 display: none;
         }    
         /* CSS para sacar el padding right de los modal fade */
+        /* Se pusieron todas las variables entre comas para hacer el código más legible.
+        .modal.fade corresponde a cuando el modal se está cerrando, .modal.fade.show corresponde
+        a cuando el modal se muestra y .modal-open corresponde a cuando el modal está abierto. */
         .modal.fade,
         .modal.fade.show,
         .modal-open {
