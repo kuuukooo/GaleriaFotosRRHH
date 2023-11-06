@@ -41,8 +41,8 @@ if ($stmt->rowCount() > 0) {
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="estilos.css"></link>
-    <link rel="stylesheet" type="text/css" href="navbar2.css"></link>
+    <link rel="stylesheet" type="text/css" href="estilos.css">
+    <link rel="stylesheet" type="text/css" href="navbar2.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
@@ -170,7 +170,7 @@ if ($stmt->rowCount() > 0) {
 <!-- Script de Botones -->
 
 <script src="imagenesDinámicas.js"></script>
-<script src="DarkModeYPaginacion.js"></script>
+<script src="DarkMode.js"></script>
 <script src="descarga_imágenes.js"></script>
 <script src="eliminar_imagen.js"></script>
 <script src="navbar2.js"></script>
