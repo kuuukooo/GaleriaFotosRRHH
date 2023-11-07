@@ -113,7 +113,11 @@
         background-repeat: no-repeat;
         background-position: center center;
 }
-
+.card-body.dark,
+.modal-body.dark{
+        background-color: #18191a !important;
+        color: #fff;
+}
 /* CSS para el botón de subir imágenes */
 #LabelElegirImagenes i {
         display: none;

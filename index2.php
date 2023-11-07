@@ -55,7 +55,8 @@ if ($stmt->rowCount() > 0) {
             <header>
                 <div class="image-text">
                     <span class="image">
-                        <img src="logovierciazul.svg" alt="LogoVierci">
+                        <img src="logovierciazul.svg" alt="LogoVierci" class="LogoVierciAzul">
+                        <img src="logovierciblanco.svg" alt="LogoVierciBlanco" class="LogoVierciBlanco" style="display: none;">
                     </span>
 
                     <div class="text logo-text">
@@ -170,7 +171,6 @@ if ($stmt->rowCount() > 0) {
 <!-- Script de Botones -->
 
 <script src="imagenesDinámicas.js"></script>
-<script src="DarkMode.js"></script>
 <script src="descarga_imágenes.js"></script>
 <script src="eliminar_imagen.js"></script>
 <script src="navbar2.js"></script>
