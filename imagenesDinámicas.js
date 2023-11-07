@@ -199,7 +199,10 @@ $(document).ready(function() {
                 console.log("Botón de eliminar correctamente activado");
 
                 // Llama a la función para adjuntar el manejador de eventos
-                GuardarAJAX(); 
+                GuardarDescripcionAJAX(); 
+
+                //Activa y desactiva el modo oscuro en la página
+                ModoOscuro();
             },
                 error: function(error) {
                     console.error("Error en la solicitud AJAX:", error);
@@ -211,6 +214,84 @@ $(document).ready(function() {
     // Cargar imágenes y activar edición en el documento listo
     cargarImagenesYActivarEdicion(1);  
 
+
+//Función para el modo oscuro de la página
+function ModoOscuro() {
+            $(document).ready(function() {
+                // Función para guardar el estado del modo en una cookie
+                function saveDarkModeStateToCookie(isDarkMode) {
+                    document.cookie = `darkMode=${isDarkMode}; expires=Fri, 31 Dec 2024 23:59:59 GMT; path=/`;
+                }
+            
+                // Función para cargar el estado del modo desde la cookie
+                function loadDarkModeStateFromCookie() {
+                    const cookies = document.cookie.split(';');
+                    for (const cookie of cookies) {
+                        const [name, value] = cookie.trim().split('=');
+                        if (name === 'darkMode') {
+                            return value === 'true';
+                        }
+                    }
+                    return false;
+                }
+            
+                // Función para habilitar el modo oscuro
+                function enableDarkMode() {
+                    console.log("Modo oscuro activado");
+                    $("body").addClass("dark");
+                    $(".card-body").addClass("dark");
+                    $(".modal-body").addClass("dark");
+                    $(".mode-text").text("Modo Oscuro");
+                    $(".LogoVierciBlanco").css("display", "block");
+                    $(".LogoVierciAzul").css("display", "none");
+                }
+            
+                // Función para deshabilitar el modo oscuro
+                function disableDarkMode() {
+                    console.log("Modo oscuro desactivado");
+                    $("body").removeClass("dark");
+                    $(".card-body").removeClass("dark");
+                    $(".modal-body").removeClass("dark");
+                    $(".mode-text").text("Modo Claro");
+                    $(".LogoVierciBlanco").css("display", "none");
+                    $(".LogoVierciAzul").css("display", "block");
+                }
+            
+                // Cargar el estado del modo al cargar la página
+                const isDarkMode = loadDarkModeStateFromCookie();
+                if (isDarkMode) {
+                    enableDarkMode();
+                } else {
+                    disableDarkMode();
+                }
+            
+                // Manejar el cambio de modo
+                $(document).on('click', '#darkModeSwitch', function() {
+                    const isDarkMode = $("body").hasClass("dark");
+                    if (isDarkMode) {
+                        // Desactivar el modo oscuro
+                        disableDarkMode();
+                    } else {
+                        // Activar el modo oscuro
+                        enableDarkMode();
+                    }
+                    // Guardar el estado del modo en una cookie
+                    saveDarkModeStateToCookie(!isDarkMode);
+                });
+                $(document).off('click', '#darkModeSwitch').on('click', '#darkModeSwitch', function() {
+                    const isDarkMode = $("body").hasClass("dark");
+                    if (isDarkMode) {
+                        // Desactivar el modo oscuro
+                        disableDarkMode();
+                    } else {
+                        // Activar el modo oscuro
+                        enableDarkMode();
+                    }
+                    // Guardar el estado del modo en una cookie
+                    saveDarkModeStateToCookie(!isDarkMode);
+                });
+            });
+}
 // Controlador de la carga de imágenes
 $(document).ready(function () {
     //la función se ejecuta cuando se hace click en el botón de cargar imágenes
@@ -324,7 +405,7 @@ $("#search-form").on("submit", function(e) {
         }
     });
 }
-function GuardarAJAX() {
+function GuardarDescripcionAJAX() {
     $(document).ready(function() {
     $('body').on('click', '#guardar-btn', function(event) {
     event.preventDefault(); // Evitar que el formulario se envíe automáticamente
