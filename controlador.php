@@ -19,13 +19,35 @@ if (!empty($_POST["btningresar"])) {
         if ($sql->fetch()) {
             // Autenticación exitosa
             $_SESSION["user_id"] = $user_id; // Almacena el ID del usuario en la sesión
-            header("location:index2.php");
-            exit();
+        
+            // Realiza una consulta adicional para obtener el tipo de usuario
+            $sql->close(); // Cierra la consulta anterior
+            $sql = $conex->prepare("SELECT tipo_usuario FROM usuarios WHERE id_usuario=?");
+            $sql->bind_param("i", $user_id);
+            $sql->execute();
+            $sql->bind_result($tipo_usuario);
+        
+            if ($sql->fetch()) {
+                $_SESSION["tipo_usuario"] = $tipo_usuario;
+        
+                // Almacena el tipo de usuario en una cookie
+                setcookie("tipo_usuario", $tipo_usuario, time() + (86400 * 30), "/"); // Caduca en 30 días
+        
+                switch ($tipo_usuario) {
+                    case "Admin":
+                        header("Location: index2.php");
+                        break;
+                    case "Usuario":
+                        header("Location: index2.php");
+                        break;
+                    default:
+                        header("Location: index2.php"); 
+                        break;
+                }
+            }
         } else {
             $_SESSION["mensaje"] = 'Acceso Denegado';
-        }
+            header("location:login.php");
+        }          
     }
-    header("location:login.php");
-    exit();
-}
-?>
+}?>
