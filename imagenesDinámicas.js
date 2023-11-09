@@ -197,10 +197,7 @@ $(document).ready(function() {
                 //activar el botón de eliminar
                 BotonEliminar();
                 console.log("Botón de eliminar correctamente activado");
-
-                // Llama a la función para adjuntar el manejador de eventos
-                GuardarDescripcionAJAX(); 
-
+                
                 //Activa y desactiva el modo oscuro en la página
                 ModoOscuro();
             },
@@ -213,7 +210,8 @@ $(document).ready(function() {
 
     // Cargar imágenes y activar edición en el documento listo
     cargarImagenesYActivarEdicion(1);  
-
+    // Llama a la función para adjuntar el manejador de eventos
+    GuardarDescripcionAJAX(); 
 
 //Función para el modo oscuro de la página
 function ModoOscuro() {
@@ -407,56 +405,57 @@ $("#search-form").on("submit", function(e) {
 }
 function GuardarDescripcionAJAX() {
     $(document).ready(function() {
-    $('body').on('click', '#guardar-btn', function(event) {
-    event.preventDefault(); // Evitar que el formulario se envíe automáticamente
-
-    // Obtener los valores del formulario
-    var form = $(this).closest('form');
-    var newDescription = form.find('textarea[name="new-description"]').val();
-    var imageId = form.find('input[name="id_imagen"]').val();
-    var paginaActual = form.find('input[name="pagina_actual"]').val();
-
-    console.log('newDescription:', newDescription);
-    console.log('imageId:', imageId);
-    console.log('paginaActual:', paginaActual);
-
-    // Realizar la solicitud AJAX
-    $.ajax({
-        url: 'editar-descripcion.php',
-        type: 'POST',
-        data: {
-            'new-description': newDescription,
-            'id_imagen': imageId,
-            'pagina_actual': paginaActual
-        },
-        dataType: 'json',
-        success: function (response) {
-            if (response.status === 'success') {
-                // Actualiza la descripción en la página sin recargarla
-                var originalDescription = form.closest('.card-body').find('.original-description');
-                originalDescription.text(newDescription);
-
-                // Restaura la visibilidad de la descripción original y los botones
-                form.closest('.description-edit-container').hide();
-                originalDescription.show();
-                form.closest('.card-body').find('.botones-utilidades').show();
-
-                // Muestra un mensaje de éxito
-                alert(response.message);
-            } else {
-                // Muestra un mensaje de error
-                alert(response.message);
-            }
-        },
-        error: function (xhr, status, error) {
-            console.log('Error en la solicitud AJAX:');
-            console.log('xhr:', xhr);
-            console.log('Status:', status);
-            console.log('Error:', error);
-            }
+        // Agregar el controlador de eventos una vez en el documento listo
+        $('body').on('click', '#guardar-btn', function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe automáticamente
+    
+            // Obtener los valores del formulario
+            var form = $(this).closest('form');
+            var newDescription = form.find('textarea[name="new-description"]').val();
+            var imageId = form.find('input[name="id_imagen"]').val();
+            var paginaActual = form.find('input[name="pagina_actual"]').val();
+    
+            console.log('newDescription:', newDescription);
+            console.log('imageId:', imageId);
+            console.log('paginaActual:', paginaActual);
+    
+            // Realizar la solicitud AJAX
+            $.ajax({
+                url: 'editar-descripcion.php',
+                type: 'POST',
+                data: {
+                    'new-description': newDescription,
+                    'id_imagen': imageId,
+                    'pagina_actual': paginaActual
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        // Actualiza la descripción en la página sin recargarla
+                        var originalDescription = form.closest('.card-body').find('.original-description');
+                        originalDescription.text(newDescription);
+    
+                        // Restaura la visibilidad de la descripción original y los botones
+                        form.closest('.description-edit-container').hide();
+                        originalDescription.show();
+                        form.closest('.card-body').find('.botones-utilidades').show();
+    
+                        // Muestra un mensaje de éxito
+                        alert(response.message);
+                    } else {
+                        // Muestra un mensaje de error
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Error en la solicitud AJAX:');
+                    console.log('xhr:', xhr);
+                    console.log('Status:', status);
+                    console.log('Error:', error);
+                }
+            });
         });
-    });
-});
+    });    
 //Eventos para la edicición de la descripción
 $(document).ready(function() {
     $(document).on("click", ".btn-edit-description", function() {
