@@ -150,7 +150,7 @@ if ($stmt->rowCount() > 0) {
                                 <label for="InputElegirImagenes" id="LabelElegirImagenes">
                                     <i class="bi bi-images fa-lg"></i>
                                 </label>
-                                <textarea name="description" id="description" rows="1" class="form-control mb-3 mx-3" style="resize: none;" placeholder="Añade una descripción" required></textarea>
+                                <textarea name="description" id="description" rows="1" class="form-control mb-3 mx-3" style="resize: none;" placeholder="Descripción..." required></textarea>
                                 <button class="btn btn-primary mb-3" type="button" name="btn-new-post-photo-no-icon" id="btn-new-post-photo"><i class="bi bi-upload"></i></button>
                             </div>
                         </form>
