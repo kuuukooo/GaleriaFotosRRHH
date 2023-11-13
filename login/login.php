@@ -14,7 +14,7 @@
 
 <body>
     <?php
-    include("controlador.php");
+    require("../controlador.php");
     ?>        
 <div class="Switch">      
     <div class="position-absolute top-0 end-0">

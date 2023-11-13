@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-require "./database/database.php";
+require __DIR__ . "/database/database.php";
+
 
 if (!empty($_POST["btningresar"])) {
     if (empty($_POST["usuario"]) || empty($_POST["password"])) {
@@ -42,24 +43,24 @@ if (!empty($_POST["btningresar"])) {
             
                     switch ($tipo_usuario) {
                         case "Admin":
-                            header("Location: index2.php");
+                            header("Location: ../index2.php");
                             break;
                         case "Usuario":
-                            header("Location: index2.php");
+                            header("Location: ../index2.php");
                             break;
                         default:
-                            header("Location: index2.php"); 
+                            header("Location: ../index2.php"); 
                             break;
                     }
                 }
             } else {
                 $_SESSION["mensaje"] = 'Acceso Denegado';
-                header("location:login.php");
+                header("location: login.php");
             }
         } catch (PDOException $e) {
             $_SESSION["mensaje"] = 'Error en la conexión a la base de datos';
             // Manejo del error (puedes redirigir a una página de error o hacer lo que consideres apropiado)
-            header("location:login.php");
+            header("location: login.php");
         }
     }
 }
