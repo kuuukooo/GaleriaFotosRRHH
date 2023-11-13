@@ -1,9 +1,10 @@
 <?php
 require "./database/database.php";
 
+
 // Obtener el número de página desde la solicitud AJAX
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
-$por_pagina = 12; // Cantidad de imágenes por página
+$por_pagina =  9; // Cantidad de imágenes por página
 
 // Calcula el inicio y fin para la consulta SQL
 $inicio = ($pagina - 1) * $por_pagina;
@@ -30,6 +31,21 @@ while ($post = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $imagenes[] = $imagen;
 }
 
-// Retorna los datos de las imágenes en formato JSON
-echo json_encode($imagenes);
+// Obtener el número total de imágenes
+$queryTotal = "SELECT COUNT(*) as total FROM imagenes_sueltas";
+$stmtTotal = $conn->prepare($queryTotal);
+$stmtTotal->execute();
+$total = $stmtTotal->fetch(PDO::FETCH_ASSOC)['total'];
+
+// Calcular el número total de páginas
+$totalPaginas = ceil($total / $por_pagina);
+
+// Crear un array que incluya las imágenes y el número total de páginas
+$respuesta = array(
+    'imagenes' => $imagenes,
+    'totalPaginas' => $totalPaginas
+);
+
+// Retorna los datos de las imágenes y el número total de páginas en formato JSON
+echo json_encode($respuesta);
 ?>
