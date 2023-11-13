@@ -8,5 +8,5 @@ $stmt->execute();
 while($row = $results = $stmt->fetch(PDO::FETCH_ASSOC)){
     array_push($posts, $row);
 }
-
+//Cambios revisados con el otro repo.
 ?>

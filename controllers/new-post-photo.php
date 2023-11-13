@@ -67,6 +67,9 @@ if(isset($_FILES['files'])){
         if(!isset($response['error'])){
             $imagesList = implode(",", $images);
 
+            if($description != ''){
+                // Aquí puedes insertar los datos en la base de datos
+                
             $sql = 'INSERT INTO imagenes_sueltas (imagen, descripcion, fecha_carga) VALUES (:imagen, :descripcion, :fecha_carga)';
             $stmt = $conn->prepare($sql);
 
@@ -78,6 +81,10 @@ if(isset($_FILES['files'])){
                 $response['success'] = "Post publicado correctamente";
             }else{
                 $response['error'] = "No ha sido posible publicar el post";
+            }
+            } else {
+                // La descripción está vacía, por lo que no se pueden insertar los datos
+                $response['error'] = "La descripción es obligatoria";
             }
         }
     }
