@@ -3,19 +3,26 @@ $(document).ready(function() {
 
     // Función para cargar las imágenes y luego activar la edición
     function cargarImagenesYActivarEdicion(pagina) {
-        console.log("Solicitando imágenes para la página: " + pagina);
+        var container = $("#image-container"); // El contenedor de imágenes
+        container.empty(); // Vacía el contenedor antes de cargar nuevas imágenes
+    
         $.ajax({
-            url: "cargar_imagenes.php",
-            method: "GET",
-            data: {
-                pagina: pagina
-            },
+            type: "GET",
+            url: "cargar_Imagenes.php?pagina=" + pagina,
             dataType: "json",
-            success: function(data) {
-                console.log("Respuesta exitosa de la solicitud AJAX:", data);
+            success: function (data) {
+                container.empty();
+                // Procesa los datos recibidos y agrega las imágenes al contenedor
+                // for (var i = 0; i < data.imagenes.length; i++) {
+                //     var imagen = data.imagenes[i];
+                //     var imageElement = $("<img src='" + imagen.imagenes[0] + "' alt='" + imagen.descripcion + "'>");
+                //     container.append(imageElement);
+                // }
+
+                generarBotonesPaginacion(data.totalPaginas, pagina);
 
                 // Create a new carousel item for each image uploaded
-                data.forEach(function(imagen) {
+                data.imagenes.forEach(function(imagen) {
                     // Create a new element .col and .card with jQuery
                     var colCardContainer = $('<div>');
                     colCardContainer.addClass('col');
@@ -207,11 +214,61 @@ $(document).ready(function() {
                 }
         });
     }
+    //Paginación
+    function generarBotonesPaginacion(totalPaginas, paginaActual) {
+        var paginationContainer = $("#pagination-container");
+        var paginationList = paginationContainer.find("ul.pagination");
+        paginationList.empty();
+    
+        var prevButton = $("<li class='page-item'><a class='page-link' href='#'><-</a></li>");
+        prevButton.click(function (event) {
+            event.preventDefault();
+            if (paginaActual > 1) {
+                cargarImagenesYActivarEdicion(paginaActual - 1);
+            }
+        });
+    
+        var nextButton = $("<li class='page-item'><a class='page-link' href='#'>-></a></li>");
+        nextButton.click(function (event) {
+            event.preventDefault();
+            if (paginaActual < totalPaginas) {
+                cargarImagenesYActivarEdicion(paginaActual + 1);
+            }
+        });
+    
+        paginationList.append(prevButton);
+    
+        // Calcula el rango de páginas a mostrar (máximo 5 páginas)
+        var startPage = Math.max(1, paginaActual - 2);
+        var endPage = Math.min(startPage + 4, totalPaginas);
+    
+        for (var i = startPage; i <= endPage; i++) {
+            var pageButton = $("<li class='page-item'><a class='page-link' href='#'>" + i + "</a></li>");
+    
+            if (i === paginaActual) {
+                pageButton.addClass("active");
+            }
+    
+            pageButton.click(function (event) {
+                event.preventDefault();
+                var newPage = parseInt($(this).text());
+                cargarImagenesYActivarEdicion(newPage);
+                history.pushState({}, "", "index2.php?page=" + newPage);
+            });
+    
+            paginationList.append(pageButton);
+        }
+    
+        paginationList.append(nextButton);
+    }
+    
 
-    // Cargar imágenes y activar edición en el documento listo
+    // Llamada inicial para generar la paginación
     cargarImagenesYActivarEdicion(1);  
+
     // Llama a la función para adjuntar el manejador de eventos
-    GuardarDescripcionAJAX(); 
+     GuardarDescripcionAJAX(); 
+
 
 //Función para el modo oscuro de la página
 function ModoOscuro() {
@@ -338,8 +395,49 @@ $(document).ready(function () {
         });
     });
 });
-});
 
+ //Función BotonEliminar
+ function BotonEliminar() {
+    $(".delete-button").click(function(event) {
+        event.preventDefault();
+
+        const paginaActual = parseInt($('.page-item.active .page-link').text()); // Captura la página actual
+
+        const imageId = $(this).data("image-id");
+        const confirmacion = confirm("¿Quieres eliminar la imagen?");
+
+        if (confirmacion) {
+            $.ajax({
+                url: "eliminar-imagen.php",
+                method: "POST",
+                data: { id_imagen: imageId },
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+                        $(`#col${imageId}`).remove(); // Elimina la imagen
+
+                        // Recalcular la página actual después de eliminar
+
+                        const newPage = Math.min(paginaActual);
+
+                        // Volver a cargar la página correspondiente a la imagen eliminada
+                        cargarImagenesYActivarEdicion(newPage);
+
+                        setTimeout(function () {
+                            alert("Imagen Eliminada Exitosamente.");
+                        }, 100);
+                    } else {
+                        alert("Error al eliminar la imagen: " + response.error);
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+}
+});
 // Manejar la búsqueda
 $("#search-form").on("submit", function(e) {
     e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
@@ -363,46 +461,6 @@ $("#search-form").on("submit", function(e) {
     }
 });
 
-
-    //Función BotonEliminar
-    function BotonEliminar() {
-    $(".delete-button").click(function(event) {
-        event.preventDefault(); // Evitar que el enlace navegue a otra página
-
-        const imageId = $(this).data("image-id");
-
-        // Mostrar una alerta de confirmación
-        const confirmacion = confirm("¿Quieres eliminar la imagen?");
-
-        if (confirmacion) {
-            $.ajax({
-                url: "eliminar-imagen.php",
-                method: "POST",
-                data: { id_imagen: imageId },
-                dataType: "json",
-                success: function(response) {
-                    if (response.success) {
-                        // Ocultar tanto el image-container como el card-body específicos
-                        $(`#col${imageId}`).remove();
-                        
-                        // Eliminación exitosa, puedes mostrar un mensaje de éxito en la página
-                        //Añadido un delay pequeño para que deje mostrar que se eliminó la foto
-                        setTimeout(function () {
-                            alert("Imágen Eliminada Exitosamente.");
-                        }, 100);
-                    } else {
-                        // Error al eliminar, puedes mostrar un mensaje de error en la página
-                        alert("Error al eliminar la imagen: " + response.error);
-                    }
-                },
-                error: function(error) {
-                    // Manejar errores de la solicitud AJAX aquí
-                    console.log(error);
-                }
-            });
-        }
-    });
-}
 function GuardarDescripcionAJAX() {
     $(document).ready(function() {
         // Agregar el controlador de eventos una vez en el documento listo
