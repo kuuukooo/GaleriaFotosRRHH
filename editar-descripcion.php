@@ -1,14 +1,20 @@
 <?php
 session_start();
-require "./database/database.php"; // Asegúrate de incluir tu archivo de conexión a la base de datos
+require "./database/database.php";
 
-$response = []; // Inicializar una respuesta vacía
+$response = [];
 
 if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_POST['pagina_actual']) && $_POST['new-description'] != '') {
     $newDescription = $_POST['new-description'];
     $imageId = $_POST['id_imagen'];
 
     try {
+        // Crea una instancia de la clase Database
+        $database = new Database();
+
+        // Obtiene la conexión
+        $conn = $database->getConnection();
+
         // Actualiza la descripción en la base de datos utilizando PDO
         $updateQuery = "UPDATE imagenes_sueltas SET descripcion = :newDescription WHERE id_imagen = :imageId";
         $stmt = $conn->prepare($updateQuery);
@@ -30,7 +36,6 @@ if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_PO
     $response['message'] = "Falta información para editar la descripción.";
 }
 
-
 header("Content-Type: application/json");
 echo json_encode($response);
-
+?>

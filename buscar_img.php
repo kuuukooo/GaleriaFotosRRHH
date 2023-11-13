@@ -1,10 +1,5 @@
 <?php
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = 'galeria';
-
-$conn = new mysqli($servername, $username, $password, $dbname);
+require "./database/database.php";
 
 if ($conn->connect_error) {
     die("Conexión a la base de datos fallida: " . $conn->connect_error);

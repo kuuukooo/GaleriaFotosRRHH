@@ -1,6 +1,14 @@
 <?php
 require "./database/database.php";
 
+// Crea una instancia de la clase Database
+$database = new Database();
+
+// Obtiene la conexión
+$conn = $database->getConnection();
+
+
+
 
 // Obtener el número de página desde la solicitud AJAX
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;

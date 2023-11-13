@@ -14,7 +14,6 @@
 
 <body>
     <?php
-    include("conexion_bd.php");
     include("controlador.php");
     ?>        
 <div class="Switch">      
