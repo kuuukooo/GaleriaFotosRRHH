@@ -4,7 +4,7 @@ require "./database/database.php"; // Asegúrate de incluir tu archivo de conexi
 
 $response = []; // Inicializar una respuesta vacía
 
-if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_POST['pagina_actual'])) {
+if (isset($_POST['new-description']) && isset($_POST['id_imagen']) && isset($_POST['pagina_actual']) && $_POST['new-description'] != '') {
     $newDescription = $_POST['new-description'];
     $imageId = $_POST['id_imagen'];
 
