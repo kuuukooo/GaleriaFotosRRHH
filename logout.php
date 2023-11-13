@@ -9,4 +9,5 @@ session_destroy();
 
 header('Location: login.php'); // Redirige al usuario a la página de inicio de sesión
 exit();
+//Código comparado con el repo de Lucas.
 ?>

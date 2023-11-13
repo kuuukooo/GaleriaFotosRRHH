@@ -118,3 +118,4 @@
 
   setup();
 })();
+//Código comparado con el de Lucas, este toggle sirve para el dark mode del Login.

@@ -37,4 +37,5 @@ if (isset($_POST['search'])) {
 
 // Cerrar la conexión a la base de datos
 $conn->close();
+//Cambios revisados con el repo de Lucas.
 ?>

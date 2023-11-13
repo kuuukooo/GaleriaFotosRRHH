@@ -14,8 +14,8 @@
 
 <body>
     <?php
-    include('conexion_bd.php'); 
-    include('controlador.php'); 
+    include("conexion_bd.php");
+    include("controlador.php");
     ?>        
 <div class="Switch">      
     <div class="position-absolute top-0 end-0">
@@ -33,7 +33,7 @@
     <div class="login-content">
         <div class="content">
             <form method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?>">  
-                <img class="LogoVierci" src="logovierci.png"></img>
+                <a href='https://postimg.cc/Wh7nVG7P' target='_blank'><img src='https://i.postimg.cc/Wh7nVG7P/vierci-removebg-preview.png' border='0' class="avatar" alt='vierci-removebg-preview'/></a>
                 <h1 class="title">BIENVENIDO</h1>
                 <?php
                     if (isset($_SESSION["mensaje"])) {
@@ -57,3 +57,4 @@
     </div>
 </body>
 </html>
+<!-- Código comparado con el repo de Lucas. -->

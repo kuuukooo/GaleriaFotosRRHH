@@ -79,3 +79,4 @@ document.addEventListener("DOMContentLoaded", function() {
   // Observar cambios en la barra lateral y actualizar la cookie en tiempo real
   observeSidebarChanges();
 });
+//Código comparado con el de Lucas.

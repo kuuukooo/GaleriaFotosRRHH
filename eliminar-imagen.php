@@ -39,4 +39,5 @@ if (isset($_POST['id_imagen'])) {
 }
 header("Content-Type: application/json");
 echo json_encode($response);
+//Código revisado con el de Lucas.
 ?>
