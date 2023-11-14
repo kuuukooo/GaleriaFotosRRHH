@@ -1,36 +1,42 @@
 <?php
 require "./database/database.php";
 
-if ($conn->connect_error) {
-    die("Conexión a la base de datos fallida: " . $conn->connect_error);
-}
+try {
+    // Crea una instancia de la clase Database
+    $database = new Database();
 
-// Obtener el término de búsqueda enviado desde el formulario
-if (isset($_POST['search'])) {
-    $searchTerm = $_POST['search'];
+    // Obtiene la conexión
+    $conn = $database->getConnection();
 
-    // Consulta SQL para buscar una imagen por descripción
-    $sql = "SELECT id_imagen, descripcion FROM imagenes_sueltas WHERE descripcion LIKE '%" . $searchTerm . "%'";
-    $result = $conn->query($sql);
+    // Obtener el término de búsqueda enviado desde el formulario
+    if (isset($_POST['search'])) {
+        $searchTerm = $_POST['search'];
 
-    if ($result->num_rows > 0) {
-        // Si se encontró una imagen que coincide con la búsqueda, enviar los datos de esa imagen como respuesta JSON
-        $row = $result->fetch_assoc();
-        $response = array(
-            'id_imagen' => $row['id_imagen'],
-            'descripcion' => $row['descripcion'],
-        );
-        echo json_encode($response);
+        // Consulta SQL para buscar una imagen por descripción
+        $sql = "SELECT id_imagen, descripcion FROM imagenes_sueltas WHERE descripcion LIKE '%" . $searchTerm . "%'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // Obtener los resultados de la consulta
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+            // Si se encontró una imagen que coincide con la búsqueda, enviar los datos de esa imagen como respuesta JSON
+            $response = array(
+                'id_imagen' => $result[0]['id_imagen'],
+                'descripcion' => $result[0]['descripcion'],
+            );
+            echo json_encode($response);
+        } else {
+            // Si no se encontraron resultados
+            echo json_encode(array('error' => 'No se encontraron imágenes que coincidan con la búsqueda.'));
+        }
     } else {
-        // Si no se encontraron resultados
-        echo json_encode(array('error' => 'No se encontraron imágenes que coincidan con la búsqueda.'));
+        // Si no se envió un término de búsqueda válido
+        echo json_encode(array('error' => 'Por favor, ingrese un término de búsqueda válido.'));
     }
-} else {
-    // Si no se envió un término de búsqueda válido
-    echo json_encode(array('error' => 'Por favor, ingrese un término de búsqueda válido.'));
+} catch (PDOException $e) {
+    // Manejo de errores en la conexión a la base de datos
+    echo json_encode(array('error' => 'Error en la conexión a la base de datos: ' . $e->getMessage()));
 }
-
-// Cerrar la conexión a la base de datos
-$conn->close();
-//Cambios revisados con el repo de Lucas.
 ?>
