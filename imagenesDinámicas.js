@@ -12,12 +12,6 @@ $(document).ready(function() {
             dataType: "json",
             success: function (data) {
                 container.empty();
-                // Procesa los datos recibidos y agrega las imágenes al contenedor
-                // for (var i = 0; i < data.imagenes.length; i++) {
-                //     var imagen = data.imagenes[i];
-                //     var imageElement = $("<img src='" + imagen.imagenes[0] + "' alt='" + imagen.descripcion + "'>");
-                //     container.append(imageElement);
-                // }
 
                 generarBotonesPaginacion(data.totalPaginas, pagina);
 
