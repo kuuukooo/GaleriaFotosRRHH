@@ -104,7 +104,7 @@ $stmt->execute();
                         </li>
 
                         <li class="nav-link">
-                            <a href="./admin_albums.php">
+                            <a href="Albums/admin_albums.php">
                                 <i class='bx bx-photo-album icon'></i>
                                 <span class="text nav-text">Albumes</span>
                             </a>
