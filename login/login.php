@@ -14,7 +14,7 @@
 
 <body>
     <?php
-    require("../controlador.php");
+    require("controladorLogin.php");
     ?>        
 <div class="Switch">      
     <div class="position-absolute top-0 end-0">

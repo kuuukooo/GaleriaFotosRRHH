@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-require __DIR__ . "/database/database.php";
+require "../database/database.php";
+
 
 
 if (!empty($_POST["btningresar"])) {
