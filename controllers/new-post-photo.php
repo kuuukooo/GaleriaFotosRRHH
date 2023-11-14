@@ -71,26 +71,35 @@ try {
                 }
             }
 
-            if (!isset($response['error'])) {
-                $imagesList = implode(",", $images);
+            $maxImages = 5; // Número máximo de imágenes permitidas
 
-                if ($description != '') {
-                    // Aquí puedes insertar los datos en la base de datos
-                    $sql = 'INSERT INTO imagenes_sueltas (imagen, descripcion, fecha_carga) VALUES (:imagen, :descripcion, :fecha_carga)';
-                    $stmt = $conn->prepare($sql);
-
-                    $stmt->bindParam(':imagen', $imagesList);
-                    $stmt->bindParam(':descripcion', $description);
-                    $stmt->bindParam(':fecha_carga', $date);
-
-                    if ($stmt->execute()) {
-                        $response['success'] = "Post publicado correctamente";
+            if (count($images) > $maxImages) {
+                $response['error'] = "Por favor, seleccione hasta $maxImages imágenes.";
+            } else {
+                if (!isset($response['error'])) {
+                    $imagesList = implode(",", $images);
+            
+                    if ($description != '') {
+                        $userId = $_SESSION['user_id']; // Obtener el ID de usuario de la sesión
+            
+                        // Crear la consulta para la inserción de imágenes
+                        $sql = 'INSERT INTO imagenes_sueltas (id_usuario, imagen, descripcion, fecha_carga) VALUES (:id_usuario, :imagen, :descripcion, :fecha_carga)';
+                        $stmt = $conn->prepare($sql);
+            
+                        $stmt->bindParam(':id_usuario', $userId);
+                        $stmt->bindParam(':imagen', $imagesList); // Usar la cadena de imágenes directamente
+                        $stmt->bindParam(':descripcion', $description);
+                        $stmt->bindParam(':fecha_carga', $date);
+            
+                        if ($stmt->execute()) {
+                            $response['success'] = "Post publicado correctamente";
+                        } else {
+                            $response['error'] = "No ha sido posible publicar el post";
+                        }
                     } else {
-                        $response['error'] = "No ha sido posible publicar el post";
+                        // La descripción está vacía, por lo que no se pueden insertar los datos
+                        $response['error'] = "La descripción es obligatoria";
                     }
-                } else {
-                    // La descripción está vacía, por lo que no se pueden insertar los datos
-                    $response['error'] = "La descripción es obligatoria";
                 }
             }
         }
