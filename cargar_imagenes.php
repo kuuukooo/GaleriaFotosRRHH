@@ -7,12 +7,9 @@ $database = new Database();
 // Obtiene la conexión
 $conn = $database->getConnection();
 
-
-
-
 // Obtener el número de página desde la solicitud AJAX
 $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
-$por_pagina =  3; // Cantidad de imágenes por página
+$por_pagina =  9; // Cantidad de imágenes por página
 
 // Calcula el inicio y fin para la consulta SQL
 $inicio = ($pagina - 1) * $por_pagina;
