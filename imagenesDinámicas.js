@@ -1,6 +1,194 @@
 $(document).ready(function() {
     console.log("Script de edición de Cargado de Imagenes cargado.");
 
+    const generarListadoImagenes = (data) => {
+        data.imagenes.forEach(function(imagen) {
+            // Create a new element .col and .card with jQuery
+            var colCardContainer = $('<div>');
+            colCardContainer.addClass('col');
+            colCardContainer.attr('id', 'col' + imagen.id_imagen);
+
+            var cardElement = $('<div>');
+            cardElement.addClass('card');
+
+            // Create a new element div with jQuery
+            var carouselElement = $('<div>');
+
+            // Assign the ID dynamically to the carousel element
+            carouselElement.attr('id', 'carousel' + imagen.id_imagen);
+            carouselElement.addClass('carousel slide');
+            carouselElement.attr('data-bs-ride', 'carousel');
+
+            // Create the carousel container outside the loop
+            var carouselInner = $('<div class="carousel-inner"></div>');
+
+            // Loop through the images and create the carousel-item elements
+            $.each(imagen.imagenes, function(j, imageName) {
+                var isActive = j === 0 ? 'active' : '';
+
+                // Create the carousel item
+                var carouselItem = $('<div>');
+                carouselItem.addClass('carousel-item ' + isActive);
+
+                // Add the carousel item to the carousel inner
+                carouselInner.append(carouselItem);
+
+                // Create the modal dynamically
+                var modal = $('<div class="modal fade" id="modal' + imagen.id_imagen + '-' + j + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">');
+                var modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg">');
+                var modalContent = $('<div class="modal-content">');
+                var modalBody = $('<div class="modal-body">');
+
+                // Create the carousel element
+                var carouselElement = $('<div>');
+                carouselElement.addClass('carousel slide');
+                carouselElement.attr('id', 'carousel' + imagen.id_imagen + '-' + j);
+                carouselElement.attr('data-bs-ride', 'carousel');
+
+                // Create the carousel inner element
+                var modalCarouselInner = $('<div>');
+                modalCarouselInner.addClass('carousel-inner');
+
+                 // Create the link and the image container
+                 var link = $('<a>');
+                 link.attr('href', '#');
+                 link.attr('data-bs-toggle', 'modal');
+                 link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
+             
+                 var imageContainer = $('<div>');
+                 imageContainer.addClass('image-container');
+                 imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
+                 imageContainer.attr('data-description', imagen.descripcion[j]);
+                 imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
+             
+                 link.append(imageContainer);
+                 carouselItem.append(link);
+
+                // Loop through the images and create the carousel-item elements
+                $.each(imagen.imagenes, function(k, modalImageName) {
+                    var modalIsActive = k === j ? 'active' : '';
+
+                    // Create the carousel item
+                    var modalCarouselItem = $('<div>');
+                    modalCarouselItem.addClass('carousel-item ' + modalIsActive);
+
+                    // Create the image element
+                    var modalImageElement = $('<img>');
+                    modalImageElement.attr('src', './assets/images/posts/' + modalImageName);
+                    modalImageElement.addClass('d-block w-100');
+
+                    // Add the image to the carousel item
+                    modalCarouselItem.append(modalImageElement);
+
+                    // Add the carousel item to the carousel inner
+                    modalCarouselInner.append(modalCarouselItem);
+                });
+
+                // Add the carousel inner to the carousel element
+                carouselElement.append(modalCarouselInner);
+
+                // Create navigation buttons for the carousel
+                var prevButton = $('<button class="carousel-control-prev" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="prev">');
+                prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
+                var nextButton = $('<button class="carousel-control-next" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="next">');
+                nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
+
+                // Add the navigation buttons to the carousel
+                carouselElement.append(prevButton);
+                carouselElement.append(nextButton);
+
+                // Add the carousel to the modal body
+                modalBody.append(carouselElement);
+
+                // Add CSS to the modal body to make it fill the entire modal
+                modalBody.css('justify-content', 'center');
+                modalBody.css('align-items', 'center');
+
+                modalContent.append(modalBody);
+                modalDialog.append(modalContent);
+                modal.append(modalDialog);
+
+                // Add the modal to the end of the document
+                $('body').append(modal);
+            });
+
+            // Add the carousel inner to the carousel element
+            carouselElement.append(carouselInner);
+
+            // Add the carousel to the card element
+            cardElement.append(carouselElement);
+
+            // Add the card to the column container
+            colCardContainer.append(cardElement);
+
+            // Add the column container to the row container
+            $('#row').append(colCardContainer);
+
+                // Crear el elemento card-body dentro de la .card
+                var cardBodyElement = $('<div>').addClass('card-body');
+                cardBodyElement.attr('id', 'card-body-' + imagen.id_imagen);
+                cardBodyElement.append('<div class="original-description" id="DescriptionID-' + imagen.id_imagen + '">' + imagen.descripcion + '</div>');
+
+                
+                // Crear el contenedor para botones-utilidades y agregar botones
+                var botonesUtilidadesContainer = $('<div>').addClass('botones-utilidades');
+                botonesUtilidadesContainer.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
+                botonesUtilidadesContainer.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen +'"><i class="bi bi-pencil-square"></i></button>');
+                botonesUtilidadesContainer.append('<a class="download-button" href="#" data-images="' + imagen.imagenes.join(',') + '" data-description="' + imagen.descripcion + '" data-descriptions="' + imagen.descripcion + '"><i class="bi bi-download"></i></a>');
+                
+                // Agregar el contenedor de botones-utilidades al card-body
+                cardBodyElement.append(botonesUtilidadesContainer);
+        
+
+                carouselElement.append(carouselInner);
+                cardElement.append(carouselElement, cardBodyElement);
+                colCardContainer.append(cardElement);
+                
+
+                // Crea el elemento .description-edit-container
+                var descriptionEditContainer = $("<div>").addClass("description-edit-container").attr("id", "description-edit-" + imagen.id_imagen).css("display", "none");
+
+                // Crea el formulario dentro del contenedor
+                var formElement = $("<form>").attr("action", "editar-descripcion.php").attr("method", "POST").attr("id", "edit-form-" + imagen.id_imagen);
+
+                // Crea el textarea dentro del formulario
+                var textareaElement = $("<textarea>").attr("maxlength", "25").attr("name", "new-description").addClass("form-control").text(imagen.descripcion);
+
+                // Crea los elementos input ocultos dentro del formulario
+                var hiddenInputId = $("<input>").attr("type", "hidden").attr("name", "id_imagen").val(imagen.id_imagen);
+                var hiddenInputEditDescription = $("<input>").attr("type", "hidden").attr("name", "edit-description").val(imagen.descripcion || ''); // Cambia esto según tu necesidad
+                var hiddenInputPaginaActual = $("<input>").attr("type", "hidden").attr("name", "pagina_actual").val(imagen.pagina_actual); // Cambia esto según tu necesidad
+
+                // Crea el botón "Guardar" dentro del formulario
+                var saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary").attr("id","guardar-btn").text("Guardar");
+
+                // Crea el enlace "Cancelar" dentro del formulario
+                var cancelButton = $("<a>").attr("href", "#").addClass("btn btn-secondary cancel-edit").attr("data-image-id", imagen.id_imagen).text("Cancelar"); 
+
+                // Agrega los elementos al formulario
+                formElement.append(textareaElement, hiddenInputId, hiddenInputEditDescription, hiddenInputPaginaActual, saveButton, cancelButton);
+
+                // Agrega el formulario al contenedor .description-edit-container
+                descriptionEditContainer.append(formElement);
+
+                // Agrega el contenedor al lugar adecuado en tu página (por ejemplo, a un div con un ID específico)
+                colCardContainer.find('.card-body').append(descriptionEditContainer); // Cambia ".card-body" al selector adecuado dentro del contexto de colCardContainer
+
+                // Agregar el elemento carousel al DOM (por ejemplo, a un contenedor con clase "container")
+                $('#image-container').append(colCardContainer);
+            });
+
+        //Descargar Imágenes
+        downloadimage();
+
+        //activar el botón de eliminar
+        BotonEliminar();
+        console.log("Botón de eliminar correctamente activado");
+        
+        //Activa y desactiva el modo oscuro en la página
+        ModoOscuro();
+    }
+
     // Función para cargar las imágenes y luego activar la edición
     function cargarImagenesYActivarEdicion(pagina) {
         var container = $("#image-container"); // El contenedor de imágenes
@@ -14,193 +202,9 @@ $(document).ready(function() {
                 container.empty();
 
                 generarBotonesPaginacion(data.totalPaginas, pagina);
-
+                generarListadoImagenes(data);
                 // Create a new carousel item for each image uploaded
-                data.imagenes.forEach(function(imagen) {
-                    // Create a new element .col and .card with jQuery
-                    var colCardContainer = $('<div>');
-                    colCardContainer.addClass('col');
-                    colCardContainer.attr('id', 'col' + imagen.id_imagen);
-
-                    var cardElement = $('<div>');
-                    cardElement.addClass('card');
-
-                    // Create a new element div with jQuery
-                    var carouselElement = $('<div>');
-
-                    // Assign the ID dynamically to the carousel element
-                    carouselElement.attr('id', 'carousel' + imagen.id_imagen);
-                    carouselElement.addClass('carousel slide');
-                    carouselElement.attr('data-bs-ride', 'carousel');
-
-                    // Create the carousel container outside the loop
-                    var carouselInner = $('<div class="carousel-inner"></div>');
-
-                    // Loop through the images and create the carousel-item elements
-                    $.each(imagen.imagenes, function(j, imageName) {
-                        var isActive = j === 0 ? 'active' : '';
-
-                        // Create the carousel item
-                        var carouselItem = $('<div>');
-                        carouselItem.addClass('carousel-item ' + isActive);
-
-                        // Add the carousel item to the carousel inner
-                        carouselInner.append(carouselItem);
-
-                        // Create the modal dynamically
-                        var modal = $('<div class="modal fade" id="modal' + imagen.id_imagen + '-' + j + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">');
-                        var modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg">');
-                        var modalContent = $('<div class="modal-content">');
-                        var modalBody = $('<div class="modal-body">');
-
-                        // Create the carousel element
-                        var carouselElement = $('<div>');
-                        carouselElement.addClass('carousel slide');
-                        carouselElement.attr('id', 'carousel' + imagen.id_imagen + '-' + j);
-                        carouselElement.attr('data-bs-ride', 'carousel');
-
-                        // Create the carousel inner element
-                        var modalCarouselInner = $('<div>');
-                        modalCarouselInner.addClass('carousel-inner');
-
-                         // Create the link and the image container
-                         var link = $('<a>');
-                         link.attr('href', '#');
-                         link.attr('data-bs-toggle', 'modal');
-                         link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
-                     
-                         var imageContainer = $('<div>');
-                         imageContainer.addClass('image-container');
-                         imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
-                         imageContainer.attr('data-description', imagen.descripcion[j]);
-                         imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
-                     
-                         link.append(imageContainer);
-                         carouselItem.append(link);
-
-                        // Loop through the images and create the carousel-item elements
-                        $.each(imagen.imagenes, function(k, modalImageName) {
-                            var modalIsActive = k === j ? 'active' : '';
-
-                            // Create the carousel item
-                            var modalCarouselItem = $('<div>');
-                            modalCarouselItem.addClass('carousel-item ' + modalIsActive);
-
-                            // Create the image element
-                            var modalImageElement = $('<img>');
-                            modalImageElement.attr('src', './assets/images/posts/' + modalImageName);
-                            modalImageElement.addClass('d-block w-100');
-
-                            // Add the image to the carousel item
-                            modalCarouselItem.append(modalImageElement);
-
-                            // Add the carousel item to the carousel inner
-                            modalCarouselInner.append(modalCarouselItem);
-                        });
-
-                        // Add the carousel inner to the carousel element
-                        carouselElement.append(modalCarouselInner);
-
-                        // Create navigation buttons for the carousel
-                        var prevButton = $('<button class="carousel-control-prev" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="prev">');
-                        prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
-                        var nextButton = $('<button class="carousel-control-next" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="next">');
-                        nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
-
-                        // Add the navigation buttons to the carousel
-                        carouselElement.append(prevButton);
-                        carouselElement.append(nextButton);
-
-                        // Add the carousel to the modal body
-                        modalBody.append(carouselElement);
-
-                        // Add CSS to the modal body to make it fill the entire modal
-                        modalBody.css('justify-content', 'center');
-                        modalBody.css('align-items', 'center');
-
-                        modalContent.append(modalBody);
-                        modalDialog.append(modalContent);
-                        modal.append(modalDialog);
-
-                        // Add the modal to the end of the document
-                        $('body').append(modal);
-                    });
-
-                    // Add the carousel inner to the carousel element
-                    carouselElement.append(carouselInner);
-
-                    // Add the carousel to the card element
-                    cardElement.append(carouselElement);
-
-                    // Add the card to the column container
-                    colCardContainer.append(cardElement);
-
-                    // Add the column container to the row container
-                    $('#row').append(colCardContainer);
-    
-                        // Crear el elemento card-body dentro de la .card
-                        var cardBodyElement = $('<div>').addClass('card-body');
-                        cardBodyElement.attr('id', 'card-body-' + imagen.id_imagen);
-                        cardBodyElement.append('<div class="original-description" id="DescriptionID-' + imagen.id_imagen + '">' + imagen.descripcion + '</div>');
-
-                        
-                        // Crear el contenedor para botones-utilidades y agregar botones
-                        var botonesUtilidadesContainer = $('<div>').addClass('botones-utilidades');
-                        botonesUtilidadesContainer.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
-                        botonesUtilidadesContainer.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen +'"><i class="bi bi-pencil-square"></i></button>');
-                        botonesUtilidadesContainer.append('<a class="download-button" href="#" data-images="' + imagen.imagenes.join(',') + '" data-description="' + imagen.descripcion + '" data-descriptions="' + imagen.descripcion + '"><i class="bi bi-download"></i></a>');
-                        
-                        // Agregar el contenedor de botones-utilidades al card-body
-                        cardBodyElement.append(botonesUtilidadesContainer);
                 
-
-                        carouselElement.append(carouselInner);
-                        cardElement.append(carouselElement, cardBodyElement);
-                        colCardContainer.append(cardElement);
-                        
-
-                        // Crea el elemento .description-edit-container
-                        var descriptionEditContainer = $("<div>").addClass("description-edit-container").attr("id", "description-edit-" + imagen.id_imagen).css("display", "none");
-
-                        // Crea el formulario dentro del contenedor
-                        var formElement = $("<form>").attr("action", "editar-descripcion.php").attr("method", "POST").attr("id", "edit-form-" + imagen.id_imagen);
-
-                        // Crea el textarea dentro del formulario
-                        var textareaElement = $("<textarea>").attr("maxlength", "25").attr("name", "new-description").addClass("form-control").text(imagen.descripcion);
-
-                        // Crea los elementos input ocultos dentro del formulario
-                        var hiddenInputId = $("<input>").attr("type", "hidden").attr("name", "id_imagen").val(imagen.id_imagen);
-                        var hiddenInputEditDescription = $("<input>").attr("type", "hidden").attr("name", "edit-description").val(imagen.descripcion || ''); // Cambia esto según tu necesidad
-                        var hiddenInputPaginaActual = $("<input>").attr("type", "hidden").attr("name", "pagina_actual").val(imagen.pagina_actual); // Cambia esto según tu necesidad
-
-                        // Crea el botón "Guardar" dentro del formulario
-                        var saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary").attr("id","guardar-btn").text("Guardar");
-
-                        // Crea el enlace "Cancelar" dentro del formulario
-                        var cancelButton = $("<a>").attr("href", "#").addClass("btn btn-secondary cancel-edit").attr("data-image-id", imagen.id_imagen).text("Cancelar"); 
-
-                        // Agrega los elementos al formulario
-                        formElement.append(textareaElement, hiddenInputId, hiddenInputEditDescription, hiddenInputPaginaActual, saveButton, cancelButton);
-
-                        // Agrega el formulario al contenedor .description-edit-container
-                        descriptionEditContainer.append(formElement);
-
-                        // Agrega el contenedor al lugar adecuado en tu página (por ejemplo, a un div con un ID específico)
-                        colCardContainer.find('.card-body').append(descriptionEditContainer); // Cambia ".card-body" al selector adecuado dentro del contexto de colCardContainer
-
-                        // Agregar el elemento carousel al DOM (por ejemplo, a un contenedor con clase "container")
-                        $('#image-container').append(colCardContainer);
-                    });
-
-                //Descargar Imágenes
-                downloadimage();
-
-                //activar el botón de eliminar
-                BotonEliminar();
-                console.log("Botón de eliminar correctamente activado");
-                
-                //Activa y desactiva el modo oscuro en la página
-                ModoOscuro();
             },
                 error: function(error) {
                     console.error("Error en la solicitud AJAX:", error);
@@ -209,7 +213,7 @@ $(document).ready(function() {
         });
     }
     //Paginación
-    function generarBotonesPaginacion(totalPaginas, paginaActual) {
+    const generarBotonesPaginacion = (totalPaginas, paginaActual) => {
         var paginationContainer = $("#pagination-container");
         var paginationList = paginationContainer.find("ul.pagination");
         paginationList.empty();
@@ -284,7 +288,7 @@ function ModoOscuro() {
                     return false;
                 }
             
-                // Función para habilitar el modo oscuro
+                                // Función para habilitar el modo oscuro
                 function enableDarkMode() {
                     console.log("Modo oscuro activado");
                     $("body").addClass("dark");
@@ -293,6 +297,14 @@ function ModoOscuro() {
                     $(".mode-text").text("Modo Oscuro");
                     $(".LogoVierciBlanco").css("display", "block");
                     $(".LogoVierciAzul").css("display", "none");
+                    $(".page-link").css("background-color", "#18191a");
+                    $(".page-link").css("color", "white");
+                    //add a hover to the page-link
+                    $(".page-link").hover(function() {
+                        $(this).css("background-color", "#0D6EFD");
+                    }, function() {
+                        $(this).css("background-color", "#18191a");
+                    });
                 }
             
                 // Función para deshabilitar el modo oscuro
@@ -304,6 +316,15 @@ function ModoOscuro() {
                     $(".mode-text").text("Modo Claro");
                     $(".LogoVierciBlanco").css("display", "none");
                     $(".LogoVierciAzul").css("display", "block");
+                    $(".page-link").css("background-color", "white");
+                    $(".page-link").css("color", "#0D6EFD");
+                    $(".page-link").hover(function() {
+                        $(this).css("background-color", "#0D6EFD");
+                        $(this).css("color", "white");
+                    }, function() {
+                        $(this).css("background-color", "#FFF");
+                        $(this).css("color", "#0D6EFD");
+                    });
                 }
             
                 // Cargar el estado del modo al cargar la página
@@ -390,6 +411,45 @@ $(document).ready(function () {
     });
 });
 
+
+$("#search-form").on("submit", function(e) {
+  e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+
+  var searchTerm = $("#search-input").val();
+
+  $.ajax({
+      url: "buscar_img.php",
+      method: "POST",
+      data: { search: searchTerm },
+      dataType: "json",
+      success: function(data) {
+        if (data.error === 'no_images_found') {
+            alert('Ninguna imagen fue encontrada');
+        } else if (data.error === 'empty_search') {
+            alert('Ingresa algo en la consulta por favor');
+        } else {
+              // Manejar el caso de que se encontraron imágenes
+              console.log("Imágenes encontradas:", data);
+      
+              // Limpiar la galería antes de agregar nuevas imágenes
+              var container = $("#image-container"); // El contenedor de imágenes
+              container.empty();
+              
+
+              generarBotonesPaginacion(data.totalPaginas, pagina=1);
+              generarListadoImagenes(data);
+          }
+      },
+      
+      error: function(xhr, status, error) {
+          console.log('Error en la solicitud AJAX:');
+          console.log('Status:', status);
+          console.log('Error:', error);
+      }
+  });
+}); 
+
+
  //Función BotonEliminar
  function BotonEliminar() {
     $(".delete-button").click(function(event) {
@@ -412,7 +472,7 @@ $(document).ready(function () {
 
                         // Recalcular la página actual después de eliminar
 
-                        const newPage = Math.min(paginaActual);
+                        const newPage = paginaActual;
 
                         // Volver a cargar la página correspondiente a la imagen eliminada
                         cargarImagenesYActivarEdicion(newPage);
@@ -432,28 +492,9 @@ $(document).ready(function () {
     });
 }
 });
-// Manejar la búsqueda
-$("#search-form").on("submit", function(e) {
-    e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
-    var searchTerm = $("#search-input").val().toLowerCase();
-    var imagesFound = false;
 
-    // Itera sobre todas las imágenes y muestra u oculta según la búsqueda
-    $(".col").each(function() {
-        var descripcion = $(this).find('.original-description').text().toLowerCase();
-        if (descripcion.includes(searchTerm)) {
-            $(this).show(); // Mostrar imágenes que coinciden con la búsqueda
-            imagesFound = true;
-        } else {
-            $(this).hide(); // Ocultar imágenes que no coinciden con la búsqueda
-        }
-    });
+//Cambios revisados con el repo de Lucas.
 
-    if (!imagesFound) {
-        alert("Ninguna imagen fue encontrada.");
-         $(".col").show();
-    }
-});
 
 function GuardarDescripcionAJAX() {
     $(document).ready(function() {
@@ -527,9 +568,9 @@ $(document).ready(function() {
         descriptionEditContainer.css('display', 'block');
     });
 
-    $(document).on("click", ".cancel-edit", function() {
+    $(document).on("click", ".cancel-edit", function(event) {
         console.log("Botón de cancelación de descripción clickeado");
-
+        event.preventDefault()
         var imageId = $(this).data("image-id");
         var cardBody = $(this).closest('.card-body');
 
