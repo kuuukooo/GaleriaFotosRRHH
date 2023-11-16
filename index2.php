@@ -194,6 +194,6 @@ $stmt->execute();
 <script src="descarga_imágenes.js"></script>
 <script src="eliminar_imagen.js"></script>
 <script src="navbar2.js"></script>
-<script src="ScriptTipoUsuario.js"></script>
+<script src="login/ScriptTipoUsuario.js"></script> 
 </body>
 </html>
