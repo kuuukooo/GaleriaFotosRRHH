@@ -109,6 +109,12 @@ $stmt->execute();
                                 <span class="text nav-text">Albumes</span>
                             </a>
                         </li>
+                        <li class="nav-link">
+                            <a href="./dashboard.php">
+                                <i class="bi bi-menu-button-wide-fill icon"></i>
+                                <span class="text nav-text">Menú</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
