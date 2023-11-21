@@ -87,6 +87,8 @@ $stmt->execute();
             <div class="menu-bar">
                 <div class="menu">
 
+                <!-- Buscador -->
+
                     <li class="search-box">
                     <i class='bx bx-search icon'></i>
                     <form class="d-flex" id="search-form" action="buscar_img.php" method="POST">
@@ -94,6 +96,8 @@ $stmt->execute();
                         <button type="submit" style="display: none;"></button>
                     </form>
                     </li>
+
+                <!-- Iconos de la navbar -->
 
                     <ul class="menu-links">
                         <li class="nav-link">
@@ -109,6 +113,7 @@ $stmt->execute();
                                 <span class="text nav-text">Albumes</span>
                             </a>
                         </li>
+
                         <li class="nav-link">
                             <a href="./dashboard.php">
                                 <i class="bi bi-menu-button-wide-fill icon"></i>
@@ -117,6 +122,8 @@ $stmt->execute();
                         </li>
                     </ul>
                 </div>
+
+                <!-- Parte de abajo de la navbar -->
 
                 <div class="bottom-content">
                     <li class="">
@@ -144,7 +151,7 @@ $stmt->execute();
 
         </nav>
 
-
+        
         <div class="main-content">
             <!-- formulario -->
             <div class="container justify-content-center">
