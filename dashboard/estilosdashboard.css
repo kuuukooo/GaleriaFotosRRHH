@@ -231,3 +231,8 @@ table.table .avatar {
 .modal form label {
 	font-weight: normal;
 }
+/* Estilos para que la tabla se vea ajustada */
+.main-content{
+	position: relative;
+	left: 3.5%;
+}
