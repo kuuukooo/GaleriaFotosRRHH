@@ -251,7 +251,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		<div id="deleteEmployeeModal" class="modal fade">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<form>
+					<form method="get" action="BorrarUsuario.php" id="deleteUserForm">
 						<div class="modal-header">						
 							<h4 class="modal-title">Eliminar Usuario</h4>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
