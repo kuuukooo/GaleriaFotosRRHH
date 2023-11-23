@@ -12,6 +12,7 @@ body {
 	background: var(--body-color);
 	font-family: 'Varela Round', sans-serif;
 	font-size: 13px;
+	overflow: hidden;
 }
 .table-responsive {
     margin: 30px 0;
@@ -25,7 +26,7 @@ body {
 }
 .table-title {        
 	padding-bottom: 15px;
-	background: #435d7d;
+	background: var(--primary-color);
 	color: #fff;
 	padding: 16px 30px;
 	min-width: 100%;
@@ -232,7 +233,37 @@ table.table .avatar {
 	font-weight: normal;
 }
 /* Estilos para que la tabla se vea ajustada */
-.main-content{
-	position: relative;
-	left: 3.5%;
+.container{
+	margin-right: revert;
 }
+.main-content {
+	margin-left: 0; /* Inicialmente, sin margen para estar al lado de la sidebar oculta */
+	transition:  0.5s; /* Transición suave para el margen */
+}
+
+/* Cuando la sidebar se despliega, ajusta el margen para dejar espacio para la sidebar */
+.sidebar.open {
+	width: 250px; /* Ancho de la sidebar cuando está desplegada */
+	transition: 0.5s; /* Transición suave para el ancho */
+}
+
+/* Ajusta el margen izquierdo del contenido principal para que esté al lado de la sidebar desplegada */
+.sidebar.open + .main-content {
+	margin-left: 250px; /* Igual al ancho de la sidebar */
+	transition: 0.5s; /* Transición suave para el margen */
+}
+.modal.fade,
+.modal.fade.show,
+.modal-open {
+padding-right: 0px !important;
+}  
+/*Sin esta línea de css se aplica un padding-right: 84px automáticamente cuando 
+una imagen se abre lo cual provoca que cuando este se cierra, produzca un bug. */
+ .modal-backdrop.fade{
+width: 100%;
+height: 100%;
+padding-right: 0px !important;
+margin-left: 0px !important;
+margin-right: 0px !important;
+padding-left: 0px !important;
+} 
