@@ -8,7 +8,7 @@ $conn = $database->getConnection();
 // Verificar la conexión a la base de datos
 if ($conn) {
     // Obtener los datos del formulario
-    $id_usuario = $_GET['id_usuario'] ?? null;
+    $id_usuario = $_GET['id_usuario'];
 
     // Verificar si el usuario existe
     $querySelect = "SELECT * FROM usuarios WHERE id_usuario = :id_usuario";

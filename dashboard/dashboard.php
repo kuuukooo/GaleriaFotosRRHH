@@ -33,9 +33,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link rel="stylesheet" type="text/css" href="../navbar2.css">
 <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 <!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script><script src="ScriptDashboard.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="ScriptDashboard.js"></script>
 </head>
 <body>
 <div class="container">
@@ -205,69 +206,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			</div>
 		</div>
 	</div>
-		<!-- Edit Modal HTML -->
-		<div id="editEmployeeModal" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form>
-						<div class="modal-header">						
-							<h4 class="modal-title">Editar Usuario</h4>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-							<div class="form-group">
-								<label>ID</label>
-								<input type="text" class="form-control" required>
-							</div>
-							<div class="form-group">
-								<label>Nombre</label>
-								<input type="text" class="form-control" required>
-							</div>
-							<div class="form-group">
-								<label>Contraseña</label>
-								<input type="password" class="form-control" required></label>
-							</div>
-							<div class="form-group">
-								<label>Usuario</label>
-								<textarea class="form-control" required></textarea>
-							</div>
-							<div class="form-group">
-								<label>Teléfono</label>
-								<input type="text" class="form-control" required>
-							</div>	
-							<div class="form-group">
-								<label>TipoUsuario</label>
-								<textarea class="form-control" required></textarea>
-							</div>								
-						</div>
-						<div class="modal-footer">
-							<input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="Cancel">
-							<input type="submit" class="btn btn-success" value="Save">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<!-- Delete Modal HTML -->
-		<div id="deleteEmployeeModal" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<form method="get" action="BorrarUsuario.php" id="deleteUserForm">
-						<div class="modal-header">						
-							<h4 class="modal-title">Eliminar Usuario</h4>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">					
-							<p>¿Estás seguro que quieres eliminar?</p>
-							<p class="text-warning"><small>Esta acción no se deshacer.</small></p>
-						</div>
-						<div class="modal-footer">
-							<input type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" value="Cancel">
-							<input type="submit" class="btn btn-danger" value="Delete">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+		<!-- Aquí es donde se generan los modales de borrar y editar -->
 	</div>
 </div>
 <script src="UsuariosDinámicos.js"></script>
