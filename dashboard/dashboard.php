@@ -34,7 +34,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="ScriptDashboard.js"></script>
 </head>
@@ -167,45 +166,45 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			</div>        
 		</div>
 	<!-- Add Modal HTML -->
-	<div id="addEmployeeModal" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<form id="addUserForm">
-					<div class="modal-header">						
-						<h4 class="modal-title">Añadir Usuario</h4>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">					
-						<div class="form-group">
-							<label>Usuario</label>
-							<input type="text" id="usuario" class="form-control" required>
+		<div id="addEmployeeModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<form id="addUserForm">
+						<div class="modal-header">						
+							<h4 class="modal-title">Añadir Usuario</h4>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
-						<div class="form-group">
-							<label>Contraseña</label>
-							<input type="password" id="contrasena" class="form-control" required>
+						<div class="modal-body">					
+							<div class="form-group">
+								<label>Usuario</label>
+								<input type="text" id="usuario" class="form-control" required>
+							</div>
+							<div class="form-group">
+								<label>Contraseña</label>
+								<input type="password" id="contrasena" class="form-control" required>
+							</div>
+							<div class="form-group">
+								<label>Correo</label>
+								<input type="email" id="correo" class="form-control" required >
+							</div>
+							<div class="form-group">
+								<label>Teléfono</label>
+								<input type="text" id="telefono" class="form-control" required>
+							</div>	
+							<div class="form-group">
+								<label>TipoUsuario</label>
+								<textarea id="tipousuario" class="form-control" required></textarea>
+							</div>				
 						</div>
-						<div class="form-group">
-							<label>Correo</label>
-							<textarea id="correo" class="form-control" required ></textarea>
+						<div class="modal-footer">
+							<div id="error-message-tipousuario" class="text-danger"></div>
+							<input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="Cancelar">
+							<input type="submit" class="btn btn-success" value="Añadir" id="addUserBtn">
 						</div>
-						<div class="form-group">
-							<label>Teléfono</label>
-							<input type="text" id="telefono" class="form-control" required>
-						</div>	
-						<div class="form-group">
-							<label>TipoUsuario</label>
-							<textarea id="tipousuario" class="form-control" required></textarea>
-						</div>				
-					</div>
-					<div class="modal-footer">
-						<div id="error-message-tipousuario" class="text-danger"></div>
-						<input type="button" class="btn btn-danger" data-bs-dismiss="modal" value="Cancelar">
-						<input type="submit" class="btn btn-success" value="Añadir" id="addUserBtn">
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 		<!-- Aquí es donde se generan los modales de borrar y editar -->
 	</div>
 </div>
