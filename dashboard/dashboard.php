@@ -177,23 +177,23 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 						<div class="modal-body">					
 							<div class="form-group">
 								<label>Usuario</label>
-								<input type="text" id="usuario" class="form-control" required>
+								<input type='text' minlength='4' maxlength='10' id='usuario' class='form-control' placeholder= 'Usuario...' required>
 							</div>
 							<div class="form-group">
 								<label>Contraseña</label>
-								<input type="password" id="contrasena" class="form-control" required>
+								<input type='password' minlength='8' maxlength='16' pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}$' id='contrasena' class='form-control' placeholder='(8 carácteres y uno especial)' required>
 							</div>
 							<div class="form-group">
 								<label>Correo</label>
-								<input type="email" id="correo" class="form-control" required >
+								<input type='email' id='correo' class='form-control' placeholder='Ej: prueba@gmail.com' required >
 							</div>
 							<div class="form-group">
 								<label>Teléfono</label>
-								<input type="text" id="telefono" class="form-control" required>
+								<input type='tel' minlength='10' maxlength='10' id='telefono' class='form-control' placeholder='Teléfono...' required>
 							</div>	
 							<div class="form-group">
 								<label>TipoUsuario</label>
-								<textarea id="tipousuario" class="form-control" required></textarea>
+								<input type='text' minlength="5" maxlength="7" id='tipousuario' class='form-control' placeholder="Ej: Admin o Usuario" required>
 							</div>				
 						</div>
 						<div class="modal-footer">
