@@ -37,26 +37,6 @@ $(document).ready(function () {
                     );
                     /*  Generación de modales de borrar y editar */
                     $('body').append(
-                        /* Modal de borrado */
-                        "<div id='" + deleteModalId + "' class='modal fade'>" +
-                            "<div class='modal-dialog'>" +
-                                "<div class='modal-content'>" +
-                                    "<div class='modal-header'>" +
-                                        "<h4 class='modal-title'>Eliminar Usuario</h4>" +
-                                        "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
-                                    "</div>" +
-                                    "<div class='modal-body'>" +
-                                        "<p>¿Estás seguro que quieres eliminar al usuario con ID " + row.id_usuario + "?</p>" +
-                                        "<p class='text-warning'><small>Esta acción no se deshace.</small></p>" +
-                                    "</div>" +
-                                    "<div class='modal-footer'>" +
-                                        "<input type='button' class='btn btn-outline-danger' data-bs-dismiss='modal' value='Cancel'>" +
-                                        "<input type='submit' class='btn btn-danger' value='Delete'>" +
-                                    "</div>" +
-                                "</div>" +
-                            "</div>" +
-                        "</div>" +
-                        
                         /* Modal de edición */
                         "<div id='" + editModalId + "' class='modal fade'>" +
                             "<div class='modal-dialog'>" +
@@ -69,11 +49,11 @@ $(document).ready(function () {
                                     "<div class='modal-body'>" +
                                         "<div class='form-group'>" +
 						                    "<label for='usuario'>Usuario</label>" +
-						                    "<input type='text' id='usuario' class='form-control' required>" +
+						                    "<input type='text' minlength='4' maxlength='10' id='usuario' class='form-control' required>" +
 						                "</div>" +
                                         "<div class='form-group'>" +
                                             "<label for='contrasena'>Contraseña</label>"+
-                                            "<input type='password' id='contrasena' class='form-control' required>" +
+                                            "<input type='password' minlength='8' maxlength='16' id='contrasena' class='form-control' required>" +
                                         "</div>" +
                                         "<div class='form-group'>" +
                                             "<label for='correo'>Correo</label>" +
@@ -81,11 +61,11 @@ $(document).ready(function () {
                                         "</div>" +
                                         "<div class='form-group'>" +
                                             "<label for='telefono'>Teléfono</label>" +
-                                            "<input type='text' id='telefono' class='form-control' required>" +                                       	
+                                            "<input type='tel' minlength='10' maxlength='10' id='telefono' class='form-control' required>" +                                       	
                                         "</div>" +
                                         "<div class='form-group'>" +
                                             "<label for='tipousuario'>TipoUsuario</label>" +
-                                            "<textarea id='tipousuario' class='form-control' required></textarea>" +
+                                            "<input type='text' minlength='5' maxlength='7' id='tipousuario' class='form-control' required>" +
                                         "</div>" +	
                                     "<div class='modal-footer'>" +
                                         "<input type='button' class='btn btn-danger' data-bs-dismiss='modal' value='Cancel'>" +
