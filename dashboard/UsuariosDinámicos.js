@@ -212,37 +212,36 @@ $(document).ready(function () {
     
     
         // Evento para enviar el formulario de edición
-        $('#tablaUsuarios').on('click', '.btn-edit', function () {
+        $(document).on('click', '.btn-edit', function () {
             var form = $(this).closest('form.editUserForm');
-            console.log('Formulario:', form);
-            console.log("El botón de editar está siendo clickado");
+            
+            // Construye un objeto con los datos del formulario
+            var formData = {
+                id_usuario: form.data('id'),
+                usuario: form.find('#usuario').val(),
+                contrasena: form.find('#contrasena').val(),
+                correo: form.find('#correo').val(),
+                telefono: form.find('#telefono').val(),
+                tipousuario: form.find('#tipousuario').val()
+            };
 
             // Realiza una solicitud AJAX al archivo EditarUsuario.php
-            console.log("Enviando solicitud AJAX...");
             $.ajax({
                 url: form.attr('action'),
                 type: form.attr('method'),
-                data: form.serialize(),
+                data: formData, // Envía los datos del formulario como objeto
                 success: function (response) {
                     console.log('Respuesta del servidor:', response);
 
-                    // Verifica si la actualización fue exitosa
+                    // Cierra el modal de edición si la actualización fue exitosa
                     if (response.success) {
-                        // Cierra el modal de edición si la actualización fue exitosa
                         form.closest('.modal').modal('hide');
-
-                        // Abre el modal de edición usando Bootstrap
-                        $('#' + editModalId).modal('toggle');
-
-                        // Llena los campos del modal con los datos actualizados
-                        $('#' + editModalId + ' #usuario').val(response.usuario);
-                        $('#' + editModalId + ' #contrasena').val(response.contrasena);
-                        $('#' + editModalId + ' #correo').val(response.correo);
-                        $('#' + editModalId + ' #telefono').val(response.telefono);
-                        $('#' + editModalId + ' #tipousuario').val(response.tipousuario);
-
-                        // Establece el valor del campo oculto id_usuario
-                        $('#' + editModalId + ' #id_usuario').val(response.id_usuario);
+                        // Recargar los datos de la tabla
+                        cargarDatosUsuarios();
+                        // Mostrar una alerta de "Usuario editado correctamente"
+                        setTimeout(function () {
+                            alert("Usuario editado correctamente");
+                        }, 500);
                     }
                 },
                 error: function (error) {
