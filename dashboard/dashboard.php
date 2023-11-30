@@ -181,7 +181,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							</div>
 							<div class="form-group">
 								<label>Contraseña</label>
-								<input type='password' minlength='8' maxlength='16' pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}$' id='contrasena' class='form-control' placeholder='(8 carácteres y uno especial)' required>
+								<input type='password' minlength='8' maxlength='16' id='contrasena' class='form-control' placeholder='(8 carácteres y uno especial)' required>
 							</div>
 							<div class="form-group">
 								<label>Correo</label>
