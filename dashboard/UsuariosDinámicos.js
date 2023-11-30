@@ -41,40 +41,42 @@ $(document).ready(function () {
                         "<div id='" + editModalId + "' class='modal fade'>" +
                             "<div class='modal-dialog'>" +
                                 "<div class='modal-content'>" +
-                                    "<form method='get' action='EditarUsuario.php' id='editUserForm'>" +
+                                    "<form method='post' action='EditarUsuario.php' class='editUserForm' data-id='" + row.id_usuario + "'>" +
                                     "<div class='modal-header'>" +
                                         "<h4 class='modal-title'>Editar Usuario</h4>" +
                                         "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>" +
                                     "</div>" +
-                                    "<div class='modal-body'>" +
-                                        "<div class='form-group'>" +
-						                    "<label for='usuario'>Usuario</label>" +
-						                    "<input type='text' minlength='4' maxlength='10' id='usuario' class='form-control' required>" +
-						                "</div>" +
-                                        "<div class='form-group'>" +
-                                            "<label for='contrasena'>Contraseña</label>"+
-                                            "<input type='password' minlength='8' maxlength='16' id='contrasena' class='form-control' required>" +
+                                        "<div class='modal-body'>" +                                    
+                                            "<div class='form-group'>" +
+                                                "<label for='usuario'>Usuario</label>" +
+                                                "<input type='text' minlength='4' maxlength='10' id='usuario' class='form-control' required>" +
+                                                "<input type='hidden' id='id_usuario' name='id_usuario' value=''>" +
+                                            "</div>" +
+                                            "<div class='form-group'>" +
+                                                "<label for='contrasena'>Contraseña</label>" +
+                                                "<input type='password' minlength='8' maxlength='16' id='contrasena' class='form-control' required>" +
+                                            "</div>" +
+                                            "<div class='form-group'>" +
+                                                "<label for='correo'>Correo</label>" +
+                                                "<input type='email' id='correo' class='form-control' required >" +
+                                            "</div>" +
+                                            "<div class='form-group'>" +
+                                                "<label for='telefono'>Teléfono</label>" +
+                                                "<input type='tel' minlength='10' maxlength='10' id='telefono' class='form-control' required>" +                                       	
+                                            "</div>" +
+                                            "<div class='form-group'>" +
+                                                "<label for='tipousuario'>TipoUsuario</label>" +
+                                                "<input type='text' minlength='5' maxlength='7' id='tipousuario' class='form-control' required>" +
+                                            "</div>" +
+                                            "<div class='modal-footer'>" +
+                                                "<input type='button' class='btn btn-danger' data-bs-dismiss='modal' value='Cancel'>" +
+                                                "<input type='button' class='btn btn-success btn-edit' value='Editar'>" +
+                                            "</div>" +
                                         "</div>" +
-                                        "<div class='form-group'>" +
-                                            "<label for='correo'>Correo</label>" +
-                                            "<input type='email' id='correo' class='form-control' required >" +
-                                        "</div>" +
-                                        "<div class='form-group'>" +
-                                            "<label for='telefono'>Teléfono</label>" +
-                                            "<input type='tel' minlength='10' maxlength='10' id='telefono' class='form-control' required>" +                                       	
-                                        "</div>" +
-                                        "<div class='form-group'>" +
-                                            "<label for='tipousuario'>TipoUsuario</label>" +
-                                            "<input type='text' minlength='5' maxlength='7' id='tipousuario' class='form-control' required>" +
-                                        "</div>" +	
-                                    "<div class='modal-footer'>" +
-                                        "<input type='button' class='btn btn-danger' data-bs-dismiss='modal' value='Cancel'>" +
-                                        "<input type='submit' class='btn btn-success' value='Save'>" +
-                                    "</div>" +
                                     "</form>" +
                                 "</div>" +
                             "</div>" +
-                        "</div>"
+                        "</div>"                     
                     );
                 });
             },
@@ -86,19 +88,8 @@ $(document).ready(function () {
 
     cargarDatosUsuarios();  // Llamamos a la función cuando la página se carga inicialmente
 
-    // Evento para abrir el modal de edición
-    $('#tablaUsuarios').on('click', '.edit', function () {
-        var userId = $(this).data('id');
-        var editModalId = 'editEmployeeModal_' + userId;
-        
-        // Abre el modal de edición usando Bootstrap
-        $('#' + editModalId).modal('toggle');
-    });
-
-
-
     $(document).ready(function () {
-    // Agregar un nuevo usuario
+    //Añadido de Usuarios
     $('#addUserForm').submit(function(e){
         e.preventDefault();
 
@@ -179,11 +170,85 @@ $(document).ready(function () {
                 },
                 error: function (error) {
                     console.log('Error en la solicitud AJAX:', error);
+                    }
+                });
+    } else {
+    alert("No se ha eliminado el usuario");
+    }
+    });
+});     
+    //Botón de Editar
+    //Espera a que el documento esté completamente cargado
+    $(document).ready(function () {
+        // Evento para abrir el modal de edición
+        $('#tablaUsuarios').on('click', '.edit', function () {
+            var userId = $(this).data('id');
+            var editModalId = 'editEmployeeModal_' + userId;
+    
+            console.log("El ID del Usuario es: " + userId);
+    
+            // Recupera los datos del usuario haciendo una nueva solicitud AJAX
+            $.ajax({
+                url: 'editarUsuarioConsulta.php',
+                type: 'GET',
+                data: { id_usuario: userId },
+                dataType: 'json',
+                success: function (userData) {
+                    // Abre el modal de edición usando Bootstrap
+                    $('#' + editModalId).modal('toggle');
+    
+                    // Llena los campos del modal con los datos del usuario
+                    $('#' + editModalId + ' #usuario').val(userData.Usuario);
+                    $('#' + editModalId + ' #contrasena').val(userData.contrasena);
+                    $('#' + editModalId + ' #correo').val(userData.correo);
+                    $('#' + editModalId + ' #telefono').val(userData.numerotel);
+                    $('#' + editModalId + ' #tipousuario').val(userData.tipo_usuario);
+                },
+                error: function (error) {
+                    console.log('Error al obtener los datos del usuario:', error);
                 }
             });
-                } else {
-                    alert("No se ha eliminado el usuario");
-                }
         });
-    });       
+    
+    
+        // Evento para enviar el formulario de edición
+        $('#tablaUsuarios').on('click', '.btn-edit', function () {
+            var form = $(this).closest('form.editUserForm');
+            console.log('Formulario:', form);
+            console.log("El botón de editar está siendo clickado");
+
+            // Realiza una solicitud AJAX al archivo EditarUsuario.php
+            console.log("Enviando solicitud AJAX...");
+            $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method'),
+                data: form.serialize(),
+                success: function (response) {
+                    console.log('Respuesta del servidor:', response);
+
+                    // Verifica si la actualización fue exitosa
+                    if (response.success) {
+                        // Cierra el modal de edición si la actualización fue exitosa
+                        form.closest('.modal').modal('hide');
+
+                        // Abre el modal de edición usando Bootstrap
+                        $('#' + editModalId).modal('toggle');
+
+                        // Llena los campos del modal con los datos actualizados
+                        $('#' + editModalId + ' #usuario').val(response.usuario);
+                        $('#' + editModalId + ' #contrasena').val(response.contrasena);
+                        $('#' + editModalId + ' #correo').val(response.correo);
+                        $('#' + editModalId + ' #telefono').val(response.telefono);
+                        $('#' + editModalId + ' #tipousuario').val(response.tipousuario);
+
+                        // Establece el valor del campo oculto id_usuario
+                        $('#' + editModalId + ' #id_usuario').val(response.id_usuario);
+                    }
+                },
+                error: function (error) {
+                    console.log('Error en la solicitud AJAX:', error);
+                }
+            });
+        });
+    });    
 });
