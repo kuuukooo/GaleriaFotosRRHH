@@ -1,23 +1,16 @@
-$(document).ready(function(){
-	// Activate tooltip
-	$('[data-bs-toggle="tooltip"]').tooltip();
-	
-	// Select/Deselect checkboxes
-	var checkbox = $('table tbody input[type="checkbox"]');
-	$("#selectAll").click(function(){
-		if(this.checked){
-			checkbox.each(function(){
-				this.checked = true;                        
-			});
-		} else{
-			checkbox.each(function(){
-				this.checked = false;                        
-			});
-		} 
-	});
-	checkbox.click(function(){
-		if(!this.checked){
-			$("#selectAll").prop("checked", false);
-		}
-	});
+$(document).ready(function () {
+    // Activate tooltip
+    $('[data-bs-toggle="tooltip"]').tooltip();
+
+    // Evento change para el checkbox principal (seleccionar todo)
+    $(document).on('change', '#selectAll', function () {
+        var isChecked = $(this).prop("checked");
+        $('table tbody input[type="checkbox"]').prop("checked", isChecked);
+    });
+
+    // Evento change para las casillas de verificación individuales
+    $(document).on('change', 'table tbody input[type="checkbox"]', function () {
+        var allChecked = $('table tbody input[type="checkbox"]:checked').length === $('table tbody input[type="checkbox"]').length;
+        $("#selectAll").prop("checked", allChecked);
+    });
 });
