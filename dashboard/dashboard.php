@@ -211,5 +211,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="UsuariosDinámicos.js"></script>
 <script src="../navbar2.js"></script>
 <script src="./darkmodeDashboard.js"></script>
+<script src="ScriptDashboard.js"></script>
 </body>
 </html>
