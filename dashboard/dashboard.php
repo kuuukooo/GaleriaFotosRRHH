@@ -192,8 +192,11 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								<input type='tel' minlength='10' maxlength='10' id='telefono' class='form-control' placeholder='Teléfono...' required>
 							</div>	
 							<div class="form-group">
-								<label>TipoUsuario</label>
-								<input type='text' minlength="5" maxlength="7" id='tipousuario' class='form-control' placeholder="Ej: Admin o Usuario" required>
+								<label for='tipousuario' class='form-label'>TipoUsuario</label> 
+                                <select id='tipousuario' class='form-select' required> 
+                                	<option value='Admin'>Admin</option> 
+                                	<option value='Usuario'>Usuario</option> 
+                                </select> 
 							</div>				
 						</div>
 						<div class="modal-footer">

@@ -65,8 +65,11 @@ $(document).ready(function () {
                                                 "<input type='tel' minlength='10' maxlength='10' id='telefono' class='form-control' required>" +                                       	
                                             "</div>" +
                                             "<div class='form-group'>" +
-                                                "<label for='tipousuario'>TipoUsuario</label>" +
-                                                "<input type='text' minlength='5' maxlength='7' id='tipousuario' class='form-control' required>" +
+                                                "<label for='tipousuario' class='form-label'>TipoUsuario</label>" +
+                                                "<select id='tipousuario' class='form-select' required>" +
+                                                "<option value='Admin'>Admin</option>" +
+                                                "<option value='Usuario'>Usuario</option>" +
+                                                "</select>" +
                                             "</div>" +
                                             "<div class='modal-footer'>" +
                                                 "<input type='button' class='btn btn-danger' data-bs-dismiss='modal' value='Cancel'>" +
