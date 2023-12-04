@@ -21,7 +21,7 @@ $(document).ready(function () {
                             "</td>" +
                             "<td>" + row.id_usuario + "</td>" +
                             "<td>" + row.Usuario + "</td>" +
-                            "<td>" + row.contrasena + "</td>" +
+                            "<td>" + "•".repeat(row.contrasena.length) + "</td>" +
                             "<td>" + row.correo + "</td>" +
                             "<td>" + row.numerotel + "</td>" +
                             "<td>" + row.tipo_usuario + "</td>" +
