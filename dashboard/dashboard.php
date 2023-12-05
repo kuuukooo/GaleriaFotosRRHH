@@ -134,12 +134,14 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							</div>
 							<div class="col-sm-6">
 								<a href="#addEmployeeModal" class="btn btn-success" data-bs-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Añadir nuevo usuario</span></a>
-								<a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>						
+								<a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>	
 							</div>
 						</div>
 					</div>
 					<table class="table table-striped table-hover" id="tablaUsuarios">
 						<thead>
+						<input class="form-control mb-2" id="tableSearch" type="text"
+    					placeholder="Introduce un usuario...">
 							<tr>
 								<th>
 									<span class="custom-checkbox">
@@ -149,19 +151,16 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								</th>
 								<th>ID</th>
 								<th>Nombre</th>
-								<th>Contraseña</th>
 								<th>Correo</th>
 								<th>Teléfono</th>
 								<th>TipoUsuario</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
-						<tbody>				
+						<tbody id="myTable">				
 						</tbody>
 					</table>
-					<div class="clearfix">
-						<div class="hint-text">Mostrando <b>5</b> de <b>25</b> entradas</div>
-					</div>
+					<p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
 				</div>
 			</div>        
 		</div>
@@ -214,6 +213,5 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="UsuariosDinámicos.js"></script>
 <script src="../navbar2.js"></script>
 <script src="./darkmodeDashboard.js"></script>
-<script src="ScriptDashboard.js"></script>
 </body>
 </html>
