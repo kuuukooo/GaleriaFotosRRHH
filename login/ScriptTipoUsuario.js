@@ -17,6 +17,7 @@ async function checkCookie() {
         var tipo_usuario = await getCookie("tipo_usuario");
         if (tipo_usuario == "Usuario") {
             var deleteButton = document.getElementsByClassName("delete-button");
+
             for (var i = 0; i < deleteButton.length; i++) {
                 deleteButton[i].style.display = "none";
             }
@@ -24,7 +25,11 @@ async function checkCookie() {
             for (var i = 0; i < downloadButton.length; i++) {
                 downloadButton[i].style.display = "none";
             }
+        } else {
+            $("#DashboardMenu").show();
         }
+
+        
     } catch (error) {
         console.error(error);
     }

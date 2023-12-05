@@ -123,6 +123,9 @@
         display: none;
       }
 
+#DashboardMenu {
+        display: none;
+}
 /* Versión para celulares */
 
 @media only screen and (max-width: 600px){

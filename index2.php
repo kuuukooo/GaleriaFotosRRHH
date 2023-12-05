@@ -115,7 +115,7 @@ $stmt->execute();
                             </a>
                         </li>
 
-                        <li class="nav-link">
+                        <li class="nav-link" id="DashboardMenu">
                             <a href="dashboard/dashboard.php">
                                 <i class="bi bi-menu-button-wide-fill icon"></i>
                                 <span class="text nav-text">Menú</span>
