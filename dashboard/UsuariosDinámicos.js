@@ -21,7 +21,6 @@ $(document).ready(function () {
                             "</td>" +
                             "<td>" + row.id_usuario + "</td>" +
                             "<td>" + row.Usuario + "</td>" +
-                            "<td>" + "•".repeat(row.contrasena.length) + "</td>" +
                             "<td>" + row.correo + "</td>" +
                             "<td>" + row.numerotel + "</td>" +
                             "<td>" + row.tipo_usuario + "</td>" +
@@ -252,5 +251,45 @@ $(document).ready(function () {
                 }
             });
         });
-    });    
+    });  
+
+    // Filtrar tabla según el buscador
+        $(document).ready(function(){
+            // Almacena la referencia al mensaje de "No se ha encontrado nada"
+            var noResultsMessage = $("#noResultsMessage");
+        
+            // Filtra la tabla en función del texto ingresado en el input
+            $("#tableSearch").on("keyup", function() {
+              var value = $(this).val().toLowerCase();
+              var tableRows = $("#myTable tr");
+        
+              // Filtra las filas de la tabla
+              tableRows.filter(function() {
+                var rowText = $(this).text().toLowerCase();
+                var isVisible = rowText.indexOf(value) > -1;
+                $(this).toggle(isVisible);
+              });
+        
+              // Muestra o oculta el mensaje de "No se ha encontrado nada"
+              noResultsMessage.toggle(tableRows.filter(":visible").length === 0);
+            });
+          });  
 });
+
+    //Selección de checks para eliminar todos a la vez
+    $(document).ready(function () {
+        // Activate tooltip
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    
+        // Evento change para el checkbox principal (seleccionar todo)
+        $(document).on('change', '#selectAll', function () {
+            var isChecked = $(this).prop("checked");
+            $('table tbody input[type="checkbox"]').prop("checked", isChecked);
+        });
+    
+        // Evento change para las casillas de verificación individuales
+        $(document).on('change', 'table tbody input[type="checkbox"]', function () {
+            var allChecked = $('table tbody input[type="checkbox"]:checked').length === $('table tbody input[type="checkbox"]').length;
+            $("#selectAll").prop("checked", allChecked);
+        });
+    });
