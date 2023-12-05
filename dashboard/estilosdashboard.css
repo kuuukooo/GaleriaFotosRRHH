@@ -147,6 +147,8 @@ table.table .avatar {
 	float: left;
 	margin-top: 10px;
 	font-size: 13px;
+	left: 5.5rem;
+    position: relative;
 }    
 /* Custom checkbox */
 .custom-checkbox {
