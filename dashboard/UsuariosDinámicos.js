@@ -54,6 +54,7 @@ $(document).ready(function () {
                                             "<div class='form-group'>" +
                                                 "<label for='contrasena'>Contraseña</label>" +
                                                 "<input type='password' minlength='8' maxlength='16' id='contrasena' class='form-control' required>" +
+                                                "<i class='bi bi-eye-slash' id='togglePassword'></i>" +
                                             "</div>" +
                                             "<div class='form-group'>" +
                                                 "<label for='correo'>Correo</label>" +
@@ -88,7 +89,8 @@ $(document).ready(function () {
         });
     }
 
-    cargarDatosUsuarios();  // Llamamos a la función cuando la página se carga inicialmente
+    cargarDatosUsuarios();
+      // Llamamos a la función cuando la página se carga inicialmente
 
     $(document).ready(function () {
     //Añadido de Usuarios
@@ -251,9 +253,21 @@ $(document).ready(function () {
                 }
             });
         });
+        //Script para togglear la contraseña
+        $(document).ready(function () {
+            $('.bi-eye-slash').click(function () {
+                var password = $('#contrasena');
+                var type = password.attr('type') === 'password' ? 'text' : 'password';
+                password.attr('type', type);
+        
+                // Cambia la clase del icono
+                $(this).toggleClass('bi-eye bi-eye-slash');
+            });
+        });        
+        
     });  
 
-    // Filtrar tabla según el buscador
+        // Filtrar tabla según el buscador
         $(document).ready(function(){
             // Almacena la referencia al mensaje de "No se ha encontrado nada"
             var noResultsMessage = $("#noResultsMessage");
@@ -274,22 +288,93 @@ $(document).ready(function () {
               noResultsMessage.toggle(tableRows.filter(":visible").length === 0);
             });
           });  
-});
 
-    //Selección de checks para eliminar todos a la vez
-    $(document).ready(function () {
-        // Activate tooltip
-        $('[data-bs-toggle="tooltip"]').tooltip();
-    
-        // Evento change para el checkbox principal (seleccionar todo)
-        $(document).on('change', '#selectAll', function () {
-            var isChecked = $(this).prop("checked");
-            $('table tbody input[type="checkbox"]').prop("checked", isChecked);
-        });
-    
-        // Evento change para las casillas de verificación individuales
-        $(document).on('change', 'table tbody input[type="checkbox"]', function () {
+
+        //Selección de checks para eliminar todos a la vez
+        $(document).ready(function () {
+            // Activate tooltip
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        
+            // Evento change para el checkbox principal (seleccionar todo)
+            $(document).on('change', '#selectAll', function () {
+                var isChecked = $(this).prop("checked");
+                $('table tbody input[type="checkbox"]').prop("checked", isChecked);
+            });
+        
+            // Evento change para las casillas de verificación individuales
+            $(document).on('change', 'table tbody input[type="checkbox"]', function () {
+            // Encuentra la fila más cercana
+            var closestRow = $(this).closest('tr');
+
+            // Obtén el valor del atributo data-id
+            var elementId = closestRow.find('.edit').data('id');
+
+            // Realiza acciones con el ID obtenido
+            console.log('ID del elemento:', elementId);
+
+
             var allChecked = $('table tbody input[type="checkbox"]:checked').length === $('table tbody input[type="checkbox"]').length;
-            $("#selectAll").prop("checked", allChecked);
+            $("#selectAll").prop("checked", allChecked);       
         });
-    });
+
+        // Evento click para el botón de eliminar
+        $(document).on('click', '#borrarVariosUsuarios', function () {
+            // Declaración de la confirmación de borrado
+            const confirmacionBorradoUsuarios = confirm("¿Estás seguro que quieres eliminar este usuario?");
+            var selectedIds = [];
+
+            // Recorre las filas de la tabla
+            $('table tbody tr').each(function () {
+                var checkbox = $(this).find('input[type="checkbox"]');
+                if (checkbox.prop('checked')) {
+                    // Obtiene el ID de la fila y lo agrega al array
+                    var elementId = $(this).find('.edit').data('id');
+                    selectedIds.push(elementId);
+                }
+            });
+
+            // Realiza acciones con los IDs obtenidos (por ejemplo, eliminar de la base de datos)
+            console.log('IDs seleccionados para eliminar:', selectedIds);
+
+            if (confirmacionBorradoUsuarios) {
+            // Verifica si hay elementos seleccionados antes de enviar la solicitud AJAX
+            if (selectedIds.length > 0) {
+                // Lógica AJAX para eliminar usuarios
+                $.ajax({
+                    url: 'BorradoVariosUsuarios.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { id_usuario: selectedIds },
+                    success: function (response) {
+                        // Maneja la respuesta del servidor
+                        if (response.success) {
+                            // Éxito: Puedes mostrar un mensaje de éxito o actualizar la tabla
+                            console.log(response.message);
+                            // Aquí puedes recargar la tabla o actualizar la interfaz según sea necesario
+                        } else {
+                            // Error: Muestra un mensaje de error
+                            console.log("Usuario borrado: " + selectedIds);
+                            cargarDatosUsuarios();
+                        }
+                    },
+                    error: function (error) {
+                        // Maneja errores de la solicitud AJAX
+                        console.error('Error en la solicitud AJAX:', error);
+                    }
+                });
+                } 
+            } else {
+                // Recorre las filas de la tabla
+                $('table tbody tr').each(function () {
+                var checkbox = $(this).find('input[type="checkbox"]');
+                if (checkbox.prop('checked')) {
+                    checkbox.prop('checked', false);
+                }
+                });
+                alert("No se ha eliminado el usuario");
+            }
+            // Desmarcar el checkbox de "Seleccionar todo"
+            $("#selectAll").prop("checked", false);
+            });
+        });
+});
