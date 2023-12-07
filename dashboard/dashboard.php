@@ -35,7 +35,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script src="ScriptDashboard.js"></script>
 </head>
 <body>
 <div class="container">
@@ -134,7 +133,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							</div>
 							<div class="col-sm-6">
 								<a href="#addEmployeeModal" class="btn btn-success" data-bs-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Añadir nuevo usuario</span></a>
-								<a href="#deleteEmployeeModal" class="btn btn-danger" data-bs-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>	
+								<a class="btn btn-danger" id="borrarVariosUsuarios"><i class="material-icons">&#xE15C;</i> <span>Eliminar</span></a>	
 							</div>
 						</div>
 					</div>
@@ -181,6 +180,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							<div class="form-group">
 								<label>Contraseña</label>
 								<input type='password' minlength='8' maxlength='16' id='contrasena' class='form-control' placeholder='(8 carácteres y uno especial)' required>
+								<i class='bi bi-eye-slash' id='togglePassword'></i>
 							</div>
 							<div class="form-group">
 								<label>Correo</label>
@@ -213,5 +213,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <script src="UsuariosDinámicos.js"></script>
 <script src="../navbar2.js"></script>
 <script src="./darkmodeDashboard.js"></script>
+<script src="toggleContraseña.js"></script>
 </body>
 </html>
