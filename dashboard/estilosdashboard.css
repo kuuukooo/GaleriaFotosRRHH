@@ -12,7 +12,6 @@ body {
 	background: var(--body-color);
 	font-family: 'Varela Round', sans-serif;
 	font-size: 13px;
-	overflow: hidden;
 }
 .table-responsive {
     margin: 30px 0;
@@ -150,6 +149,13 @@ table.table .avatar {
 	left: 5.5rem;
     position: relative;
 }    
+
+/* Icono de togglear vista de contraseña */
+ .bi-eye-slash, .bi-eye {
+     position: relative; 
+	 margin-left: 90%; 
+	 top: -1.79rem;
+} 
 /* Custom checkbox */
 .custom-checkbox {
 	position: relative;
@@ -219,7 +225,7 @@ table.table .avatar {
 .modal .modal-title {
 	display: inline-block;
 }
-.modal .form-control {
+.modal .form-control, .modal .form-control .bi-eye {
 	border-radius: 2px;
 	box-shadow: none;
 	border-color: #dddddd;
