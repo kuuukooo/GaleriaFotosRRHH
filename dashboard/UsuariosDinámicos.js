@@ -54,7 +54,6 @@ $(document).ready(function () {
                                             "<div class='form-group'>" +
                                                 "<label for='contrasena'>Contraseña</label>" +
                                                 "<input type='password' minlength='8' maxlength='16' id='contrasena' class='form-control' required>" +
-                                                "<i class='bi bi-eye-slash' id='togglePassword'></i>" +
                                             "</div>" +
                                             "<div class='form-group'>" +
                                                 "<label for='correo'>Correo</label>" +
@@ -253,18 +252,6 @@ $(document).ready(function () {
                 }
             });
         });
-        //Script para togglear la contraseña
-        $(document).ready(function () {
-            $('.bi-eye-slash').click(function () {
-                var password = $('#contrasena');
-                var type = password.attr('type') === 'password' ? 'text' : 'password';
-                password.attr('type', type);
-        
-                // Cambia la clase del icono
-                $(this).toggleClass('bi-eye bi-eye-slash');
-            });
-        });        
-        
     });  
 
         // Filtrar tabla según el buscador
