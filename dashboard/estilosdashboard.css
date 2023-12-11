@@ -285,4 +285,17 @@ una imagen se abre lo cual provoca que cuando este se cierra, produzca un bug. *
 #BotonEditar {
 	margin-right: -1rem;
 }
+.container-lg {
+	margin-left: 5rem;
+}
+}
+@media only screen and (max-width: 480px){
+.container-lg{
+	margin-left: 5rem;
+}
+}
+@media only screen and (min-width: 1000px) and (max-width: 1440px){
+.container-lg{
+	margin-left: 1rem;
+}
 }
