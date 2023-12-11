@@ -218,7 +218,7 @@ $(document).ready(function() {
         let paginationList = paginationContainer.find("ul.pagination");
         paginationList.empty();
     
-        let prevButton = $("<li class='page-item'><a class='page-link' href='#'><-</a></li>");
+        let prevButton = $("<li class='page-item'><a class='page-link' href='#'><</a></li>");
         prevButton.click(function (event) {
             event.preventDefault();
             if (paginaActual > 1) {
@@ -226,7 +226,7 @@ $(document).ready(function() {
             }
         });
     
-        let nextButton = $("<li class='page-item'><a class='page-link' href='#'>-></a></li>");
+        let nextButton = $("<li class='page-item'><a class='page-link' href='#'>></a></li>");
         nextButton.click(function (event) {
             event.preventDefault();
             if (paginaActual < totalPaginas) {
