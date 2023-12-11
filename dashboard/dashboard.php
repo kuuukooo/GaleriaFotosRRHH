@@ -58,16 +58,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				<div class="menu-bar">
 					<div class="menu">
 
-					<!-- Buscador -->
-
-						<li class="search-box">
-						<i class='bx bx-search icon'></i>
-						<form class="d-flex" id="search-form" action="buscar_img.php" method="POST">
-							<input class="form-control me-2" type="search" name="search" id="search-input" placeholder="Buscar..." aria-label="Search">
-							<button type="submit" style="display: none;"></button>
-						</form>
-						</li>
-
 					<!-- Iconos de la navbar -->
 
 						<ul class="menu-links">
