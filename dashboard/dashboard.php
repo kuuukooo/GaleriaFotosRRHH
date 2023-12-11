@@ -138,9 +138,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 						</div>
 					</div>
 					<table class="table table-striped table-hover" id="tablaUsuarios">
+						
 						<thead>
 						<input class="form-control mb-2" id="tableSearch" type="text"
-    					placeholder="Introduce un usuario...">
+    					placeholder="Introduce un usuario..." maxlength='16'>
 							<tr>
 								<th>
 									<span class="custom-checkbox">
