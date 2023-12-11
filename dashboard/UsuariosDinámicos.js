@@ -71,8 +71,8 @@ $(document).ready(function () {
                                                 "</select>" +
                                             "</div>" +
                                             "<div class='modal-footer'>" +
-                                                "<input type='button' class='btn btn-danger' data-bs-dismiss='modal' value='Cancel'>" +
-                                                "<input type='button' class='btn btn-success btn-edit' value='Editar'>" +
+                                                "<input type='button' class='btn btn-danger' data-bs-dismiss='modal' value='Cancel' id='BotonCancelarEditar'>" +
+                                                "<input type='button' class='btn btn-success btn-edit' value='Editar' id='BotonEditar'>" +
                                             "</div>" +
                                         "</div>" +
                                     "</form>" +
