@@ -12,7 +12,6 @@ body {
 	background: var(--body-color);
 	font-family: 'Varela Round', sans-serif;
 	font-size: 13px;
-	overflow: hidden;
 	overflow-x: hidden;
 }
 .table-responsive {
