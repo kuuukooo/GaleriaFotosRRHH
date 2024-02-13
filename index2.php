@@ -102,7 +102,7 @@ $stmt->execute();
 
                     <ul class="menu-links">
                         <li class="nav-link">
-                            <a href="./index2.php">
+                            <a href="index2.php">
                                 <i class='bx bx-home-alt icon'></i>
                                 <span class="text nav-text">Inicio</span>
                             </a>
