@@ -51,11 +51,20 @@ function ModoOscuro() {
             $("body").removeClass("dark");
             $(".card-body").removeClass("dark");
             $(".modal-body").removeClass("dark");
+            $(".dialogAlbum").removeClass("dark");
+            $(".wrapper").removeClass("dark");
+            $(".headerDialogAlbum").removeClass("dark");
+            $(".Main").removeClass("dark");
+            $(".imagenDivDialogAlbum").removeClass("dark");
             $(".mode-text").text("Modo Claro");
             $(".LogoVierciBlanco").css("display", "none");
             $(".LogoVierciAzul").css("display", "block");
             $(".page-link").css("background-color", "white");
             $(".page-link").css("color", "#0D6EFD");
+            $(".headerTextoDialogAlbum").css("color", "rgb(0, 0, 0)");
+            $(".footerDialogAlbum").css("background-color", "rgb(243, 244, 246)");
+            $(".cancelFooterDialogAlbum").css("background-color", "rgb(243, 244, 246)");
+            $(".cancelFooterDialogAlbum").css("color", "rgb(156, 163, 175)");
             $(".page-link").hover(function() {
                 $(this).css("background-color", "#0D6EFD");
                 $(this).css("color", "white");
