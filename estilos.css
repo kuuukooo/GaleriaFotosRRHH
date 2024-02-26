@@ -206,6 +206,7 @@
 }
 .cancelFooterDialogAlbum:hover {
         color: rgb(107, 114, 128);
+        background-color: rgb(107, 114, 128);
 }
 .botonHeader:hover {
         background-color: rgb(235, 238, 242);
@@ -220,6 +221,9 @@
         border: none;
         width: 100%;
         justify-content: space-between;
+}
+.inputFileMask:hover {
+        background-color: #38843c;
 }
 input[type="file"] {
         display: none;
@@ -298,7 +302,7 @@ una imagen se abre lo cual provoca que cuando este se cierra, produzca un bug. *
 #pagination-container {
         margin-left: 5.8rem;
         }
-        .dialogAlbum {
+.dialogAlbum {
         width: 386px;
         top: calc((297vh - 394px) / 8);
         left: calc((272vw - 386px) / 8);
