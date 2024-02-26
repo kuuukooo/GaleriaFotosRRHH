@@ -145,8 +145,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <label class="imagenLabelDialogAlbum">Imágen</label>
                 <label for="imagenInputDialogAlbum" class="inputFileMask">Agregar Imágen <i class="bi bi-images fa-lg"></i></label>
                 <input
-                    class="imagenInput"
-                    id="imagenInput"
+                    class="imagenInputDialogAlbum"
+                    id="imagenInputDialogAlbum"
                     type="file"
                     accept=".jpg, .jpeg, .png, .gif"/>
                 </div>
