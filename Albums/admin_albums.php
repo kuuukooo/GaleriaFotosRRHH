@@ -133,7 +133,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Dialog para agregar un álbum -->    
     <dialog class="dialogAlbum">
         <div class="wrapper">
-            <form>
+            <form enctype="multipart/form-data" method="POST">
             <header class="headerDialogAlbum">
                 <h1 class="headerTextoDialogAlbum">Elige las imágenes</h1>
                 <button onclick=showDialog(false) type="button" class="botonHeader">
@@ -148,11 +148,14 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     class="imagenInputDialogAlbum"
                     id="imagenInputDialogAlbum"
                     type="file"
-                    accept=".jpg, .jpeg, .png, .gif"/>
+                    accept=".jpg, .jpeg, .png, .gif"
+                    name="files[]"
+                    multiple
+                />
                 </div>
                 <div class="imagenDivDialogAlbum">
                 <label class="imagenLabelDialogAlbum">Descripción</label>
-                <input class="imagenInputDialogAlbum" id="imagenInput" type="text">
+                <input class="imagenInputDialogAlbum" id="imagenInput" type="text" name="description">
                 </div>
             </main>
             <footer class="footerDialogAlbum">
