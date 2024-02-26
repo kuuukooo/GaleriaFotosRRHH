@@ -1,5 +1,3 @@
-
-ModoOscuro();
 //Función para el modo oscuro de la página
 function ModoOscuro() {
     $(document).ready(function() {
@@ -94,3 +92,5 @@ function ModoOscuro() {
         });
     });
 }
+
+ModoOscuro();
