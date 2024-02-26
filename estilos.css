@@ -6,19 +6,15 @@
         margin-left: 0; /* Inicialmente, sin margen para estar al lado de la sidebar oculta */
         transition:  0.5s; /* Transición suave para el margen */
 }
-    
-    /* Cuando la sidebar se despliega, ajusta el margen para dejar espacio para la sidebar */
+/* Cuando la sidebar se despliega, ajusta el margen para dejar espacio para la sidebar */
 .sidebar.open {
         width: 250px; /* Ancho de la sidebar cuando está desplegada */
         transition: 0.5s; /* Transición suave para el ancho */
 }
-    
-    /* Ajusta el margen izquierdo del contenido principal para que esté al lado de la sidebar desplegada */
 .sidebar.open + .main-content {
         margin-left: 250px; /* Igual al ancho de la sidebar */
         transition: 0.5s; /* Transición suave para el margen */
 }
-    
 .logo img {
         max-width: 100px;
         margin-right: 10px;     
@@ -49,10 +45,10 @@
 .botones-utilidades a {
         padding: .2rem;
 }
- .btn-edit-description  {
+.btn-edit-description  {
         color: gray;
         background-color: transparent;
- } 
+} 
 .delete-button {
         border: thin;
         background-color: transparent;  
@@ -76,10 +72,8 @@
         margin-left: 3px;
 }      
 .original-description {
-        display: block; /* O utiliza 'none' para ocultar por defecto */
+        display: block; 
 }
-    
-    /* Agrega esta regla para ocultar la descripción original cuando el description-edit-container está visible */
 .description-edit-container.visible .original-description {
         display: none;
 }
@@ -127,28 +121,28 @@
         position: absolute;
         top: calc((100vh - 394px) / 2);
         left: calc((100vw - 386px) / 2);
-    }
+}
 
-    .dialogAlbum::backdrop {
+.dialogAlbum::backdrop {
         backdrop-filter: blur(4px);
-    }
-    .dialogAlbum.open {
+}
+.dialogAlbum.open {
         opacity: 1;
         transition: opacity .15s linear, transform .15s linear;
-    }
-    .headerDialogAlbum {
+}
+.headerDialogAlbum {
         padding-top: 1.5rem;
         padding-left: 2rem;
         padding-right: 2rem;
         background-color: rgb(255, 255, 255);
         position: relative;
-    }
-    .headerTextoDialogAlbum {
+}
+.headerTextoDialogAlbum {
         font-weight: 700;
         font-size: 1.5rem;
         line-height: 2rem;
-    }
-    .botonHeader {
+}
+.botonHeader {
         border: none;
         font-size: 1.25rem;
         line-height: 1.75rem;  
@@ -161,32 +155,32 @@
         top: 1.75rem;
         right: 1rem;
         position: absolute;
-    }
-    .spanHeader {
+}
+.spanHeader {
         color: red;
-    }
-    .Main {
+}
+.Main {
         padding: 4rem 2rem 4rem 2rem;
         background-color: rgb(255, 255, 255); 
-    }
-    .imagenDivDialogAlbum{
+}
+.imagenDivDialogAlbum{
         align-items: center;
         display: flex;
         margin-top: calc(0.75rem * calc(1 - 0));
         margin-bottom: calc(0.75rem * calc(1 - 0));
-    }
-    .imagenLabelDialogAlbum {
+}
+.imagenLabelDialogAlbum {
         margin-right: auto;
         width: 60%;
         color: rgb(156, 163, 175);
-    }
-    .imagenInputDialogAlbum, select {
+}
+.imagenInputDialogAlbum, select {
         padding: 0.5rem 0.75rem 0.5rem 0.75rem;
         width: 100%;
         border-radius: 0.5rem;
         border-width: 1px;    
-    }
-    .footerDialogAlbum {
+}
+.footerDialogAlbum {
         padding: 1rem 2rem 1rem 2rem;
         background-color: rgb(243, 244, 246);
         gap: 1.5rem;
@@ -194,29 +188,29 @@
         border-bottom-right-radius: 1rem;
         justify-content: flex-end;
         display: flex;
-    }
-    .cancelFooterDialogAlbum {
+}
+.cancelFooterDialogAlbum {
         color: rgb(156, 163, 175);
         cursor: pointer;
         border: none;       
-    }
-    .saveFooterDialogAlbum {
+}
+.saveFooterDialogAlbum {
         padding: 0.75rem 1.25rem 0.75rem 1.25rem;
         color: rgb(255, 255, 255);
         background-color: rgb(59, 130, 246);
         border-radius: 0.75rem;
         border: none;
-    }
-    .saveFooterDialogAlbum:hover {
+}
+.saveFooterDialogAlbum:hover {
         background-color: rgb(49, 106, 202);
-    }
-    .cancelFooterDialogAlbum:hover {
+}
+.cancelFooterDialogAlbum:hover {
         color: rgb(107, 114, 128);
-    }
-    .botonHeader:hover {
+}
+.botonHeader:hover {
         background-color: rgb(235, 238, 242);
-    }
-    .inputFileMask {
+}
+.inputFileMask {
         display: flex;
         padding: 10px 20px;
         cursor: pointer;
@@ -226,17 +220,17 @@
         border: none;
         width: 100%;
         justify-content: space-between;
-    }
-    input[type="file"] {
+}
+input[type="file"] {
         display: none;
-    }
+}
 /* CSS para el botón de subir imágenes */
 #btn-new-post-photo{
         margin-left: 16px;
 }
 #LabelElegirImagenes i {
         display: none;
-      }
+}
 
 #DashboardMenu {
         display: none;
@@ -244,10 +238,10 @@
 /* Versión para celulares */
 
 @media only screen and (max-width: 768px){
-         #btn-new-post-photo{
+#btn-new-post-photo{
         width: 25%;
         }
-        #LabelElegirImagenes i {
+#LabelElegirImagenes i {
         display: inline;
         border: 1px solid #0d6efd; 
         border-radius: 4px;
@@ -256,31 +250,31 @@
         background: #0d6efd;
         color: white;
         padding: 0.3rem 1rem;
-              }
-        #InputElegirImagenes {
+        }
+#InputElegirImagenes {
                 display: none;
         }    
-        /* CSS para sacar el padding right de los modal fade */
-        /* Se pusieron todas las variables entre comas para hacer el código más legible.
-        .modal.fade corresponde a cuando el modal se está cerrando, .modal.fade.show corresponde
-        a cuando el modal se muestra y .modal-open corresponde a cuando el modal está abierto. */
-        .modal.fade,
-        .modal.fade.show,
-        .modal-open {
+/* CSS para sacar el padding right de los modal fade */
+/* Se pusieron todas las variables entre comas para hacer el código más legible.
+.modal.fade corresponde a cuando el modal se está cerrando, .modal.fade.show corresponde
+a cuando el modal se muestra y .modal-open corresponde a cuando el modal está abierto. */
+.modal.fade,
+.modal.fade.show,
+.modal-open {
         padding-right: 0px !important;
         }  
-        /*Sin esta línea de css se aplica un padding-right: 84px automáticamente cuando 
-        una imagen se abre lo cual provoca que cuando este se cierra, produzca un bug. */
-         .modal-backdrop.fade{
+/*Sin esta línea de css se aplica un padding-right: 84px automáticamente cuando 
+una imagen se abre lo cual provoca que cuando este se cierra, produzca un bug. */
+.modal-backdrop.fade{
         width: 100%;
         height: 100%;
         padding-right: 0px !important;
         } 
-        #pagination-container {
+#pagination-container {
         margin-left: 5.8rem;
         }
-        /* CSS del dialog para dispositivos móviles */
-        .dialogAlbum {
+/* CSS del dialog para dispositivos móviles */
+.dialogAlbum {
         top: calc((100vh - 394px) / 2);
         left: calc((184vw - 386px) / 4);
         width: 386px;
@@ -288,20 +282,20 @@
 }
 /* Media Query Para dispositivos menores a 480px */
 @media only screen and (max-width: 480px){
-        #btn-new-post-photo{
+#btn-new-post-photo{
         width: 25%;
         }
-        .modal.fade,
-        .modal.fade.show,
-        .modal-open {
+.modal.fade,
+.modal.fade.show,
+.modal-open {
         padding-right: 0px !important;
         }  
-        .modal-backdrop.fade{
+.modal-backdrop.fade{
         width: 100%;
         height: 100%;
         padding-right: 0px !important;
         } 
-        #pagination-container {
+#pagination-container {
         margin-left: 5.8rem;
         }
         .dialogAlbum {
@@ -312,22 +306,21 @@
 }
 /* Agregar Media Query para dispositivos mas grandes como 1200px y 1000px */
 @media only screen and (max-width: 1440px){
-        .modal.fade,
-        .modal.fade.show,
-        .modal-open {
+.modal.fade,
+.modal.fade.show,
+.modal-open {
         padding-right: 0px !important;
         }  
-        .modal-backdrop.fade{
+.modal-backdrop.fade{
         width: 100%;
         height: 100%;
         padding-right: 0px !important;
         }  
-        .pagination {
+.pagination {
         position: relative;
         justify-content: center;
         } 
-        #pagination-container {
+#pagination-container {
         margin-left: 5.8rem;
         }               
 }
-/* Código revisado con el repo de Lucas. */
