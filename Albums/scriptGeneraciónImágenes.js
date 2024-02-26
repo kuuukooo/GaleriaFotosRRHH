@@ -24,24 +24,22 @@ $(document).ready(function() {
         
         // Crear un objeto FormData para enviar los datos al servidor
         let formData = new FormData();
-        formData.append('description', descripcion); // Cambio aquí
-        formData.append('files[]', imagen); // Cambio aquí
+        formData.append('description', descripcion); 
+        formData.append('files[]', imagen); 
 
         // Hacer la petición AJAX para enviar los datos al servidor y guardar en la base de datos
         $.ajax({
-            url: 'upload.php', // Ruta del archivo PHP que procesará los datos y los guardará en la base de datos
+            url: 'upload.php', 
             type: 'POST',
             data: formData,
             processData: false,
             contentType: false,
             success: function(response) {
-                // Manejar la respuesta del servidor
                 console.log(response);
-                // Aquí puedes realizar alguna acción después de crear el álbum, como mostrar un mensaje de éxito
                 if(response.success) {
-                    alert(response.success); // Mostrar mensaje de éxito
+                    alert(response.success); 
                 } else {
-                    alert(response.error); // Mostrar mensaje de error si lo hay
+                    alert(response.error); 
                 }
             },
             error: function(xhr, status, error) {
