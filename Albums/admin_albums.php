@@ -131,35 +131,35 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Dialog para agregar un álbum -->    
-    <dialog class="dialogPrueba">
+    <dialog class="dialogAlbum">
         <div class="wrapper">
             <form>
-            <header class="headerPrueba">
-                <h1 class="headerTexto">Elige las imágenes</h1>
+            <header class="headerDialogAlbum">
+                <h1 class="headerTextoDialogAlbum">Elige las imágenes</h1>
                 <button onclick=showDialog(false) type="button" class="botonHeader">
                 <span class="spanHeader"><i class="bi bi-x-lg"></i></span>
                 </button>
             </header>
             <main class="Main">
-                <div class="imagenDiv">
-                <label class="imagenLabel">Imágen</label>
-                <label for="imagenInput" class="inputFileMask">Agregar Imágen <i class="bi bi-images fa-lg"></i></label>
+                <div class="imagenDivDialogAlbum">
+                <label class="imagenLabelDialogAlbum">Imágen</label>
+                <label for="imagenInputDialogAlbum" class="inputFileMask">Agregar Imágen <i class="bi bi-images fa-lg"></i></label>
                 <input
                     class="imagenInput"
                     id="imagenInput"
                     type="file"
                     accept=".jpg, .jpeg, .png, .gif"/>
                 </div>
-                <div class="imagenDiv">
-                <label class="imagenLabel">Descripción</label>
-                <input class="imagenInput" id="imagenInput" type="text">
+                <div class="imagenDivDialogAlbum">
+                <label class="imagenLabelDialogAlbum">Descripción</label>
+                <input class="imagenInputDialogAlbum" id="imagenInput" type="text">
                 </div>
             </main>
-            <footer class="footerDialog">
-                <button class="cancelFooterDialog" formMethod="dialog" value="cancel">
+            <footer class="footerDialogAlbum">
+                <button class="cancelFooterDialogAlbum" formMethod="dialog" value="cancel">
                 Cancelar
                 </button>
-                <button class="saveFooterDialog" formMethod="dialog" value="submit">
+                <button class="saveFooterDialogAlbum" formMethod="dialog" value="submit">
                 Subir Imágen
                 </button>
             </footer>

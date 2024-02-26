@@ -119,7 +119,7 @@
         color: #fff;
 }
 /* CSS para el modal de los álbumes */
-.dialogPrueba {
+.dialogAlbum {
         border-radius: 1rem;
         border: none;
         padding: 0;
@@ -129,21 +129,21 @@
         left: calc((100vw - 386px) / 2);
     }
 
-    .dialogPrueba::backdrop {
+    .dialogAlbum::backdrop {
         backdrop-filter: blur(4px);
     }
-    .dialogPrueba.open {
+    .dialogAlbum.open {
         opacity: 1;
         transition: opacity .15s linear, transform .15s linear;
     }
-    .headerPrueba {
+    .headerDialogAlbum {
         padding-top: 1.5rem;
         padding-left: 2rem;
         padding-right: 2rem;
         background-color: rgb(255, 255, 255);
         position: relative;
     }
-    .headerTexto {
+    .headerTextoDialogAlbum {
         font-weight: 700;
         font-size: 1.5rem;
         line-height: 2rem;
@@ -169,24 +169,24 @@
         padding: 4rem 2rem 4rem 2rem;
         background-color: rgb(255, 255, 255); 
     }
-    .imagenDiv{
+    .imagenDivDialogAlbum{
         align-items: center;
         display: flex;
         margin-top: calc(0.75rem * calc(1 - 0));
         margin-bottom: calc(0.75rem * calc(1 - 0));
     }
-    .imagenLabel {
+    .imagenLabelDialogAlbum {
         margin-right: auto;
         width: 60%;
         color: rgb(156, 163, 175);
     }
-    .imagenInput, select {
+    .imagenInputDialogAlbum, select {
         padding: 0.5rem 0.75rem 0.5rem 0.75rem;
         width: 100%;
         border-radius: 0.5rem;
         border-width: 1px;    
     }
-    .footerDialog {
+    .footerDialogAlbum {
         padding: 1rem 2rem 1rem 2rem;
         background-color: rgb(243, 244, 246);
         gap: 1.5rem;
@@ -195,22 +195,22 @@
         justify-content: flex-end;
         display: flex;
     }
-    .cancelFooterDialog {
+    .cancelFooterDialogAlbum {
         color: rgb(156, 163, 175);
         cursor: pointer;
         border: none;       
     }
-    .saveFooterDialog {
+    .saveFooterDialogAlbum {
         padding: 0.75rem 1.25rem 0.75rem 1.25rem;
         color: rgb(255, 255, 255);
         background-color: rgb(59, 130, 246);
         border-radius: 0.75rem;
         border: none;
     }
-    .saveFooterDialog:hover {
+    .saveFooterDialogAlbum:hover {
         background-color: rgb(49, 106, 202);
     }
-    .cancelFooterDialog:hover {
+    .cancelFooterDialogAlbum:hover {
         color: rgb(107, 114, 128);
     }
     .botonHeader:hover {
@@ -280,7 +280,7 @@
         margin-left: 5.8rem;
         }
         /* CSS del dialog para dispositivos móviles */
-        .dialogPrueba {
+        .dialogAlbum {
         top: calc((100vh - 394px) / 2);
         left: calc((184vw - 386px) / 4);
         width: 386px;
@@ -304,7 +304,7 @@
         #pagination-container {
         margin-left: 5.8rem;
         }
-        .dialogPrueba {
+        .dialogAlbum {
         width: 386px;
         top: calc((297vh - 394px) / 8);
         left: calc((272vw - 386px) / 8);
