@@ -24,11 +24,19 @@ function ModoOscuro() {
             $("body").addClass("dark");
             $(".card-body").addClass("dark");
             $(".modal-body").addClass("dark");
+            $(".dialogAlbum").addClass("dark");
+            $(".wrapper").addClass("dark");
+            $(".headerDialogAlbum").addClass("dark");
+            $(".Main").addClass("dark");
+            $(".imagenDivDialogAlbum").addClass("dark");
             $(".mode-text").text("Modo Oscuro");
             $(".LogoVierciBlanco").css("display", "block");
             $(".LogoVierciAzul").css("display", "none");
             $(".page-link").css("background-color", "#18191a");
             $(".page-link").css("color", "white");
+            $(".headerTextoDialogAlbum").css("color", "white");
+            $(".footerDialogAlbum").css("background-color", "rgb(97, 97, 97)");
+            $(".cancelFooterDialogAlbum").css("background-color", "rgb(97, 97, 97)");
             //add a hover to the page-link
             $(".page-link").hover(function() {
                 $(this).css("background-color", "#0D6EFD");
