@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['description']) && isse
                             break;
                         }
                     } else {
-                        $response['error'] = "El archivo $fileName no es una imagen válida";
+                        $response['error'] = "El archivo $fileName no es válido";
                         break;
                     }
                 }
