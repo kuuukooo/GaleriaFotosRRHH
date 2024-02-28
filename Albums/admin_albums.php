@@ -182,24 +182,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- podría hacer una función para borrar varios albumes que lleva la opción
 de "thumbnailSelectable": true, para hacer que las miniaturas de las imágenes se puedan
 seleccionar para luego borrarse. -->
-    <div class="container justify-content-center mt-5 mb-5 py-2">
-                <div id="nanogallery2" 
-                data-nanogallery2='{
-                    "thumbnailWidth":   300,
-                    "thumbnailHeight":  300,
-                    "thumbnailAlignment": "center",
-                    "thumbnailGutterWidth": 90,
-                    "thumbnailGutterHeight": 40,
-                    "galleryTheme":    {
-                        "galleryMaxRows": "3",
-                        "galleryDisplayMode": "pagination"
-                }
-            }'>
-                <a href="" data-ngkind="album" data-ngid="1" data-ngthumb="fotos/prueba.png">Album A</a>
-                <a href="fotos/prueba.png" data-ngid="10" data-ngalbumid="1" data-ngthumb="fotos/prueba.png">Image 1 / album A</a>
-                <a href="fotos/super cap.jpg" data-ngid="11" data-ngalbumid="1" data-ngthumb="fotos/super cap.jpg">Image 2 / album A</a>
-    </div>
-</div>
+    <div class="container justify-content-center mt-5 mb-5 py-2" id="galeriaContainer">
+    </div> 
 </div>
 
 <script src="../login/ScriptTipoUsuario.js"></script> 
