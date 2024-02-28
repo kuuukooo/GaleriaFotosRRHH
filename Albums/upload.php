@@ -3,6 +3,8 @@ session_start();
 
 require $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/database/database.php';
 
+date_default_timezone_set('America/Asuncion');
+
 $image = "";
 $description = "";
 $date = date('Y-m-d H:i:s');
