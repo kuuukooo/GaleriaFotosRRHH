@@ -8,7 +8,8 @@ date_default_timezone_set('America/Asuncion');
 $image = "";
 $description = "";
 $date = date('Y-m-d H:i:s');
-$response = array();
+$response = array();           
+$maxImages = 50;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['description']) && isset($_FILES['files'])) {
     $response_message = "Datos recibidos del formulario:";
@@ -25,9 +26,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['description']) && isse
         if (isset($_FILES['files'])) {
             $countfiles = count($_FILES['files']['name']);
             $images = array();
+            $response_message .= "Cantidad de archivos: " . $countfiles . "";
 
-            if ($countfiles > 0) {
-                for ($i = 0; $i < $countfiles; $i++) {
+            // Verificar el límite de imágenes antes de procesar cualquier archivo
+            if ($countfiles > $maxImages) {
+                $response['error'] = "Por favor seleccione hasta $maxImages imágenes.";
+            } else {
+                for ($i = 0; $i < $countfiles && $i < $maxImages; $i++) {
                     $fileTmpPath = $_FILES['files']['tmp_name'][$i];
                     $fileName = $_FILES['files']['name'][$i];
                     $fileType = $_FILES['files']['type'][$i];
@@ -36,25 +41,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['description']) && isse
                     $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
                     $image = $newFileName;
 
-                    $allowedFileExtensions = array('png', 'jpg', 'jpeg');
+                    $allowedFileExtensions = array('png', 'jpg', 'jpeg', 'gif');
 
                     if (in_array($fileExtension, $allowedFileExtensions)) {
                         $uploadFileDir = './fotos/';
                         $dest_path = $uploadFileDir . $newFileName;
                         $imageType = exif_imagetype($fileTmpPath);
-
-                        if ($imageType !== false && ($imageType == IMAGETYPE_JPEG || $imageType == IMAGETYPE_PNG)) {
-                            $calidad = 40;
-                            $originalImage = "";
-
-                            if ($imageType == IMAGETYPE_PNG) {
-                                $originalImage = imagecreatefrompng($fileTmpPath);
+                    
+                        if ($imageType !== false && ($imageType == IMAGETYPE_JPEG || $imageType == IMAGETYPE_PNG || $imageType == IMAGETYPE_GIF)) {
+                            if ($imageType == IMAGETYPE_GIF) {
+                                move_uploaded_file($fileTmpPath, $dest_path); // For GIF, just move the file without compression
+                                array_push($images, $image); // Optionally add the image to the images array
                             } else {
-                                $originalImage = imagecreatefromjpeg($fileTmpPath);
-                            }
-
-                            if ($originalImage !== false && imagejpeg($originalImage, $dest_path, $calidad)) {
-                                array_push($images, $image);
+                                $calidad = 40;
+                                $originalImage = "";
+                    
+                                if ($imageType == IMAGETYPE_PNG) {
+                                    $originalImage = imagecreatefrompng($fileTmpPath);
+                                } else {
+                                    $originalImage = imagecreatefromjpeg($fileTmpPath);
+                                }
+                    
+                                if ($originalImage !== false && imagejpeg($originalImage, $dest_path, $calidad)) {
+                                    array_push($images, $image);
+                                }
                             }
                         } else {
                             $response['error'] = "El archivo $fileName no es una imagen válida";
@@ -66,36 +76,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['description']) && isse
                     }
                 }
 
-                $maxImages = 50;
+                if (!isset($response['error'])) {
+                    $imagesList = implode(",", $images);
+                    $query = "INSERT INTO albumes (imagen, descripcion, fecha_creacion, id_usuario) VALUES ('$imagesList', '$description', :fecha_creacion, :id_usuario)";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bindParam(':id_usuario', $userId);
+                    $stmt->bindParam(':fecha_creacion', $date);
 
-                if (count($images) > $maxImages) {
-                    $response['error'] = "Por favor, seleccione hasta $maxImages imágenes.";
-                } else {
-                    if (!isset($response['error'])) {
-                        $imagesList = implode(",", $images);
-                        $query = "INSERT INTO albumes (imagen, descripcion, fecha_creacion, id_usuario) VALUES ('$imagesList', '$description', :fecha_creacion, :id_usuario)";
-                        $stmt = $conn->prepare($query);
-                        $stmt->bindParam(':id_usuario', $userId);
-                        $stmt->bindParam(':fecha_creacion', $date);
+                    if ($stmt->execute()) {
+                        $albumId = $conn->lastInsertId();
+                        $queryImagenes = "INSERT INTO imagenes_albumes (id_usuario, id_album, imagen, descripcion, fecha_carga) VALUES (:id_usuario, :id_album, :imagen, :descripcion, :fecha_carga)";
+                        $stmtImagenes = $conn->prepare($queryImagenes);
+                        $stmtImagenes->bindParam(':id_usuario', $userId);
+                        $stmtImagenes->bindParam(':id_album', $albumId);
+                        $stmtImagenes->bindParam(':imagen', $imagesList);
+                        $stmtImagenes->bindParam(':descripcion', $description);
+                        $stmtImagenes->bindParam(':fecha_carga', $date);
 
-                        if ($stmt->execute()) {
-                            $albumId = $conn->lastInsertId();
-                            $queryImagenes = "INSERT INTO imagenes_albumes (id_usuario, id_album, imagen, descripcion, fecha_carga) VALUES (:id_usuario, :id_album, :imagen, :descripcion, :fecha_carga)";
-                            $stmtImagenes = $conn->prepare($queryImagenes);
-                            $stmtImagenes->bindParam(':id_usuario', $userId);
-                            $stmtImagenes->bindParam(':id_album', $albumId);
-                            $stmtImagenes->bindParam(':imagen', $imagesList);
-                            $stmtImagenes->bindParam(':descripcion', $description);
-                            $stmtImagenes->bindParam(':fecha_carga', $date);
-
-                            if ($stmtImagenes->execute()) {
-                                $response['success'] = "Álbum y imágenes subidos correctamente";
-                            } else {
-                                $response['error'] = "Error al insertar en la tabla imagenes_albumes: " . $stmtImagenes->errorInfo()[2];
-                            }
+                        if ($stmtImagenes->execute()) {
+                            $response['success'] = "Álbum y imágenes subidos correctamente";
                         } else {
-                            $response['error'] = "Error al insertar en la tabla albumes: " . $stmt->errorInfo()[2];
+                            $response['error'] = "Error al insertar en la tabla imagenes_albumes: " . $stmtImagenes->errorInfo()[2];
                         }
+                    } else {
+                        $response['error'] = "Error al insertar en la tabla albumes: " . $stmt->errorInfo()[2];
                     }
                 }
             }
