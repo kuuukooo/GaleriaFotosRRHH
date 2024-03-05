@@ -8,20 +8,24 @@ try {
     $conn = $database->getConnection();
 
     $sql = "SELECT 
-                a.id_album, 
-                a.descripcion AS album_descripcion, 
-                a.imagen AS album_miniatura, 
-                i.id_img_alb, 
-                i.descripcion AS imagen_descripcion, 
-                i.imagen, 
-                i.id_album AS imagen_id_album
-            FROM 
-                albumes a
-            LEFT JOIN 
-                imagenes_albumes i ON a.id_album = i.id_album
-            ORDER BY 
-                a.id_album, 
-                i.id_img_alb";
+            a.id_album, 
+            a.descripcion AS album_descripcion, 
+            a.imagen AS album_miniatura, 
+            i.id_img_alb, 
+            i.descripcion AS imagen_descripcion, 
+            i.imagen, 
+            i.id_album AS imagen_id_album,
+            GROUP_CONCAT(i.imagen) AS imagenes
+        FROM 
+            albumes a
+        LEFT JOIN 
+            imagenes_albumes i ON a.id_album = i.id_album
+        GROUP BY 
+            a.id_album, 
+            i.id_img_alb
+        ORDER BY 
+            a.id_album, 
+            i.id_img_alb";
 
     $result = $conn->query($sql);
 
@@ -37,15 +41,19 @@ try {
                 $datos[$current_album]["descripcion"] = $row["album_descripcion"];
                 $datos[$current_album]["miniatura"] = $row["album_miniatura"];
                 $datos[$current_album]["imagenes"] = array();
+        
+                // Dividir la cadena de imágenes en una matriz
+                $imagenes = explode(',', $row['imagenes']);
+                foreach ($imagenes as $imagen) {
+                    $datos[$current_album]["imagenes"][] = array(
+                        "id_img_alb" => $row["id_img_alb"], // o puedes asignar un valor si es necesario
+                        "descripcion" => $row["imagen_descripcion"], // o puedes asignar un valor si es necesario
+                        "imagen" => $imagen,
+                        "id_album" => $row["imagen_id_album"]
+                    );
+                }
             }
-
-            $datos[$current_album]["imagenes"][] = array(
-                "id_img_alb" => $row["id_img_alb"],
-                "descripcion" => $row["imagen_descripcion"],
-                "imagen" => $row["imagen"],
-                "id_album" => $row["imagen_id_album"]
-            );
-        }
+        }  
     }
 
     echo json_encode($datos);
