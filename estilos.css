@@ -226,7 +226,7 @@
         background-color: #38843c;
 }
 input[type="file"] {
-        display: none;
+       display: none;
 }
 /* CSS para el botón de subir imágenes */
 #btn-new-post-photo{
