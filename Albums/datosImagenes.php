@@ -52,6 +52,11 @@ try {
                         "id_album" => $row["imagen_id_album"]
                     );
                 }
+
+                // Si hay imágenes en el álbum, designa la primera como miniatura
+                if (count($datos[$current_album]["imagenes"]) > 0) {
+                    $datos[$current_album]["miniatura"] = $datos[$current_album]["imagenes"][0]["imagen"];
+                }
             }
         }  
     }
