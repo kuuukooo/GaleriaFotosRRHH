@@ -67,22 +67,40 @@ $(document).ready(function () {
 });
 
 
-
-
-// Función para crear un álbum
+//Función para crear el álbum
 const crearAlbum = () => {
-    // Obtener los datos del formulario
     let descripcion = $('#imagenInput').val(); 
     let imagenes = $('#imagenInputDialogAlbum').prop('files'); 
     
+    // Validar si el formulario está vacío
+    if(descripcion.trim() === '' && imagenes.length === 0) {
+        alert("Por favor, ingresa al menos una descripción o selecciona al menos una imagen.");
+        return; 
+    }
+
     // Crear un objeto FormData para enviar los datos al servidor
     let formData = new FormData();
     formData.append('description', descripcion); 
-    
+
+    let imagenesExcedidas = false; // Bandera para verificar si se superó el límite de imágenes
+
     // Agregar cada archivo al objeto FormData
     for (let i = 0; i < imagenes.length; i++) {
-        formData.append('files[]', imagenes[i]); 
+        if(imagenes.length <= 50){
+            formData.append('files[]', imagenes[i]);
+        } else {
+            imagenesExcedidas = true;
+            break; 
+        }
     }
+
+    // Verificar si se superó el límite de imágenes
+    if(imagenesExcedidas) {
+        alert("No se pueden subir más de 50 imágenes");
+        return;
+    }
+
+    // Si no hay errores, enviar la solicitud AJAX
     $.ajax({
         url: 'upload.php', 
         type: 'POST',
@@ -91,6 +109,7 @@ const crearAlbum = () => {
         contentType: false,
         success: function(response) {
             console.log("respuesta exitosa:", response);
+            console.log(formData)
             if(response.success) {
               $(galeriaContainer).empty();
               CargadeImagenes();
@@ -101,12 +120,14 @@ const crearAlbum = () => {
             }
         },
         error: function(xhr, status, error) {
-            // Manejar errores
             console.error(xhr.responseText);
+            console.log(formData);
             alert("Error en la solicitud AJAX. Consulta la consola para más detalles.");
         }
-    }) ;
-} 
+    });
+}
+
+
 
 // Llamar a la función para crear un álbum cuando se hace clic en el botón "Subir Imagen"
 $('.saveFooterDialogAlbum').on('click', function() {
