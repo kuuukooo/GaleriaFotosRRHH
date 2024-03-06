@@ -36,7 +36,6 @@ function CargadeImagenes() {
             $.each(album.imagenes, function(index, imagen) {
                 items.push({
                 src: "fotos/" + imagen.imagen,
-                title: imagen.descripcion,
                 albumID: album.id_album
                 });
             });
@@ -113,8 +112,8 @@ function CargadeImagenes() {
                 if(response.success) {
                 $(galeriaContainer).empty();
                 CargadeImagenes();
-
-                    alert(response.success); 
+                limpiar();
+                alert(response.success); 
                 } else {
                     alert(response.error); 
                 }
@@ -127,7 +126,15 @@ function CargadeImagenes() {
         });
     }
 
+    const limpiar = () => {
+        $('#imagenInput').val('');  // Borrar el valor del input de descripción
+        $('#imagenInputDialogAlbum').val('');  // Borrar el valor del input de imágenes
+    }
+        
 
+    $('.cancelFooterDialogAlbum', '.spanHeader').on('click', function() {
+        limpiar();
+    });
 
     // Llamar a la función para crear un álbum cuando se hace clic en el botón "Subir Imagen"
     $('.saveFooterDialogAlbum').on('click', function() {
@@ -138,5 +145,5 @@ function CargadeImagenes() {
     //Función para mostrar el dialog
     function showDialog(show) {
     const dialog = document.querySelector('dialog');
-    show ? dialog.showModal() : dialog.close();
+    show ? dialog.showModal() : dialog.close(), limpiar();
     }
