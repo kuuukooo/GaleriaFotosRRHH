@@ -144,7 +144,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="imagenDivDialogAlbum">
                 <label class="imagenLabelDialogAlbum">Imágen</label>
                 <label for="imagenInputDialogAlbum" class="inputFileMask">Agregar Imágen <i class="bi bi-images fa-lg"></i></label>
-                <input type="file" class="imagenInputDialogAlbum" id="imagenInputDialogAlbum" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg, .gif" required maxlength="50">
+                <input type="file" class="imagenInputDialogAlbum" id="imagenInputDialogAlbum" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg, .gif" maxlength="50">
                 </div>
                 <div class="imagenDivDialogAlbum">
                 <label class="imagenLabelDialogAlbum">Descripción</label>
@@ -152,7 +152,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </main>
             <footer class="footerDialogAlbum">
-                <button class="cancelFooterDialogAlbum" formMethod="dialog" value="cancel">
+                <button onclick=showDialog(false) class="cancelFooterDialogAlbum" value="cancel">
                 Cancelar
                 </button>
                 <button class="saveFooterDialogAlbum" formMethod="dialog" value="submit">
