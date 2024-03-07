@@ -8,41 +8,44 @@ console.log("Corriendo prueba.");
 
 
 function CargadeImagenes() {
-  // Crear el div de my_nanogallery2 con los atributos data necesarios
+    // Crear el div de my_nanogallery2 con los atributos data necesarios
     let galleryDiv = $('<div id="my_nanogallery2" data-nanogallery2=\'{}\'></div>');
     let galeriaContainer = document.getElementById('galeriaContainer');
-  // Agregar el div al cuerpo del documento
+    // Agregar el div al cuerpo del documento
     $(galeriaContainer).append(galleryDiv);
 
-  // Realizar petición AJAX para obtener los datos de los álbumes e imágenes
+    // Realizar petición AJAX para obtener los datos de los álbumes e imágenes
     $.ajax({
         url: 'datosImagenes.php',
         dataType: 'json',
         success: function(data) {
             let items = [];
-
-          // Iterar sobre los datos recibidos y construir los objetos de la galería
+        
+            // Iterar sobre los datos ordenados y construir los objetos de la galería
             $.each(data, function(index, album) {
-              // Añadir el álbum
-            items.push({
-                src: "fotos/" + album.miniatura,
-                srct: "fotos/" + album.miniatura,
-                title: album.descripcion,
-                ID: album.id_album,
-                kind: 'album'
-            });
-
-              // Añadir las imágenes del álbum
-            $.each(album.imagenes, function(index, imagen) {
+                // Añadir el álbum
                 items.push({
-                src: "fotos/" + imagen.imagen,
-                albumID: album.id_album
+                    src: "fotos/" + album.miniatura,
+                    srct: "fotos/" + album.miniatura,
+                    title: album.descripcion,
+                    ID: album.id_album,
+                    kind: 'album',
+                    customData: {
+                        date: album.fecha_creacion // Asegúrate de que esta propiedad está asignada correctamente
+                    }
+                });
+        
+                // Añadir las imágenes del álbum ordenadas por fecha de creación
+                $.each(album.imagenes, function(index, imagen) {
+                    items.push({
+                        src: "fotos/" + imagen.imagen,
+                        albumID: album.id_album
+                    });
                 });
             });
             console.log(items);
-        });
-    
-          // Inicializar la galería nanogallery2 con los items obtenidos
+
+            // Inicializar la galería nanogallery2 con los items obtenidos
             $("#my_nanogallery2").nanogallery2({
                 items: items,
                 thumbnailWidth: 300,
@@ -51,15 +54,15 @@ function CargadeImagenes() {
                 thumbnailGutterWidth: 70,
                 thumbnailGutterHeight: 50,
                 galleryMaxRows: 3,
-                locationHash: false,
-                gallerySorting: 'reversed'
-        });
-        },
-            error: function(jqXHR, textStatus, errorThrown) {
+                locationHash: false
+            });
+        }, 
+        error: function(jqXHR, textStatus, errorThrown) {
             console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
         }
     });
 }
+
 
     $(document).ready(function () {
         CargadeImagenes();
