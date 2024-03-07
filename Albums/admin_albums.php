@@ -105,7 +105,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="bottom-content">
                     <li class="">
-                        <a href="login/logout.php">
+                        <a href="../login/logout.php">
                             <i class='bx bx-log-out icon'></i>
                             <span class="text nav-text">Cerrar Sesión</span>
                         </a>
