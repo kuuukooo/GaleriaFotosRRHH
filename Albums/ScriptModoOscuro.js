@@ -18,7 +18,7 @@ function ModoOscuro() {
             return false;
         }
     
-                        // Función para habilitar el modo oscuro
+        // Función para habilitar el modo oscuro
         function enableDarkMode() {
             console.log("Modo oscuro activado");
             $("body").addClass("dark");
