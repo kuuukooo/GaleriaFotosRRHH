@@ -25,7 +25,6 @@ try {
                 a.id_album, 
                 i.id_img_alb
             ORDER BY 
-                a.fecha_creacion DESC, -- Ordenar los álbumes por fecha_creacion de forma descendente
                 a.id_album, 
                 i.id_img_alb";
 
