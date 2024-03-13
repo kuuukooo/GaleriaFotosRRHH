@@ -76,7 +76,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <li class="search-box">
                     <i class='bx bx-search icon'></i>
-                    <form class="d-flex" id="search-form" action="buscar_img.php" method="POST">
+                    <form class="d-flex" id="search-form">
                         <input class="form-control me-2" type="search" name="search" id="search-input" placeholder="Buscar..." aria-label="Search">
                         <button type="submit" style="display: none;"></button>
                     </form>
@@ -88,7 +88,14 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li class="nav-link">
                             <a href="../index2.php">
                                 <i class='bx bx-home-alt icon'></i>
-                                <span class="text nav-text">Inicio</span>
+                                <span class="text nav-text">Galería</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-link">
+                            <a href="admin_albums.php">
+                                <i class='bx bx-photo-album icon'></i>
+                                <span class="text nav-text">Albumes</span>
                             </a>
                         </li>
 
@@ -169,6 +176,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <h5 class="mb-3">Album de imágenes</h5>
                         <button class="btn btn-primary mb-3 show-modal" onclick=showDialog(true)>Crear un álbum</button>
                 </div>
+                <p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
     </div>
 
     <!-- Imágenes -->
