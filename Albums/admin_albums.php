@@ -176,7 +176,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="mt-5 mx-auto">
                     <h5 class="mb-3">Album de imágenes</h5>
                         <button class="btn btn-primary mb-3 show-modal" onclick=showDialog(true)>Crear un álbum</button>
-                        <button class="btn btn-danger mb-3" id="eliminarAlb">Eliminar un álbum</button>
                 </div>
                 <p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
     </div>
