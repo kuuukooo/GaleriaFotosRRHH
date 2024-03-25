@@ -25,6 +25,15 @@ async function checkCookie() {
             for (var i = 0; i < downloadButton.length; i++) {
                 downloadButton[i].style.display = "none";
             }
+            let deleteButtonAlbum = document.querySelectorAll('[data-ngy2action="custom1"]');
+            for (let i = 0; i < deleteButtonAlbum.length; i++) {
+                deleteButtonAlbum[i].style.display = "none";
+            }
+
+            let editButtonAlbum = document.querySelectorAll('[data-ngy2action="custom2"]');
+            for (let i = 0; i < editButtonAlbum.length; i++){
+                editButtonAlbum[i].style.display = "none";
+            }
         } else {
             $("#DashboardMenu").show();
         }
