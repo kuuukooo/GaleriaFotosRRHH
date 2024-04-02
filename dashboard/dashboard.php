@@ -30,7 +30,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <!-- CSS -->
 <link rel="stylesheet" href="estilosdashboard.css">
-<link rel="stylesheet" type="text/css" href="../navbar2.css">
+<link rel="stylesheet" type="text/css" href="../NavBar/navbar2.css">
 <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -202,7 +202,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	</div>
 </div>
 <script src="UsuariosDinámicos.js"></script>
-<script src="../navbar2.js"></script>
+<script src="../NavBar/navbar2.js"></script>
 <script src="./darkmodeDashboard.js"></script>
 <script src="toggleContraseña.js"></script>
 </body>
