@@ -42,7 +42,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nanogallery2/3.0.5/css/nanogallery2.min.css" integrity="sha512-6sOT9zKSKq1CYgNMqtcY84tFPDnG1yX5mxwdGQiAVpAomVr2kUKJ//pFeU/KfaZDVCOru5iFOVswpT4RWWF2dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css'>
     <link rel="stylesheet" type="text/css" href="../estilos.css">
-    <link rel="stylesheet" type="text/css" href="../navbar2.css">
+    <link rel="stylesheet" type="text/css" href="../NavBar/navbar2.css">
     <!-- Scripts -->    
     <!-- Librerias Utilizadas: JSzip y Nanogallery2 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
@@ -189,7 +189,7 @@ seleccionar para luego borrarse. -->
 </div>
 
 <script src="../login/ScriptTipoUsuario.js"></script> 
-<script src="../navbar2.js"></script>
+<script src="../Navbar/navbar2.js"></script>
 <script src="scriptModoOscuro.js"></script>
 <script src="scriptGeneraciónImágenes.js"></script>
 </body>
