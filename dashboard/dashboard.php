@@ -21,7 +21,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Bootstrap Prueba</title>
+<title>Menú de Usuarios</title>
 <link rel="icon" type="image/x-icon" href="../assets/logovierciblanco.svg">
 <!-- Librerías -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
