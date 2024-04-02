@@ -67,7 +67,7 @@
                 thumbnailAlignment: 'center',
                 thumbnailGutterWidth: 70,
                 thumbnailGutterHeight: 50,
-                galleryMaxRows: 3,
+                galleryMaxRows: 30,
                 galleryDisplayMode: 'pagination',
                 galleryPaginationMode: 'numbers',
                 locationHash: false,
@@ -266,7 +266,7 @@
                     if (response.success === true) {
                         $(galeriaContainer).empty();
                         CargadeImagenes();
-                        alert("Imagen agregada correctamente.");
+                        alert("Imagen borrada correctamente.");
                     } else if (response.success === false) {
                         alert(response.error);
                     } else {
