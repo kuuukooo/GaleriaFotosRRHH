@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     const generarListadoImagenes = (data) => {
         data.imagenes.forEach(function(imagen) {
-            // Create a new element .col and .card with jQuery
+            // Crea un nuevo elemento .col y .card con jQuery
             let colCardContainer = $('<div>');
             colCardContainer.addClass('col');
             colCardContainer.attr('id', 'col' + imagen.id_imagen);
@@ -11,45 +11,45 @@ $(document).ready(function() {
             let cardElement = $('<div>');
             cardElement.addClass('card');
 
-            // Create a new element div with jQuery
+            // Crea un nuevo elemento div con jQuery
             let carouselElement = $('<div>');
 
-            // Assign the ID dynamically to the carousel element
+            // Asigna la ID dinámicamente al elemento carrusel
             carouselElement.attr('id', 'carousel' + imagen.id_imagen);
             carouselElement.addClass('carousel slide');
             carouselElement.attr('data-bs-ride', 'carousel');
 
-            // Create the carousel container outside the loop
+            // Crea el contenedor del carrusel fuera del bucle
             let carouselInner = $('<div class="carousel-inner"></div>');
 
-            // Loop through the images and create the carousel-item elements
+            // Itera sobre las imágenes y crea los elementos carousel-item
             $.each(imagen.imagenes, function(j, imageName) {
                 let isActive = j === 0 ? 'active' : '';
 
-                // Create the carousel item
+                // Crea el item carrusel
                 let carouselItem = $('<div>');
                 carouselItem.addClass('carousel-item ' + isActive);
 
-                // Add the carousel item to the carousel inner
+                // Añade el item carrusel al carrusel interior
                 carouselInner.append(carouselItem);
 
-                // Create the modal dynamically
+                // Crea el modal dinámicamente
                 let modal = $('<div class="modal fade" id="modal' + imagen.id_imagen + '-' + j + '" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">');
                 let modalDialog = $('<div class="modal-dialog modal-dialog-centered modal-lg">');
                 let modalContent = $('<div class="modal-content">');
                 let modalBody = $('<div class="modal-body">');
 
-                // Create the carousel element
+                // Crea el elemento del carrusel
                 let carouselElement = $('<div>');
                 carouselElement.addClass('carousel slide');
                 carouselElement.attr('id', 'carousel' + imagen.id_imagen + '-' + j);
                 carouselElement.attr('data-bs-ride', 'carousel');
 
-                // Create the carousel inner element
+                // Crea el elemento carrusel interior
                 let modalCarouselInner = $('<div>');
                 modalCarouselInner.addClass('carousel-inner');
 
-                 // Create the link and the image container
+                 // Crea el link y el contenedor de la imagen
                  let link = $('<a>');
                  link.attr('href', '#');
                  link.attr('data-bs-toggle', 'modal');
@@ -64,43 +64,43 @@ $(document).ready(function() {
                  link.append(imageContainer);
                  carouselItem.append(link);
 
-                // Loop through the images and create the carousel-item elements
+                // Itera sobre las imagenes y crea los elementos carousel-item
                 $.each(imagen.imagenes, function(k, modalImageName) {
                     let modalIsActive = k === j ? 'active' : '';
 
-                    // Create the carousel item
+                    // Crea el item carrusel
                     let modalCarouselItem = $('<div>');
                     modalCarouselItem.addClass('carousel-item ' + modalIsActive);
 
-                    // Create the image element
+                    // Crea el elemento de la imagen
                     let modalImageElement = $('<img>');
                     modalImageElement.attr('src', './assets/images/posts/' + modalImageName);
                     modalImageElement.addClass('d-block w-100');
 
-                    // Add the image to the carousel item
+                    // Añade la imagen al item del carrusel
                     modalCarouselItem.append(modalImageElement);
 
-                    // Add the carousel item to the carousel inner
+                    // Añade el item del carrusel al carrusel interior
                     modalCarouselInner.append(modalCarouselItem);
                 });
 
-                // Add the carousel inner to the carousel element
+                // Añade el carousel inner al elemento carousel
                 carouselElement.append(modalCarouselInner);
 
-                // Create navigation buttons for the carousel
+                // Crea botones de navegación para el carrusel
                 let prevButton = $('<button class="carousel-control-prev" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="prev">');
                 prevButton.html('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
                 let nextButton = $('<button class="carousel-control-next" data-bs-target="#carousel' + imagen.id_imagen + '-' + j + '" data-bs-slide="next">');
                 nextButton.html('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
 
-                // Add the navigation buttons to the carousel
+                // Añade los botones de navegación al carrusel
                 carouselElement.append(prevButton);
                 carouselElement.append(nextButton);
 
-                // Add the carousel to the modal body
+                // Añade el carrusel al cuerpo del modal
                 modalBody.append(carouselElement);
 
-                // Add CSS to the modal body to make it fill the entire modal
+                //Añade CSS al cuerpo del modal para que llene todo el modal
                 modalBody.css('justify-content', 'center');
                 modalBody.css('align-items', 'center');
 
@@ -108,20 +108,15 @@ $(document).ready(function() {
                 modalDialog.append(modalContent);
                 modal.append(modalDialog);
 
-                // Add the modal to the end of the document
                 $('body').append(modal);
             });
 
-            // Add the carousel inner to the carousel element
             carouselElement.append(carouselInner);
 
-            // Add the carousel to the card element
             cardElement.append(carouselElement);
 
-            // Add the card to the column container
             colCardContainer.append(cardElement);
 
-            // Add the column container to the row container
             $('#row').append(colCardContainer);
 
                 // Crear el elemento card-body dentro de la .card
@@ -196,14 +191,13 @@ $(document).ready(function() {
     
         $.ajax({
             type: "GET",
-            url: "cargar_Imagenes.php?pagina=" + pagina,
+            url: "cargar_imagenes.php?pagina=" + pagina,
             dataType: "json",
             success: function (data) {
                 container.empty();
 
                 generarBotonesPaginacion(data.totalPaginas, pagina);
                 generarListadoImagenes(data);
-                // Create a new carousel item for each image uploaded
                 
             },
                 error: function(error) {
@@ -288,7 +282,7 @@ function ModoOscuro() {
                     return false;
                 }
             
-                                // Función para habilitar el modo oscuro
+                // Función para habilitar el modo oscuro
                 function enableDarkMode() {
                     console.log("Modo oscuro activado");
                     $("body").addClass("dark");
@@ -299,7 +293,6 @@ function ModoOscuro() {
                     $(".LogoVierciAzul").css("display", "none");
                     $(".page-link").css("background-color", "#18191a");
                     $(".page-link").css("color", "white");
-                    //add a hover to the page-link
                     $(".page-link").hover(function() {
                         $(this).css("background-color", "#0D6EFD");
                     }, function() {
@@ -339,10 +332,8 @@ function ModoOscuro() {
                 $(document).on('click', '#darkModeSwitch', function() {
                     const isDarkMode = $("body").hasClass("dark");
                     if (isDarkMode) {
-                        // Desactivar el modo oscuro
                         disableDarkMode();
                     } else {
-                        // Activar el modo oscuro
                         enableDarkMode();
                     }
                     // Guardar el estado del modo en una cookie
@@ -351,13 +342,10 @@ function ModoOscuro() {
                 $(document).off('click', '#darkModeSwitch').on('click', '#darkModeSwitch', function() {
                     const isDarkMode = $("body").hasClass("dark");
                     if (isDarkMode) {
-                        // Desactivar el modo oscuro
                         disableDarkMode();
                     } else {
-                        // Activar el modo oscuro
                         enableDarkMode();
                     }
-                    // Guardar el estado del modo en una cookie
                     saveDarkModeStateToCookie(!isDarkMode);
                 });
             });
@@ -557,13 +545,10 @@ $(document).ready(function() {
         let imageId = $(this).data("image-id");
         let cardBody = $(this).closest('.card-body');
 
-        // Hide the original description and buttons
         cardBody.find('.botones-utilidades, .original-description').hide();
 
-        // Create the description edit container
         let descriptionEditContainer = $(`#description-edit-${imageId}`);
 
-        // Show the description edit container
         descriptionEditContainer.addClass('visible');
         descriptionEditContainer.css('display', 'block');
     });
@@ -574,10 +559,7 @@ $(document).ready(function() {
         let imageId = $(this).data("image-id");
         let cardBody = $(this).closest('.card-body');
 
-        // Hide the description edit container
-        // $(`#description-edit-${imageId}`).removeClass('visible');
         $(`#description-edit-${imageId}`).hide();
-        // Show the original description and buttons
         cardBody.find('.botones-utilidades, .original-description').show();
 
     });

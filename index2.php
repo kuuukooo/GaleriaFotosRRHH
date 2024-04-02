@@ -24,14 +24,13 @@ if ($stmt->rowCount() > 0) {
 $por_pagina = 12;
 $pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
 
-// Ajustamos la lógica para obtener el valor de $empieza
+
 if ($pagina_actual > 1) {
     $empieza = ($pagina_actual - 1) * $por_pagina;
 } else {
     $empieza = 0;
 }
 
-// Usamos una variable adicional para llevar registro de la página actual
 $pagina_mostrada = $pagina_actual;
 
 $query = "SELECT * FROM imagenes_sueltas ORDER BY id_imagen DESC LIMIT " . intval($empieza) . ", $por_pagina";
@@ -176,7 +175,6 @@ $stmt->execute();
                             <h5 class="mb-3">Elige tu foto y añade una descripción</h5>
                             <div class="d-flex justify-content-between">
                                 <input type="file"id="InputElegirImagenes" class="form-control mb-3" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg" style="width: 40%" required>
-                                <!-- Se agregó un label para ocultar el botón de Elegir imágenes en dispositivos móviles -->
                                 <label for="InputElegirImagenes" id="LabelElegirImagenes">
                                     <i class="bi bi-images fa-lg"></i>
                                 </label>
@@ -198,7 +196,6 @@ $stmt->execute();
             <!-- Paginación -->
             <div id="pagination-container">
             <ul class="pagination">
-                <!-- Los botones de paginación se generarán aquí -->
             </ul>
             </div>
 
