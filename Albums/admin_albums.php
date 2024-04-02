@@ -189,8 +189,8 @@ seleccionar para luego borrarse. -->
 </div>
 
 <script src="../login/ScriptTipoUsuario.js"></script> 
-<script src="../Navbar/navbar2.js"></script>
-<script src="scriptModoOscuro.js"></script>
+<script src="../NavBar/navbar2.js"></script>
+<script src="ScriptModoOscuro.js"></script>
 <script src="scriptGeneraciónImágenes.js"></script>
 </body>
 </html>
