@@ -201,9 +201,9 @@ $stmt->execute();
 
 <!-- Script de Botones -->
 
-<script src="imagenesDinámicas.js"></script>
-<script src="descarga_imágenes.js"></script>
-<script src="eliminar_imagen.js"></script>
+<script src="ImagenesSueltas/imagenesDinámicas.js"></script>
+<script src="ImagenesSueltas/descarga_imágenes.js"></script>
+<script src="ImagenesSueltas/eliminar_imagen.js"></script>
 <script src="NavBar/navbar2.js"></script>
 <script src="login/ScriptTipoUsuario.js"></script> 
 </body>
