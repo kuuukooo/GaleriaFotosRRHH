@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/database/database.php';
+require "../database/database.php";
 
 $image = "";
 $description = "";

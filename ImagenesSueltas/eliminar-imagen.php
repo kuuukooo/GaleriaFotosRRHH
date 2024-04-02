@@ -3,7 +3,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 session_start();
-require "../controllers/posts.php";
+
 require "../database/database.php";
 
 $response = []; // Inicializar una respuesta vacía

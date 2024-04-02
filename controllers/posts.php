@@ -1,6 +1,6 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/database/database.php';
+require "../Galeria5-AJAX/database/database.php";
 
 // Crea una instancia de la clase Database
 $database = new Database();
