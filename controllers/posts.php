@@ -15,4 +15,4 @@ $stmt->execute();
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     array_push($posts, $row);
 }
-?>
+
