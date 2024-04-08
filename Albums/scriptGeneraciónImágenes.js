@@ -32,8 +32,6 @@
 
                 let items = [];
 
-                console.log(dataArray)
-
                 // Iterar sobre los datos y construir los objetos de la galería
                 $.each(dataArray, function(index, album) {
                     // Añadir el álbum
