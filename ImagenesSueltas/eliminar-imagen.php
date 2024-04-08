@@ -31,17 +31,22 @@ if (isset($_POST['id_imagen'])) {
             foreach ($imagesName as $imageNameToDelete) {
                 $imagePath = "../assets/images/posts/" . $imageNameToDelete;
                 if (file_exists($imagePath)) {
-                    unlink($imagePath);
+                    if (unlink($imagePath)) {
+                        // Eliminar la entrada de la base de datos
+                        $deleteQuery = "DELETE FROM imagenes_sueltas WHERE id_imagen = :imageId";
+                        $stmt = $conn->prepare($deleteQuery);
+                        $stmt->bindParam(':imageId', $imageId, PDO::PARAM_INT);
+                        $stmt->execute();
+                        
+                        $response['success'] = "Imagen eliminada exitosamente.";
+                    } else {
+                        $response['error'] = "Error al eliminar la imagen del sistema de archivos.";
+                        // Puedes agregar más detalles sobre el error si lo deseas.
+                    }
+                } else {
+                    $response['error'] = "La imagen no existe en el sistema de archivos.";
                 }
             }
-
-            // Eliminar la entrada de la base de datos
-            $deleteQuery = "DELETE FROM imagenes_sueltas WHERE id_imagen = :imageId";
-            $stmt = $conn->prepare($deleteQuery);
-            $stmt->bindParam(':imageId', $imageId, PDO::PARAM_INT);
-            $stmt->execute();
-
-            $response['success'] = "Imagen eliminada exitosamente.";
         } else {
             $response['error'] = "No se encontró la imagen.";
         }
@@ -54,4 +59,3 @@ if (isset($_POST['id_imagen'])) {
 
 header("Content-Type: application/json");
 echo json_encode($response);
-?>
