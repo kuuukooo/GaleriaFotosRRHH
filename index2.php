@@ -1,14 +1,14 @@
 <!-- Inicio de la sesión de PHP -->
 <?php
 session_start();
-require "./controllers/posts.php";
+require "controllers/posts.php";
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login/login.php'); // Redirige al usuario si no está autenticado
     exit();
 }
 
-require "./database/database.php";
+require "database/database.php";
 $user_id = $_SESSION['user_id'];
 $query = "SELECT Usuario FROM usuarios WHERE id_usuario = :user_id";
 $stmt = $conn->prepare($query);
