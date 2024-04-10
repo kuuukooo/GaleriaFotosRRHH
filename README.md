@@ -59,6 +59,7 @@
 - <a href="https://releases.jquery.com/">Jquery 3.7.1 </a>
 - <a href="https://www.php.net/downloads">PHP 8</a>
 - <a href="https://github.com/nanostudio-org/nanogallery2">NanoGallery2</a>
+- <a href="https://github.com/han109k/light-switch-bootstrap">Light Switch Bootstrap</a>
 - <a href="https://fonts.google.com/">Google Fonts</a>
 - <a href="https://getbootstrap.com/">Bootstrap 5.3.3</a> y <a href="https://icons.getbootstrap.com/">Bootstrap Icons 1.11.0</a>
 - <a href="https://boxicons.com/">Boxicons 2.1.4</a>
