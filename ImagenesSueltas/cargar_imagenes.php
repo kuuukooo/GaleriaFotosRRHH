@@ -53,4 +53,3 @@ $respuesta = array(
 
 // Retorna los datos de las imágenes y el número total de páginas en formato JSON
 echo json_encode($respuesta);
-?>

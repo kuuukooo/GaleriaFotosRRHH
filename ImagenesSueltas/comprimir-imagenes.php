@@ -37,4 +37,3 @@ if(isset($_POST['image_names']) && is_array($_POST['image_names'])) {
 } else {
     echo 'No se proporcionaron nombres de archivo.';
 }
-?>

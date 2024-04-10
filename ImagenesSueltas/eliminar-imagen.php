@@ -41,7 +41,6 @@ if (isset($_POST['id_imagen'])) {
                         $response['success'] = "Imagen eliminada exitosamente.";
                     } else {
                         $response['error'] = "Error al eliminar la imagen del sistema de archivos.";
-                        // Puedes agregar más detalles sobre el error si lo deseas.
                     }
                 } else {
                     $response['error'] = "La imagen no existe en el sistema de archivos.";
