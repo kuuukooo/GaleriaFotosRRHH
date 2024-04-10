@@ -9,13 +9,13 @@
         $conn = $database->getConnection();
 
         // Obtener el AlbumID del parámetro de la solicitud
-        $albumID = $_POST['albumID']; // Asegúrate de validar y sanitizar este valor para evitar inyecciones SQL
+        $albumID = $_POST['albumID']; 
 
         $sql = "SELECT 
                     a.id_album, 
                     a.descripcion AS album_descripcion, 
                     a.imagen AS album_miniatura, 
-                    a.fecha_creacion, -- Agregar la columna fecha_creacion aquí
+                    a.fecha_creacion, 
                     i.id_img_alb, 
                     i.descripcion AS imagen_descripcion, 
                     i.imagen, 
@@ -41,9 +41,9 @@
             $datos["id_album"] = $row["id_album"];
             $datos["descripcion"] = $row["album_descripcion"];
             $datos["miniatura"] = $row["album_miniatura"];
-            $datos["fecha_creacion"] = $row["fecha_creacion"]; // Agregar la fecha de creación aquí
+            $datos["fecha_creacion"] = $row["fecha_creacion"];
 
-            // Almacenar los datos de las imágenes
+            // Almacenar los datos de las imágenes en un array
             $datos["imagenes"][] = array(
                 "id_img_alb" => $row["id_img_alb"],
                 "descripcion" => $row["imagen_descripcion"],

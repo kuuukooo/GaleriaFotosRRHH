@@ -7,18 +7,18 @@ try {
     $database = new Database();
     $conn = $database->getConnection();
 
-    // Get the search term sent from the form
+    //Consigue el término a buscar desde el formulario que ha sido mandado (función BuscarImg - ScriptGeneraciónImágenes.js)
     if (isset($_POST['search'])) {
         $searchTerm = $_POST['search'];
         if(empty($searchTerm)) {
             echo json_encode(array('error' => 'empty_search'));
         } else {
-            // SQL query to search for an image by description
+            //Query SQL para buscar la imágen por su descripción
             $sql = "SELECT 
                         a.id_album, 
                         a.descripcion AS album_descripcion, 
                         a.imagen AS album_miniatura, 
-                        a.fecha_creacion, -- Agregar la columna fecha_creacion aquí
+                        a.fecha_creacion,
                         i.id_img_alb, 
                         i.descripcion AS imagen_descripcion, 
                         i.imagen, 
@@ -36,6 +36,8 @@ try {
                     ORDER BY 
                         a.id_album, 
                         i.id_img_alb";
+            /* Este bloque de código es responsable de ejecutar una consulta SQL para buscar imágenes basadas en
+            un término de búsqueda proporcionado por el usuario. */
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(':searchTerm', '%' . $searchTerm . '%', PDO::PARAM_STR);
             $stmt->execute();
@@ -48,6 +50,9 @@ try {
                 $datos = array();
                 $current_album = null;
 
+                /* Este bloque de código está iterando sobre los resultados obtenidos de la consulta SQL para
+                organizar los datos en un formato estructurado antes de codificarlos en JSON para el
+                respuesta.*/
                 foreach ($result as $row) {
                     if ($current_album !== $row["id_album"]) {
                         $current_album = $row["id_album"];
@@ -68,6 +73,8 @@ try {
                             );
                         }
 
+                        /* El if-ese checkea si hay imágenes en el álbum y muestra la primera imágen del 
+                        álbum como miniatura */
                         if (count($datos[$current_album]["imagenes"]) > 0) {
                             $datos[$current_album]["miniatura"] = $datos[$current_album]["imagenes"][0]["imagen"];
                         }

@@ -181,9 +181,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- Imágenes -->
-    <!-- podría hacer una función para borrar varios albumes que lleva la opción
-de "thumbnailSelectable": true, para hacer que las miniaturas de las imágenes se puedan
-seleccionar para luego borrarse. -->
     <div class="container justify-content-center mt-5 mb-5 py-2" id="galeriaContainer">
     </div> 
 </div>
