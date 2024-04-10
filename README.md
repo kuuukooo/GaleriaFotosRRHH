@@ -52,7 +52,10 @@
 - Botón para hacer auto-play de todas las imágenes en el álbum
 > Todo esto gracias a la librería <a href="https://github.com/nanostudio-org/nanogallery2">NanoGallery2</a>.
 
-##Tecnologías Utilizadas
+
+
+
+## Tecnologías Utilizadas
 - <a href="https://releases.jquery.com/">Jquery 3.7.1 </a>
 - <a href="https://www.php.net/downloads">PHP 8</a>
 - <a href="https://github.com/nanostudio-org/nanogallery2">NanoGallery2</a>
