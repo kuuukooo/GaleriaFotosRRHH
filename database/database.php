@@ -1,6 +1,5 @@
 <?php
 
-// Verifica si la clase ya está definida antes de declararla
 if (!class_exists('Database')) {
     class Database
     {
@@ -14,7 +13,6 @@ if (!class_exists('Database')) {
         {
             try {
                 $this->conn = new PDO("mysql:host=$this->server;dbname=$this->database;", $this->username, $this->password);
-                // Configuración adicional si es necesario
                 $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
                 die('Connection failed: ' . $e->getMessage());
@@ -27,5 +25,3 @@ if (!class_exists('Database')) {
         }
     }
 }
-
-?>
