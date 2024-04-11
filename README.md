@@ -52,8 +52,112 @@
 - Botón para hacer auto-play de todas las imágenes en el álbum
 > Todo esto gracias a la librería <a href="https://github.com/nanostudio-org/nanogallery2">NanoGallery2</a>.
 
+## Guía de Usuario
+### Pasos para cargar una imágen
+1. Damos click al botón azul con el ícono de una imágen.
+2. Seleccionamos la/las imágenes a subir (el límite en imágenes sueltas es de 5 imágenes).
+3. Agregamos una descripción breve de la imágen a subir.
+4. Damos click al botón azul con el ícono de una flecha hacia arriba.
+> Aquí un gif indicando el paso a paso 😺👇
 
 
+<img src="assets/GuiaUsuario/CargarImagen.gif"></img>
+
+### Pasos para borrar una imágen/album
+1. Buscamos el ícono del basurero rojo en la derecha de la imágen (En el caso de los álbumes, arriba en la izquierda al pasar el ratón sobre la imágen).
+2. Le damos click al ícono y nos saldrá un panel en donde nos pregunta si eliminar la imágen o no.
+3. Le damos click en Aceptar en el caso de querer borrar una imágen.
+4. Le damos click en Cancelar en caso de que fue un miss-click y no ocurrirá nada.
+>Aquí un gif indicando el paso a paso 🐱👇
+
+<img src="assets/GuiaUsuario/BorrarImagen.gif"></img>
+
+### Pasos para editar la descripción de la imágen/álbum
+1. Buscamos el ícono del lapiz en la derecha de la imágen (En el caso de los álbumes, arriba en la izquierda al pasar el ratón sobre la imágen).
+2. Le damos click al ícono y se desplegará una caja en donde podremos cambiar la descripción.
+3. Para guardar la descripción editada, le damos click al botón "Guardar". Si nos equivocamos y no queremos guardar, al botón "Cancelar".
+4. Habremos cambiado la descripción.
+>Aquí un gif indicando el paso a paso 😼👇
+
+<img src="assets/GuiaUsuario/CambiarDescripcionImagen.gif"></img>
+
+### Pasos para descargar la/las imágen/es.
+1. Buscamos el ícono de descarga en la derecha de la imágen (En el caso de los álbumes, arriba en la izquierda al pasar el ratón sobre la imágen).
+2. Le damos click al ícono y comenzará a descargar como archivo Zip en nuestro navegador
+3. Habremos descargado el álbum o imágen.
+>Aquí un gif indicando el paso a paso 😼👇
+
+<img src="assets/GuiaUsuario/DescargarImagen.gif"></img>
+
+### Pasos para buscar una imágen
+1. Le damos click al ícono de la lupa en la barra de navegación.
+2. Se desplegará la barra de navegación dando a lugar un espacio donde escribir la descripción a consultar.
+3. Una vez ingresada la descripción de la foto a buscar, le damos a "Enter" en el teclado.
+4. Nos mostrará la búsqueda en la galería.
+> [!TIP]
+> Para salir del modo búsqueda podemos darle al ícono de Inicio que está debajo del ícono de Búsqueda.
+
+
+>Aquí un gif indicando el paso a paso 🐱⬇️
+
+<img src="assets/GuiaUsuario/BuscarImagen.gif"></img>
+
+### Modo Oscuro
+1. Para activar el modo oscuro de la galería, le tenemos que dar al switch que se encuentra abajo mismo de la barra de navegación.
+> [!TIP]
+> Para intercambiar entre ambos modos se puede dar click de nuevo al botón.
+
+>Aquí un gif indicando el paso a paso 🐱🌃🌇
+
+<img src="assets/GuiaUsuario/ActivarModoOscuro.gif"></img>
+
+## Menú de Usuarios
+> [!IMPORTANT]
+> Estas funciones solamente están disponibles para los administradores.
+### Añadir nuevo usuario
+1. Desplegamos la barra de navegación
+2. Buscamos la sección de Menú y le damos click.
+3. Nos abrirá el panel.
+4. Buscamos el botón que dice "Añadir Nuevo Usuario" y le damos click.
+5. Rellenamos a gusto y le damos click en "Añadir".
+6. Un usuario nuevo será añadido.
+
+>Aquí un gif indicando el paso a paso 🤓
+
+<img src="assets/GuiaUsuario/AgregarUsuario.gif"></img>
+### Eliminar un usuario
+1. Buscamos el ícono de basurero rojo en la parte derecha, debajo del texto "Acciones".
+2. Le damos click y nos saldrá una ventana preguntando si queremos o no eliminar el usuario.
+3. Le damos en "Aceptar".
+4. Borraremos un usuario.
+
+>Aquí un gif indicando el paso a paso 😄
+
+<img src="assets/GuiaUsuario/BorrarUsuario.gif"></img>
+
+> [!TIP]
+> También podemos eliminar varios usuarios haciendo lo siguiente:
+
+<img src="assets/GuiaUsuario/BorrarVariosUsuarios.gif"></img>
+
+### Editar Usuario
+1. Buscamos el ícono del lápiz amarillo en la parte derecha, debajo del texto "Acciones".
+2. Le damos click y nos saldrá una ventana para rellenar de nuevo los datos del usuario.
+3. Cambiamos los datos a necesidad.
+4. Editaremos los datos del usuario.
+
+>Aquí un gif indicando el paso a paso 😄
+
+<img src="assets/GuiaUsuario/EditarUsuarios.gif"></img>
+
+### Buscar Usuario
+1. Ingresamos cualquier dato del usuario que queremos consultar en la barra que dice Introduce un usuario.
+2. Al ingresar los datos buscará de forma instantánea en toda la tabla.
+3. Buscamos un usuario a gusto.
+
+>Aquí un gif indicando el paso a paso 🧐
+
+<img src="assets/GuiaUsuario/BuscarUsuarios.gif"></img>
 
 ## Tecnologías Utilizadas
 - <a href="https://releases.jquery.com/">Jquery 3.7.1 </a>
