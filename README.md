@@ -133,7 +133,7 @@
 
 >Aquí un gif indicando el paso a paso 😄
 
-<img src="assets/GuiaUsuario/BorrarUsuario.gif"></img>
+<img src="assets/GuiaUsuario/BorrarUsuarios.gif"></img>
 
 > [!TIP]
 > También podemos eliminar varios usuarios haciendo lo siguiente:
