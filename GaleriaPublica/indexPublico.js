@@ -1,0 +1,45 @@
+$("#my_nanogalleryImagenes").nanogallery2({
+    thumbnailHeight: 250,
+    thumbnailWidth: 'auto',
+    thumbnailBorderVertical: 0,
+    thumbnailBorderHorizontal: 0,
+    thumbnailGutterWidth: 6,
+    thumbnailGutterHeight: 6,
+    thumbnailHoverEffect: 'label_slideUp',
+    thumbnailHoverEffect2: "labelAppear75|scale120",
+    thumbnailAlignment: "center",
+    thumbnailLabel: {
+        display: true,
+        position: 'overImageOnBottom',
+        description: 'title',
+    },
+    galleryTheme: {
+        thumbnail : {borderRadius: '10px'}
+    },
+    items: [
+        { src: '../assets/images/posts/prueba1.jpg', srct: '../assets/images/posts/prueba1.jpg', title: 'Prueba 1' },
+        { src: '../assets/images/posts/prueba2.jpg', srct: '../assets/images/posts/prueba2.jpg', title: 'Prueba 2' },
+        { src: '../assets/images/posts/prueba3.jpg', srct: '../assets/images/posts/prueba3.jpg', title: 'Prueba 3' },
+        { src: '../assets/images/posts/prueba4.jpg', srct: '../assets/images/posts/prueba4.jpg', title: 'Prueba 4' },
+        { src: '../assets/images/posts/prueba5.jpg', srct: '../assets/images/posts/prueba5.jpg', title: 'Prueba 5' },
+        { src: '../assets/images/posts/prueba6.jpg', srct: '../assets/images/posts/prueba6.jpg', title: 'Prueba 6' },
+        { src: '../assets/images/posts/prueba7.jpg', srct: '../assets/images/posts/prueba7.jpg', title: 'Prueba 7' },
+        { src: '../assets/images/posts/EavcvzuWAAE8Cvc.jpg', srct: '../assets/images/posts/EavcvzuWAAE8Cvc.jpg', title: 'Prueba 8'},
+        { src: '../assets/images/posts/prueba1.jpg', srct: '../assets/images/posts/prueba1.jpg', title: 'Prueba 1' },
+        { src: '../assets/images/posts/prueba2.jpg', srct: '../assets/images/posts/prueba2.jpg', title: 'Prueba 2' },
+        { src: '../assets/images/posts/prueba3.jpg', srct: '../assets/images/posts/prueba3.jpg', title: 'Prueba 3' },
+        { src: '../assets/images/posts/prueba4.jpg', srct: '../assets/images/posts/prueba4.jpg', title: 'Prueba 4' },
+        { src: '../assets/images/posts/prueba5.jpg', srct: '../assets/images/posts/prueba5.jpg', title: 'Prueba 5' },
+        { src: '../assets/images/posts/prueba6.jpg', srct: '../assets/images/posts/prueba6.jpg', title: 'Prueba 6' },
+        { src: '../assets/images/posts/prueba7.jpg', srct: '../assets/images/posts/prueba7.jpg', title: 'Prueba 7' },
+        { src: '../assets/images/posts/EavcvzuWAAE8Cvc.jpg', srct: '../assets/images/posts/EavcvzuWAAE8Cvc.jpg', title: 'Prueba 8'},
+        { src: '../assets/images/posts/prueba1.jpg', srct: '../assets/images/posts/prueba1.jpg', title: 'Prueba 1' },
+        { src: '../assets/images/posts/prueba2.jpg', srct: '../assets/images/posts/prueba2.jpg', title: 'Prueba 2' },
+        { src: '../assets/images/posts/prueba3.jpg', srct: '../assets/images/posts/prueba3.jpg', title: 'Prueba 3' },
+        { src: '../assets/images/posts/prueba4.jpg', srct: '../assets/images/posts/prueba4.jpg', title: 'Prueba 4' },
+        { src: '../assets/images/posts/prueba5.jpg', srct: '../assets/images/posts/prueba5.jpg', title: 'Prueba 5' },
+        { src: '../assets/images/posts/prueba6.jpg', srct: '../assets/images/posts/prueba6.jpg', title: 'Prueba 6' },
+        { src: '../assets/images/posts/prueba7.jpg', srct: '../assets/images/posts/prueba7.jpg', title: 'Prueba 7' },
+        { src: '../assets/images/posts/EavcvzuWAAE8Cvc.jpg', srct: '../assets/images/posts/EavcvzuWAAE8Cvc.jpg', title: 'Prueba 8'}
+    ]
+}); 
