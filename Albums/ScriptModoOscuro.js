@@ -2,6 +2,16 @@
 function ModoOscuro() {
     $(document).ready(function() {
         // Función para guardar el estado del modo en una cookie
+       /**
+        * Estas funciones manejan el guardado y carga del modo oscuro desde el dato de la cookie alojada en la galería, 
+        * así como también activa y desactiva los estilos en las funciones específicas de la página.
+        * @param isDarkMode - El parámetro "isDarkMode es un valor booleano que indica si el modo oscuro
+        * está activado en el momento ('true') o si está desactivado ('false').
+        * @param enableDarkMode - La función enableDarkMode es la responsable de que cada estilo se agregue
+        * correctamente a todos los modales que se visualizarán al abrir una imágen, los estilos de los componentes
+        * de cada imágen y su vista en general.
+        * @param disableDarkMode - Esta función quita los estilos que se hayan agregado anteriormente.
+        */
         function saveDarkModeStateToCookie(isDarkMode) {
             document.cookie = `darkMode=${isDarkMode}; expires=Fri, 31 Dec 2024 23:59:59 GMT; path=/`;
         }
@@ -37,6 +47,7 @@ function ModoOscuro() {
             $(".headerTextoDialogAlbum").css("color", "white");
             $(".footerDialogAlbum").css("background-color", "rgb(97, 97, 97)");
             $(".cancelFooterDialogAlbum").css("background-color", "rgb(97, 97, 97)");
+            $(".texto-principal").css("color", "white");
             //add a hover to the page-link
             $(".page-link").hover(function() {
                 $(this).css("background-color", "#0D6EFD");
@@ -65,6 +76,7 @@ function ModoOscuro() {
             $(".footerDialogAlbum").css("background-color", "rgb(243, 244, 246)");
             $(".cancelFooterDialogAlbum").css("background-color", "rgb(243, 244, 246)");
             $(".cancelFooterDialogAlbum").css("color", "rgb(156, 163, 175)");
+            $(".texto-principal").css("color", "#20327e");
             $(".page-link").hover(function() {
                 $(this).css("background-color", "#0D6EFD");
                 $(this).css("color", "white");
@@ -74,6 +86,8 @@ function ModoOscuro() {
             });
         }
     
+    /* Esta sección del código es responsable de manejar el funcionamiento del Modo Oscuro.
+    Aquí un pequeño desglose de lo que hace cada parte: */
         // Cargar el estado del modo al cargar la página
         const isDarkMode = loadDarkModeStateFromCookie();
         if (isDarkMode) {
