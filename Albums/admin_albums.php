@@ -183,11 +183,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Imágenes -->
     <div class="container justify-content-center mt-5 mb-5 py-2" id="galeriaContainer">
     </div> 
-</div>
 
 <script src="../login/ScriptTipoUsuario.js"></script> 
 <script src="../NavBar/navbar2.js"></script>
 <script src="ScriptModoOscuro.js"></script>
-<script src="scriptGeneraciónImágenes.js"></script>
+<script src="ScriptGeneraciónImágenes.js"></script>
 </body>
 </html>
