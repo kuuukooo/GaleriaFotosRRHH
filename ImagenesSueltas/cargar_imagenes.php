@@ -30,6 +30,7 @@ while ($post = $stmt->fetch(PDO::FETCH_ASSOC)) {
         'id_imagen' => $post['id_imagen'],
         'descripcion' => $post['descripcion'],
         'imagenes' => $imagesName,
+        'es_publico' => $post['es_publico'], // Incluir el campo es_publico
         'pagina_actual' => $pagina, // Agrega el número de página actual
     );
 
