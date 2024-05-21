@@ -3,9 +3,9 @@
 if (!class_exists('Database')) {
     class Database
     {
-        private $server = 'localhost';
-        private $username = 'root';
-        private $password = '';
+        private $server = '192.168.217.76';
+        private $username = 'lucas';
+        private $password = 'lucaslucas';
         private $database = 'galeria';
         private $conn;
 
