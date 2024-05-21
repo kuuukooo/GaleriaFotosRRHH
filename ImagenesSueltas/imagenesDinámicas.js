@@ -50,19 +50,19 @@ $(document).ready(function() {
                 modalCarouselInner.addClass('carousel-inner');
 
                  // Crea el link y el contenedor de la imagen
-                 let link = $('<a>');
-                 link.attr('href', '#');
-                 link.attr('data-bs-toggle', 'modal');
-                 link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
-             
-                 let imageContainer = $('<div>');
-                 imageContainer.addClass('image-container');
-                 imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
-                 imageContainer.attr('data-description', imagen.descripcion[j]);
-                 imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
-             
-                 link.append(imageContainer);
-                 carouselItem.append(link);
+                let link = $('<a>');
+                link.attr('href', '#');
+                link.attr('data-bs-toggle', 'modal');
+                link.attr('data-bs-target', '#modal' + imagen.id_imagen + '-' + j);
+            
+                let imageContainer = $('<div>');
+                imageContainer.addClass('image-container');
+                imageContainer.attr('id', 'image-' + imagen.id_imagen + '-' + j);
+                imageContainer.attr('data-description', imagen.descripcion[j]);
+                imageContainer.css('background-image', 'url(\'./assets/images/posts/' + imageName + '\')');
+            
+                link.append(imageContainer);
+                carouselItem.append(link);
 
                 // Itera sobre las imagenes y crea los elementos carousel-item
                 $.each(imagen.imagenes, function(k, modalImageName) {
@@ -127,12 +127,16 @@ $(document).ready(function() {
                 
                 // Crear el contenedor para botones-utilidades y agregar botones
                 let botonesUtilidadesContainer = $('<div>').addClass('botones-utilidades');
+                // Determinar la clase del icono en función de es_publico
+                let iconClass = imagen.es_publico ? 'bi bi-eye' : 'bi bi-eye-slash';
+                // Agregar el botón publicar con el icono adecuado
+                botonesUtilidadesContainer.append('<button class="btn-publicar" data-image-id="' + imagen.id_imagen + '"><i class="' + iconClass + '"></i></button>');
                 botonesUtilidadesContainer.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
                 botonesUtilidadesContainer.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen +'"><i class="bi bi-pencil-square"></i></button>');
                 botonesUtilidadesContainer.append('<a class="download-button" href="#" data-images="' + imagen.imagenes.join(',') + '" data-description="' + imagen.descripcion + '" data-descriptions="' + imagen.descripcion + '"><i class="bi bi-download"></i></a>');
-                
+
                 // Agregar el contenedor de botones-utilidades al card-body
-                cardBodyElement.append(botonesUtilidadesContainer);
+                cardBodyElement.append(botonesUtilidadesContainer); 
         
 
                 carouselElement.append(carouselInner);
@@ -182,6 +186,8 @@ $(document).ready(function() {
         
         //Activa y desactiva el modo oscuro en la página
         ModoOscuro();
+        //Publica la imágen en la página principal
+        BotonPublicar();
     }
 
     // Función para cargar las imágenes y luego activar la edición
@@ -372,13 +378,13 @@ $(document).ready(function () {
                 if (response.success) {
                     // Elimina todas las imágenes existentes antes de agregar las nuevas
                     console.log("Eliminando imágenes existentes...");
-                    $("#image-container").empty();
+                    $("#image-container").empty();  
 
                     //Entonces carga las imágenes cuando se haya eliminado las anteriores
                     //para despues volver a cargar las imágenes
                     console.log("Cargando imágenes...");
                     cargarImagenesYActivarEdicion(1);
-
+                    BotonPublicar();
                     // Mostrar mensaje de éxito
                     console.log("Mensaje de éxito:", response.success);
                     alert(response.success); 
@@ -403,43 +409,43 @@ $(document).ready(function () {
 $("#search-form").on("submit", function(e) {
   e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
 
-  let searchTerm = $("#search-input").val();
+    let searchTerm = $("#search-input").val();
 
-  $.ajax({
-      url: "ImagenesSueltas/buscar_img.php",
-      method: "POST",
-      data: { search: searchTerm },
-      dataType: "json",
-      success: function(data) {
+    $.ajax({
+        url: "ImagenesSueltas/buscar_img.php",
+        method: "POST",
+        data: { search: searchTerm },
+        dataType: "json",
+        success: function(data) {
         if (data.error === 'no_images_found') {
             alert('Ninguna imagen fue encontrada');
         } else if (data.error === 'empty_search') {
             alert('Ingresa algo en la consulta por favor');
         } else {
-              // Manejar el caso de que se encontraron imágenes
-              console.log("Imágenes encontradas:", data);
-      
-              // Limpiar la galería antes de agregar nuevas imágenes
-              let container = $("#image-container"); // El contenedor de imágenes
-              container.empty();
-              
+                // Manejar el caso de que se encontraron imágenes
+                console.log("Imágenes encontradas:", data);
+        
+                // Limpiar la galería antes de agregar nuevas imágenes
+                let container = $("#image-container"); // El contenedor de imágenes
+                container.empty();
+                
 
-              generarBotonesPaginacion(data.totalPaginas, pagina=1);
-              generarListadoImagenes(data);
-          }
-      },
-      
-      error: function(xhr, status, error) {
-          console.log('Error en la solicitud AJAX:');
-          console.log('Status:', status);
-          console.log('Error:', error);
-      }
-  });
+                generarBotonesPaginacion(data.totalPaginas, pagina=1);
+                generarListadoImagenes(data);
+            }
+        },
+        
+        error: function(xhr, status, error) {
+            console.log('Error en la solicitud AJAX:');
+            console.log('Status:', status);
+            console.log('Error:', error);
+        }
+    });
 }); 
 
 
  //Función BotonEliminar
- function BotonEliminar() {
+function BotonEliminar() {
     $(".delete-button").click(function(event) {
         event.preventDefault();
 
@@ -565,4 +571,44 @@ $(document).ready(function() {
     });
 });
 
+}
+function BotonPublicar(){
+    // Manejar el evento de clic
+    $(document).on('click', '.btn-publicar', function() {
+        var $button = $(this);
+        var imageId = $button.data('image-id');
+
+        // Registrar en consola el ID de la imagen
+        console.log('ID de la imagen:', imageId);
+
+        // Cambiar el icono
+        var $icon = $button.find('i');
+        if ($icon.hasClass('bi-eye-slash')) {
+            $icon.removeClass('bi-eye-slash').addClass('bi-eye');
+            console.log('La imagen ahora está pública');
+        } else {
+            $icon.removeClass('bi-eye').addClass('bi-eye-slash');
+            console.log('La imagen ahora no está pública');
+        }
+
+        // Realizar la solicitud AJAX
+        $.ajax({
+            url: 'ImagenesSueltas/publicarImagen.php',
+            method: 'POST',
+            data: {
+                id_imagen: imageId,
+                es_publico: $icon.hasClass('bi-eye') ? 1 : 0
+            },
+            success: function(response) {
+                console.log('Respuesta del servidor:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en la solicitud AJAX:', error);
+                // Manejar el error
+            }
+        });
+
+        // Registrar en consola que el botón fue clickeado
+        console.log('Botón clickeado');
+    });
 }
