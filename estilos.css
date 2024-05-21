@@ -1,5 +1,6 @@
 .btn-edit-description,
-.delete-button {
+.delete-button,
+.btn-publicar {
     border: thin;
     background-color: transparent;
 }
@@ -37,8 +38,7 @@
 .botones-utilidades {
     position: absolute;
     bottom: 0;
-    padding: 1rem;
-    margin: 0 5px 0 0;
+    padding: 13px;
     right: 0;
     display: flex;
 }
@@ -48,7 +48,8 @@
 }
 .bi-download,
 .bi-pencil-square,
-.bi-trash3 {
+.bi-trash3,
+.bi-eye-slash {
     margin-left: 3px;
 }
 .botones-utilidades a,
@@ -63,6 +64,9 @@
 }
 .bi-download {
     color: green;
+}
+.bi-eye, .bi-eye-slash{
+    color: lightblue;
 }
 .original-description {
     display: block;
