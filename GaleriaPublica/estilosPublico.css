@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+:root{
+	--GaleriaColor: #137231;
+	--fondoAzul: #20327e;
+}
+
+#imagenes-section, #albumes-section{
+	margin-left: 88px !important;
+	padding: 20px; 
+	justify-content: center;
+	overflow-x: hidden;
+}
+#galeriaContainer{
+	margin-left: 0px !important;
+	width: 100% !important;
+}
+#my_nanogalleryAlbumes, #my_nanogalleryImagenes{
+	width: 100% !important;
+	margin-left: 10px;
+	margin-right: 10px;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+/* El color del texto del título se tiene que cambiar en el script de ScriptModoOscuro.js */
+.titulo {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 900;
+}

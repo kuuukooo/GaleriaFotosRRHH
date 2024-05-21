@@ -1,0 +1,312 @@
+.btn-edit-description,
+.delete-button,
+.btn-publicar {
+    border: thin;
+    background-color: transparent;
+}
+.container {
+    margin-left: 3rem;
+}
+.main-content {
+    margin-left: 0;
+    transition: 0.5s;
+}
+.sidebar.open {
+    width: 250px;
+    transition: 0.5s;
+}
+.dialogAlbum,
+.dialogAlbum.open {
+    transition: opacity 0.15s linear, transform 0.15s linear;
+}
+.sidebar.open + .main-content {
+    margin-left: 250px;
+    transition: 0.5s;
+}
+.logo img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+.title {
+    flex: 1;
+}
+.pagination {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+.botones-utilidades {
+    position: absolute;
+    bottom: 0;
+    padding: 13px;
+    right: 0;
+    display: flex;
+}
+.card-body,
+.image-container {
+    position: relative;
+}
+.bi-download,
+.bi-pencil-square,
+.bi-trash3,
+.bi-eye-slash {
+    margin-left: 3px;
+}
+.botones-utilidades a,
+.botones-utilidades button {
+    padding: 0.2rem;
+}
+.btn-edit-description {
+    color: gray;
+}
+.bi-trash3 {
+    color: red;
+}
+.bi-download {
+    color: green;
+}
+.bi-eye, .bi-eye-slash{
+    color: lightblue;
+}
+.original-description {
+    display: block;
+}
+#DashboardMenu,
+#LabelElegirImagenes i,
+#botonAgregarImagenes,
+.description-edit-container.visible .original-description,
+input[type="file"] {
+    display: none;
+}
+.form-control {
+    resize: none;
+}
+.carousel-inner img {
+    max-width: 100%;
+    height: auto;
+}
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+.image-container {
+    overflow: hidden;
+    width: 100%;
+    padding-bottom: 75%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.card-body.dark,
+.modal-body.dark {
+    background-color: #18191a !important;
+    color: #fff;
+}
+.dialogAlbum {
+    border-radius: 1rem;
+    border: none;
+    padding: 0;
+    position: absolute;
+    top: calc((100vh - 394px) / 2);
+    left: calc((100vw - 386px) / 2);
+}
+.dialogAlbum::backdrop {
+    backdrop-filter: blur(4px);
+}
+.dialogAlbum.open {
+    opacity: 1;
+}
+.headerDialogAlbum {
+    padding-top: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    background-color: #fff;
+    position: relative;
+}
+.headerTextoDialogAlbum {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+.botonHeader {
+    border: none;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    background-color: #f3f4f6;
+    border-radius: 0.375rem;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    top: 1.5rem;
+    right: 1rem;
+    position: absolute;
+}
+.spanHeader {
+    color: red;
+}
+.Main {
+    padding: 4rem 2rem;
+    background-color: #fff;
+}
+.imagenDivDialogAlbum {
+    align-items: center;
+    display: flex;
+    margin-top: calc(0.75rem * calc(1 - 0));
+    margin-bottom: calc(0.75rem * calc(1 - 0));
+}
+.imagenLabelDialogAlbum {
+    margin-right: auto;
+    width: 60%;
+    color: #9ca3af;
+}
+.imagenInputDialogAlbum,
+select {
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    border-width: 1px;
+}
+.footerDialogAlbum {
+    padding: 1rem 2rem;
+    background-color: #f3f4f6;
+    gap: 1.5rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    justify-content: flex-end;
+    display: flex;
+}
+.cancelFooterDialogAlbum {
+    color: #9ca3af;
+    cursor: pointer;
+    border: none;
+}
+.saveFooterDialogAlbum {
+    padding: 0.75rem 1.25rem;
+    color: #fff;
+    background-color: #3b82f6;
+    border-radius: 0.75rem;
+    border: none;
+}
+.saveFooterDialogAlbum:hover {
+    background-color: #316aca;
+}
+.cancelFooterDialogAlbum:hover {
+    color: #6b7280;
+    background-color: #6b7280;
+}
+.botonHeader:hover {
+    background-color: #ebeef2;
+}
+.inputFileMask {
+    display: flex;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    justify-content: space-between;
+}
+.inputFileMask:hover {
+    background-color: #38843c;
+}
+#btn-new-post-photo {
+    margin-left: 16px;
+}
+@media only screen and (max-width: 768px) {
+    .modal-backdrop.fade,
+    .modal-open,
+    .modal.fade,
+    .modal.fade.show {
+        padding-right: 0 !important;
+    }
+    #btn-new-post-photo {
+        width: 25%;
+    }
+    #LabelElegirImagenes i {
+        display: inline;
+        border: 1px solid #0d6efd;
+        border-radius: 4px;
+        position: relative;
+        top: 15%;
+        background: #0d6efd;
+        color: #fff;
+        padding: 0.3rem 1rem;
+    }
+    #InputElegirImagenes {
+        display: none;
+    }
+    .modal-backdrop.fade {
+        width: 100%;
+        height: 100%;
+    }
+    #pagination-container {
+        margin-left: 5.8rem;
+    }
+    .dialogAlbum {
+        top: calc((100vh - 394px) / 2);
+        left: calc((184vw - 386px) / 4);
+        width: 386px;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .modal-backdrop.fade,
+    .modal-open,
+    .modal.fade,
+    .modal.fade.show {
+        padding-right: 0 !important;
+    }
+    #btn-new-post-photo {
+        width: 25%;
+    }
+    .modal-backdrop.fade {
+        width: 100%;
+        height: 100%;
+    }
+    #pagination-container {
+        margin-left: 5.8rem;
+    }
+    .dialogAlbum {
+        width: 386px;
+        top: calc((297vh - 394px) / 8);
+        left: calc((272vw - 386px) / 8);
+    }
+}
+@media only screen and (max-width: 1440px) {
+    .modal-backdrop.fade,
+    .modal-open,
+    .modal.fade,
+    .modal.fade.show {
+        padding-right: 0 !important;
+    }
+    .modal-backdrop.fade {
+        width: 100%;
+        height: 100%;
+    }
+    .pagination {
+        position: relative;
+        justify-content: center;
+    }
+    #pagination-container {
+        margin-left: 5.8rem;
+    }
+}
+@media only screen and (min-width: 769px) {
+    #LabelElegirImagenes i {
+        display: inline;
+        border: 1px solid #0d6efd;
+        border-radius: 4px;
+        position: relative;
+        top: 15%;
+        background: #0d6efd;
+        color: #fff;
+        padding: 0.3rem 1rem;
+        cursor: pointer;
+    }
+    #InputElegirImagenes {
+        display: none;
+    }
+}
