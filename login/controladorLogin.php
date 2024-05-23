@@ -17,14 +17,13 @@ if (!empty($_POST["btningresar"])) {
             // Obtiene la conexión
             $conex = $database->getConnection();
 
-            // Realizar la consulta a la base de datos para autenticar al usuario y obtener el tipo de usuario
-            $sql = $conex->prepare("SELECT id_usuario, tipo_usuario, usuario FROM usuarios WHERE usuario=? AND contrasena=?");
+            // Realizar la consulta a la base de datos para obtener la contraseña encriptada
+            $sql = $conex->prepare("SELECT id_usuario, tipo_usuario, usuario, contrasena FROM usuarios WHERE usuario = ?");
             $sql->bindParam(1, $usuario, PDO::PARAM_STR);
-            $sql->bindParam(2, $clave, PDO::PARAM_STR);
             $sql->execute();
             $result = $sql->fetch(PDO::FETCH_ASSOC);
 
-            if ($result) {
+            if ($result && password_verify($clave, $result["contrasena"])) {
                 // Autenticación exitosa
                 $_SESSION["user_id"] = $result["id_usuario"]; // Almacena el ID del usuario en la sesión
 
