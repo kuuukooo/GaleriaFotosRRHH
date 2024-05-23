@@ -23,9 +23,6 @@ if ($conn) {
     } elseif (strlen($usuario) < 3) {
         // Usuario debe tener al menos 3 caracteres
         $response = array('success' => false, 'message' => 'El usuario debe tener al menos 3 caracteres.');
-    } elseif (strlen($contrasena) < 8 || !preg_match('/[!@#$%^&*(),.?":{}|<>]/', $contrasena)) {
-        // Contraseña no cumple con los requisitos
-        $response = array('success' => false, 'message' => 'La contraseña debe tener al menos 8 caracteres y contener al menos un carácter especial.');
     } elseif (!is_numeric($telefono)) {
         // Teléfono no es un número
         $response = array('success' => false, 'message' => 'Por favor, ingrese un número válido en el campo de teléfono.');
@@ -61,4 +58,3 @@ if ($conn) {
 // Devolver la respuesta en formato JSON
 header('Content-Type: application/json');
 echo json_encode($response);
-?>
