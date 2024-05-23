@@ -27,7 +27,7 @@ $(document).ready(function() {
             $(".mode-text").text("Modo Oscuro");
             $(".LogoVierciBlanco").css("display", "block");
             $(".LogoVierciAzul").css("display", "none");
-            $("label").css("color", "rgb(89, 106, 137)");
+            $("label").css("color", "#ffffff");
             $(".modal-header").css("background-color", "#18191A");
             $(".modal-body").css("background-color", "#18191A");
             $(".modal-footer").css("background-color", "#373838");
