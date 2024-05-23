@@ -30,13 +30,16 @@ if ($conn) {
         // Teléfono no es un número
         $response = array('success' => false, 'message' => 'Por favor, ingrese un número válido en el campo de teléfono.');
     } else {
+        // Encriptar la contraseña
+        $hashed_password = password_hash($contrasena, PASSWORD_BCRYPT);
+
         // Preparar la consulta para insertar el nuevo usuario
         $query = "INSERT INTO usuarios (Usuario, contrasena, correo, numerotel, tipo_usuario) VALUES (:usuario, :contrasena, :correo, :telefono, :tipousuario)";
         $stmt = $conn->prepare($query);
 
         // Asociar los parámetros
         $stmt->bindParam(':usuario', $usuario);
-        $stmt->bindParam(':contrasena', $contrasena);
+        $stmt->bindParam(':contrasena', $hashed_password);
         $stmt->bindParam(':correo', $correo);
         $stmt->bindParam(':telefono', $telefono);
         $stmt->bindParam(':tipousuario', $tipousuario);
