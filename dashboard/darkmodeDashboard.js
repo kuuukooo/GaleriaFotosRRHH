@@ -1,1 +1,81 @@
-$(document).ready(function(){function o(o){console.log("Saving dark mode state to cookie: ",o),document.cookie=`darkMode=${o}; expires=Fri, 31 Dec 2024 23:59:59 GMT; path=/`}function e(){console.log("Enabling dark mode"),$("body").addClass("dark"),$(".mode-text").text("Modo Oscuro"),$(".LogoVierciBlanco").css("display","block"),$(".LogoVierciAzul").css("display","none")}function d(){console.log("Disabling dark mode"),$("body").removeClass("dark"),$(".modal-body").removeClass("dark"),$(".mode-text").text("Modo Claro"),$(".LogoVierciBlanco").css("display","none"),$(".LogoVierciAzul").css("display","block")}let i=function o(){console.log("Loading dark mode state from cookie");let e=document.cookie.split(";");for(let d of e){let[i,a]=d.trim().split("=");if("darkMode"===i)return console.log("Found dark mode cookie: ",a),"true"===a}return console.log("No dark mode cookie found"),!1}();console.log("Initial dark mode state: ",i),i?e():d(),$(document).on("click","#darkModeSwitch",function(){let i=$("body").hasClass("dark");console.log("Dark mode switch clicked. Current state: ",i),i?d():e(),o(!i)}),$(document).off("click","#darkModeSwitch").on("click","#darkModeSwitch",function(){let i=$("body").hasClass("dark");console.log("Dark mode switch clicked. Current state: ",i),i?d():e(),o(!i)})});
+$(document).ready(function() {
+    // Función para guardar el estado del modo en una cookie
+    function saveDarkModeStateToCookie(isDarkMode) {
+        console.log("Saving dark mode state to cookie: ", isDarkMode);
+        document.cookie = `darkMode=${isDarkMode}; expires=Fri, 31 Dec 2024 23:59:59 GMT; path=/`;
+    }
+
+    // Función para cargar el estado del modo desde la cookie
+    function loadDarkModeStateFromCookie() {
+        console.log("Loading dark mode state from cookie");
+        const cookies = document.cookie.split(';');
+        for (const cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'darkMode') {
+                console.log("Found dark mode cookie: ", value);
+                return value === 'true';
+            }
+        }
+        console.log("No dark mode cookie found");
+        return false;
+    }
+
+        // Función para habilitar el modo oscuro
+        function enableDarkMode() {
+            console.log("Enabling dark mode");
+            $("body").addClass("dark");
+            $(".mode-text").text("Modo Oscuro");
+            $(".LogoVierciBlanco").css("display", "block");
+            $(".LogoVierciAzul").css("display", "none");
+            $("label").css("color", "rgb(89, 106, 137)");
+            $(".modal-header").css("background-color", "#18191A");
+            $(".modal-body").css("background-color", "#18191A");
+            $(".modal-footer").css("background-color", "#373838");
+            $(".btn-close").css("background-color", "red");
+        }
+
+    // Función para deshabilitar el modo oscuro
+    function disableDarkMode() {
+        console.log("Disabling dark mode");
+        $("body").removeClass("dark");
+        $(".modal-body").removeClass("dark");
+        $(".mode-text").text("Modo Claro");
+        $(".LogoVierciBlanco").css("display", "none");
+        $(".LogoVierciAzul").css("display", "block");
+        $("label").css("color", "rgb(89, 106, 137)")
+        $(".modal-header").css("background-color", "#ffffff");
+        $(".modal-body").css("background-color", "#ffffff");
+        $(".modal-footer").css("background-color", "#ecf0f1");
+    }
+
+    // Cargar el estado del modo al cargar la página
+    const isDarkMode = loadDarkModeStateFromCookie();
+    console.log("Initial dark mode state: ", isDarkMode);
+    if (isDarkMode) {
+        enableDarkMode();
+    } else {
+        disableDarkMode();
+    }
+
+    // Manejar el cambio de modo
+    $(document).on('click', '#darkModeSwitch', function() {
+        const isDarkMode = $("body").hasClass("dark");
+        console.log("Dark mode switch clicked. Current state: ", isDarkMode);
+        if (isDarkMode) {
+            disableDarkMode();
+        } else {
+            enableDarkMode();
+        }
+        saveDarkModeStateToCookie(!isDarkMode);
+    });
+    $(document).off('click', '#darkModeSwitch').on('click', '#darkModeSwitch', function() {
+        const isDarkMode = $("body").hasClass("dark");
+        console.log("Dark mode switch clicked. Current state: ", isDarkMode);
+        if (isDarkMode) {
+            disableDarkMode();
+        } else {
+            enableDarkMode();
+        }
+        saveDarkModeStateToCookie(!isDarkMode);
+    });
+});
