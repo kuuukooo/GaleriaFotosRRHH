@@ -78,7 +78,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							<li class="nav-link">
 								<a href="dashboard.php">
 									<i class="bi bi-menu-button-wide-fill icon"></i>
-									<span class="text nav-text">Menú</span>
+									<span class="text nav-text">Usuarios</span>
 								</a>
 							</li>
 
