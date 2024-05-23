@@ -81,6 +81,13 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 									<span class="text nav-text">Menú</span>
 								</a>
 							</li>
+
+							<li class="nav-link" id="GaleriaPublica">
+                            <a href="../GaleriaPublica/IndexGaleriaPublica.php">
+                                <i class="bi bi-globe icon"></i>
+                                <span class="text nav-text">Imágenes Públicas</span>
+                            </a>
+                        </li>
 						</ul>
 					</div>
 
@@ -184,8 +191,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							<div class="form-group">
 								<label for='tipousuario' class='form-label'>TipoUsuario</label> 
                                 <select id='tipousuario' class='form-select' required> 
-                                	<option value='Admin'>Admin</option> 
-                                	<option value='Usuario'>Usuario</option> 
+								<option value='Admin'>Admin</option> 
+								<option value='Usuario'>Usuario</option> 
                                 </select> 
 							</div>				
 						</div>

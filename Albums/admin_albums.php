@@ -106,6 +106,13 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <span class="text nav-text">Menú</span>
                             </a>
                         </li>
+
+                        <li class="nav-link" id="GaleriaPublica">
+                            <a href="../GaleriaPublica/IndexGaleriaPublicaAlbumes.php">
+                                <i class="bi bi-globe icon"></i>
+                                <span class="text nav-text">Album Público</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
