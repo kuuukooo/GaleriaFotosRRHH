@@ -66,7 +66,80 @@ const CargadeImagenes = () => {
         }); 
     }
 
+BuscarImg();
+
+//Función para Buscar Imágenes dentro de los álbumes
+function BuscarImg() {
+    $("#search-form").on("submit", function(e) {
+    e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+    
+        let searchTerm = $("#search-input").val();
+    
+        $.ajax({
+            url: "../Albums/buscarAlbum.php",
+            method: "POST",
+            data: { search: searchTerm },
+            dataType: "json",
+            success: function(data) {
+                if (data.error === 'no_images_found') {
+                    alert('Ninguna imagen fue encontrada');
+                } else if (data.error === 'empty_search') {
+                    alert('Ingresa algo en la consulta por favor');
+                } else {
+                    // Limpiar la galería antes de agregar nuevos elementos
+                    $("#my_nanogalleryAlbumes").nanogallery2("destroy");
+    
+                    // Lógica para construir los items de la galería basados en los resultados de la búsqueda
+                    let items = [];
+    
+                    // Iterar sobre los resultados de la búsqueda y construir los objetos de la galería
+                    $.each(data, function(index, album) {
+                        // Añadir el álbum
+                        items.push({
+                            src: "../Albums/fotos/" + album.miniatura,
+                            srct: "../Albums/fotos/" + album.miniatura,
+                            title: album.descripcion,
+                            ID: album.id_album,
+                            kind: 'album',
+                            customData: {
+                                date: album.fecha_creacion // Asegúrate de que esta propiedad está asignada correctamente
+                            }
+                        });
+    
+                        // Añadir las imágenes del álbum
+                        $.each(album.imagenes, function(index, imagen) {
+                            items.push({
+                                src: "../Albums/fotos/" + imagen.imagen,
+                                albumID: album.id_album
+                            });
+                        });
+                    });
+    
+                    // Inicializar la galería nanogallery2 con los nuevos items
+                    $("#my_nanogalleryAlbumes").nanogallery2({
+                        items: items,
+                        thumbnailWidth: 300,
+                        thumbnailHeight: 300,
+                        thumbnailAlignment: 'center',
+                        thumbnailGutterWidth: 70,
+                        thumbnailGutterHeight: 50,
+                        galleryMaxRows: 30,
+                        galleryDisplayMode: 'pagination',
+                        galleryPaginationMode: 'numbers',
+                        locationHash: false,
+                    });
+                }
+            },
+    
+            error: function(xhr, status, error) {
+                console.log('Error en la solicitud AJAX:');
+                console.log('Status:', status);
+                console.log('Error:', error);
+            }
+        });
+    });        
+    }
+
     $(document).ready(function () {
         CargadeImagenes();
     }); 
-    
