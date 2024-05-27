@@ -171,7 +171,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 Cancelar
                 </button>
                 <button class="saveFooterDialogAlbum" formMethod="dialog" value="submit">
-                Subir Imágen
+                Subir Album
                 </button>
             </footer>
             </form>
