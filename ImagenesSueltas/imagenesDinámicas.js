@@ -171,7 +171,7 @@ $(document).ready(function() {
                     alert('Hubo un error al intentar eliminar los álbumes.');
                 }
             });
-        });
+        });        
     
         actionButtonContainer.append(actionButton);
         $('#image-container').before(actionButtonContainer);
