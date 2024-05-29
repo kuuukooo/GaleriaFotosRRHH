@@ -313,3 +313,14 @@ select {
 .btn-primary{
     border-color: unset;
 }
+
+.checkbox-container {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 350px;
+    margin-bottom: 100px;
+}
+
