@@ -71,6 +71,9 @@
 .original-description {
     display: block;
 }
+.ColorAzul{
+    background-color: #20327e;
+}
 #DashboardMenu,
 #GaleriaPublica,
 #LabelElegirImagenes i,
@@ -229,11 +232,9 @@ select {
     }
     #LabelElegirImagenes i {
         display: inline;
-        border: 1px solid #0d6efd;
         border-radius: 4px;
         position: relative;
         top: 15%;
-        background: #0d6efd;
         color: #fff;
         padding: 0.3rem 1rem;
     }
@@ -298,11 +299,9 @@ select {
 @media only screen and (min-width: 769px) {
     #LabelElegirImagenes i {
         display: inline;
-        border: 1px solid #0d6efd;
         border-radius: 4px;
         position: relative;
         top: 15%;
-        background: #0d6efd;
         color: #fff;
         padding: 0.3rem 1rem;
         cursor: pointer;
@@ -310,6 +309,9 @@ select {
     #InputElegirImagenes {
         display: none;
     }
+}
+.btn-primary{
+    border-color: unset;
 }
 
 .checkbox-container {
