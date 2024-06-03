@@ -184,42 +184,55 @@ const CargaParaSeleccion = () => {
                 galleryPaginationMode: 'numbers',
                 locationHash: false,
             });
-            let BotonEliminarAlbumes = document.createElement("button");
-            BotonEliminarAlbumes.id = "btnEliminar";
-            BotonEliminarAlbumes.classList.add("btn", "btn-danger"); // Añade clases de Bootstrap si es necesario
-            
-            const icono = document.createElement("i");
-            icono.classList.add("bi", "bi-trash"); // Clases del icono de Bootstrap
-
-            BotonEliminarAlbumes.appendChild(icono);
-
-
-            galeriaContainer.append(BotonEliminarAlbumes);
-            BotonEliminarAlbumes.before(galeriaContainer);
-
-
-            // Agregar el evento para manejar la selección de elementos
-            $("#my_nanogallery2").on('itemSelected.nanogallery2 itemUnSelected.nanogallery2', function() {
-                var ngy2data = $("#my_nanogallery2").nanogallery2('data');
-                
-                // Actualizar contador de elementos seleccionados
-                $('#nb_selected').text(ngy2data.gallery.nbSelected);
-                
-                // Mostrar elementos seleccionados
-                var sel = '';
-                ngy2data.items.forEach(function(item) {
+         let BotonEliminarAlbumes = document.createElement("button");
+         BotonEliminarAlbumes.id = "btnEliminar";
+         BotonEliminarAlbumes.classList.add("btn", "btn-danger"); // Añade clases de Bootstrap si es necesario
+         const icono = document.createElement("i");
+         icono.classList.add("bi", "bi-trash"); // Clases del icono de Bootstrap
+         BotonEliminarAlbumes.appendChild(icono);
+         galeriaContainer.append(BotonEliminarAlbumes);
+         
+         $("#my_nanogallery2").on('itemSelected.nanogallery2 itemUnSelected.nanogallery2', function() {
+            var ngy2data = $("#my_nanogallery2").nanogallery2('data');
+            BotonEliminarAlbumes.addEventListener("click", () => {
+                  let albumIDs = [];
+                  ngy2data.items.forEach(function(item) {
                     if (item.selected) {
-                        sel += item.GetID() + '[' + item.title + '] ';
+                        albumIDs.push(item.GetID());
+                        console.log("Selected Albums",albumIDs);
                     }
                 });
-                $('#selection').text(sel);
-            });
+                  $.ajax({
+                      url: 'EliminarMultiplesAlbums.php', 
+                      type: 'POST',
+                      data: { albumIDs: albumIDs },
+                      dataType: 'json',
+                      success: function(response) {
+                          if (response.success) {
+                              alert('Álbumes eliminados correctamente');
+                              $(galeriaContainer).empty();
+                              CargadeImagenes();
+                          } else if (response.error) {
+                              alert('Error: ' + response.error);
+                          } else {
+                              alert('Respuesta inesperada del servidor');
+                          }
+                      },
+                      error: function(jqXHR, textStatus, errorThrown) {
+                          alert('Error en la solicitud AJAX: ' + textStatus);
+                          console.log("Hola",jqXHR, textStatus, errorThrown)
+                      }
+                  });
+        
+            })
+        });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
         }
     }); 
 }
+
 
 let isCargaParaSeleccion = true;
 
