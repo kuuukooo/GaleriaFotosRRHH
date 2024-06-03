@@ -12,6 +12,8 @@ determina si el diálogo debe mostrarse o cerrarse. Si show es true, el diálogo
 
 y si show es false, el diálogo se cerrará.
 */
+
+
 const dialog = document.querySelector('dialog');
 const wrapper = document.querySelector('.wrapper');
 
@@ -26,81 +28,218 @@ show ? dialog.showModal() : dialog.close(), limpiar();
 }
 
 const CargadeImagenes = () => {
-// Crear el div de my_nanogallery2 con los atributos data necesarios
-let galleryDiv = $('<div id="my_nanogallery2" data-nanogallery2=\'{}\'></div>');
-let galeriaContainer = document.getElementById('galeriaContainer');
-// Agregar el div al cuerpo del documento
-$(galeriaContainer).append(galleryDiv);
+    // Crear el div de my_nanogallery2 con los atributos data necesarios
+    let galleryDiv = $('<div id="my_nanogallery2" data-nanogallery2=\'{}\'></div>');
+    let galeriaContainer = document.getElementById('galeriaContainer');
+    // Agregar el div al cuerpo del documento
+    $(galeriaContainer).append(galleryDiv);
 
-// Realizar petición AJAX para obtener los datos de los álbumes e imágenes
-$.ajax({
-    url: 'datosImagenes.php',
-    dataType: 'json',
-    success: function(data) {
-        // Convertir el objeto en un array
-        var dataArray = Object.values(data);
+    // Realizar petición AJAX para obtener los datos de los álbumes e imágenes
+    $.ajax({
+        url: 'datosImagenes.php',
+        dataType: 'json',
+        success: function(data) {
+            // Convertir el objeto en un array
+            var dataArray = Object.values(data);
 
-        // Toda la fé puesta.
-        dataArray.reverse();
+            // Toda la fé puesta.
+            dataArray.reverse();
 
-        let items = [];
+            let items = [];
 
-        console.log(dataArray)
+            console.log(dataArray);
 
-         // Iterar sobre los datos y construir los objetos de la galería
-        $.each(dataArray, function(index, album) {
-            // Añadir el álbum
-            items.push({
-            src: "fotos/" + album.miniatura,
-                srct: "fotos/" + album.miniatura,
-                title: album.descripcion,
-                ID: album.id_album,
-                kind: 'album',
-                customData: {
-                    date: album.fecha_creacion,
-                    AlbumID: album.id_album,
-                }
-            });
-
-            // Añadir las imágenes del álbum
-            $.each(album.imagenes, function(index, imagen) {
+            // Iterar sobre los datos y construir los objetos de la galería
+            $.each(dataArray, function(index, album) {
+                // Añadir el álbum
                 items.push({
-                    src: "fotos/" + imagen.imagen,
-                    albumID: album.id_album
+                    src: "fotos/" + album.miniatura,
+                    srct: "fotos/" + album.miniatura,
+                    title: album.descripcion,
+                    ID: album.id_album,
+                    kind: 'album',
+                    customData: {
+                        date: album.fecha_creacion,
+                        AlbumID: album.id_album,
+                    }
                 });
+
+                // Añadir las imágenes del álbum
+                $.each(album.imagenes, function(index, imagen) {
+                    items.push({
+                        src: "fotos/" + imagen.imagen,
+                        albumID: album.id_album
+                    });
+                });
+
             });
 
-        });
-
-     // Inicializar la galería nanogallery2 con los items obtenidos
-    $("#my_nanogallery2").nanogallery2({
-            items: items,
-            thumbnailWidth: 300,
-            thumbnailHeight: 300,
-            thumbnailAlignment: 'center',
-            thumbnailGutterWidth: 70,
-            thumbnailGutterHeight: 50,
-            galleryMaxRows: 30,
-            galleryDisplayMode: 'pagination',
-            galleryPaginationMode: 'numbers',
-            locationHash: false,
-            //Custom1: Borrar Album, Custom2: Cambiar el título del Album, custom3: Descargar Album, Custom 4: Publicar Album
-            thumbnailToolbarAlbum: { topLeft: 'custom1, custom2, custom3, custom4'}, 
-            thumbnailToolbarImage: { topLeft: 'download' }, //Herramienta de descarga dentro de las imágenes
-            icons: {
-            thumbnailCustomTool1: '<i class="bi bi-trash" style="color: white"></i>', //Borrar Album
-            thumbnailCustomTool2: '<i class="bi bi-pencil-square"></i>', //Cambiar el título del Album
-            thumbnailCustomTool3: '<i class="bi bi-download" style="color: white"></i>', //Descargar Album
-            thumbnailCustomTool4: '<i class="bi bi-eye-slash"></i>' //Publicar Album
-        },
-         fnThumbnailToolCustAction: myTnTool // Cambiar la función que maneja las acciones personalizadas
-        });
+            // Inicializar la galería nanogallery2 con los items obtenidos
+            $("#my_nanogallery2").nanogallery2({
+                items: items,
+                thumbnailWidth: 300,
+                thumbnailHeight: 300,
+                thumbnailAlignment: 'center',
+                thumbnailGutterWidth: 70,
+                thumbnailGutterHeight: 50,
+                galleryMaxRows: 30,
+                galleryDisplayMode: 'pagination',
+                galleryPaginationMode: 'numbers',
+                locationHash: false,
+                // Custom1: Borrar Album, Custom2: Cambiar el título del Album, Custom3: Descargar Album, Custom 4: Publicar Album
+                thumbnailToolbarAlbum: { topLeft: 'custom1, custom2, custom3, custom4' }, 
+                thumbnailToolbarImage: { topLeft: 'download' }, // Herramienta de descarga dentro de las imágenes
+                icons: {
+                    thumbnailCustomTool1: '<i class="bi bi-trash" style="color: white"></i>', // Borrar Album
+                    thumbnailCustomTool2: '<i class="bi bi-pencil-square"></i>', // Cambiar el título del Album
+                    thumbnailCustomTool3: '<i class="bi bi-download" style="color: white"></i>', // Descargar Album
+                    thumbnailCustomTool4: '<i class="bi bi-eye-slash"></i>' // Publicar Album
+                },
+                fnThumbnailToolCustAction: myTnTool // Cambiar la función que maneja las acciones personalizadas
+            });
+            function myTnTool(action, item) {
+                console.dir(item);
+                
+                    switch (action) {
+                        case 'custom1':
+                            BorrarAlbum(item);
+                            break;
+                        case 'custom2':
+                            EditarDescripcionAlbum(item);
+                            break;
+                        case 'custom3':
+                            descargarAlbum(item); 
+                            break;
+                        case 'custom4':
+                            PublicarAlbum(item);
+                            break;
+                    }
+                }
+           
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
         }
     }); 
 }
+
+const CargaParaSeleccion = () => {
+    // Crear el div de my_nanogallery2 con los atributos data necesarios
+    let galleryDiv = $('<div id="my_nanogallery2" data-nanogallery2=\'{}\'></div>');
+    let galeriaContainer = document.getElementById('galeriaContainer');
+    // Agregar el div al cuerpo del documento
+    $(galeriaContainer).append(galleryDiv);
+
+    // Realizar petición AJAX para obtener los datos de los álbumes e imágenes
+    $.ajax({
+        url: 'datosImagenes.php',
+        dataType: 'json',
+        success: function(data) {
+            // Convertir el objeto en un array
+            var dataArray = Object.values(data);
+
+            // Toda la fé puesta.
+            dataArray.reverse();
+
+            let items = [];
+
+            console.log(dataArray);
+
+            // Iterar sobre los datos y construir los objetos de la galería
+            $.each(dataArray, function(index, album) {
+                // Añadir el álbum
+                items.push({
+                    src: "fotos/" + album.miniatura,
+                    srct: "fotos/" + album.miniatura,
+                    title: album.descripcion,
+                    ID: album.id_album,
+                    kind: 'album',
+                    customData: {
+                        date: album.fecha_creacion,
+                        AlbumID: album.id_album,
+                    }
+                });
+
+                // Añadir las imágenes del álbum
+                $.each(album.imagenes, function(index, imagen) {
+                    items.push({
+                        src: "fotos/" + imagen.imagen,
+                        albumID: album.id_album
+                    });
+                });
+
+            });
+
+            // Inicializar la galería nanogallery2 con los items obtenidos
+            $("#my_nanogallery2").nanogallery2({
+                thumbnailSelectable: true, // Habilitar selección
+                items: items,
+                thumbnailWidth: 300,
+                thumbnailHeight: 300,
+                thumbnailAlignment: 'center',
+                thumbnailGutterWidth: 70,
+                thumbnailGutterHeight: 50,
+                galleryMaxRows: 30,
+                galleryDisplayMode: 'pagination',
+                galleryPaginationMode: 'numbers',
+                locationHash: false,
+            });
+            let BotonEliminarAlbumes = document.createElement("button");
+            BotonEliminarAlbumes.id = "btnEliminar";
+            BotonEliminarAlbumes.classList.add("btn", "btn-danger"); // Añade clases de Bootstrap si es necesario
+            
+            const icono = document.createElement("i");
+            icono.classList.add("bi", "bi-trash"); // Clases del icono de Bootstrap
+
+            BotonEliminarAlbumes.appendChild(icono);
+
+
+            galeriaContainer.append(BotonEliminarAlbumes);
+            BotonEliminarAlbumes.before(galeriaContainer);
+
+
+            // Agregar el evento para manejar la selección de elementos
+            $("#my_nanogallery2").on('itemSelected.nanogallery2 itemUnSelected.nanogallery2', function() {
+                var ngy2data = $("#my_nanogallery2").nanogallery2('data');
+                
+                // Actualizar contador de elementos seleccionados
+                $('#nb_selected').text(ngy2data.gallery.nbSelected);
+                
+                // Mostrar elementos seleccionados
+                var sel = '';
+                ngy2data.items.forEach(function(item) {
+                    if (item.selected) {
+                        sel += item.GetID() + '[' + item.title + '] ';
+                    }
+                });
+                $('#selection').text(sel);
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
+        }
+    }); 
+}
+
+let isCargaParaSeleccion = true;
+
+const BotonSeleccion = document.getElementById('BotonSelector');
+BotonSeleccion.addEventListener("click", () => {
+    BotonSeleccion.classList.toggle('btn-pressed');
+    const galeriaContainer = document.getElementById('galeriaContainer');
+    $(galeriaContainer).empty();
+    
+    // Alternar entre las funciones dependiendo del estado
+    if (isCargaParaSeleccion) {
+        CargaParaSeleccion();
+    } else {
+        CargadeImagenes();
+    }
+
+    // Invertir el estado para el próximo clic
+    isCargaParaSeleccion = !isCargaParaSeleccion;
+});
+
 
 // Función para manejar acciones personalizadas en la herramienta de miniaturas
 /**
@@ -121,24 +260,7 @@ información sobre un álbum. Podría incluir detalles como el nombre del álbum
 
 lista de pistas, etc.
 */
-function myTnTool(action, item) {
-console.dir(item);
 
-    switch (action) {
-        case 'custom1':
-            BorrarAlbum(item);
-            break;
-        case 'custom2':
-            EditarDescripcionAlbum(item);
-            break;
-        case 'custom3':
-            descargarAlbum(item); 
-            break;
-        case 'custom4':
-            PublicarAlbum(item);
-            break;
-    }
-}
 
 /**
 

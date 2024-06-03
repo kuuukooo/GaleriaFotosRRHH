@@ -322,3 +322,24 @@ select {
     margin-bottom: 100px;
 }
 
+.BotonError{
+    background-color:red;
+    border: none; 
+    color: white; 
+    padding: 14px 28px; 
+    cursor: pointer; 
+    border-radius: 10rem; 
+    display: inline-flex;
+
+
+}
+.btn-pressed{
+    color: black;
+    border-radius: 10rem;
+    background-color: #00ff37; /* Cambia esto al color que desees */
+    border-color: #00ff73;     /* Cambia esto al color que desees */
+}
+.btn-pressed:hover {
+    background-color: #00ff37; /* Cambia esto al color que desees */
+    border-color: #00ff73;     /* Cambia esto al color que desees */
+}
