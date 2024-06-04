@@ -30,7 +30,7 @@ try {
                 foreach ($images as $image) {
                     $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/Albums/fotos/' . trim($image);
 
-                    if (file_exists($imagePath)) {
+                    if (!empty(trim($image)) && file_exists($imagePath) && !is_dir($imagePath)) {
                         if (!unlink($imagePath)) {
                             throw new Exception("Error al eliminar la imagen: " . $imagePath);
                         }
