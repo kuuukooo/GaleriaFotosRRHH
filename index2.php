@@ -181,14 +181,26 @@ $stmt->execute();
                         <form id="uploadForm" action="controllers/new-post-photo.php" method="POST" enctype="multipart/form-data">
                             <h5 class="mb-3">Elige tu foto y añade una descripción</h5>
                             <div class="d-flex justify-content-between">
-                                <input type="file"id="InputElegirImagenes" class="form-control mb-3" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg" style="width: 40%" required>
+                                <input type="file" id="InputElegirImagenes" class="form-control mb-3" name="files[]" multiple id="file" accept=".png, .jpg, .jpeg" style="width: 40%" required>
                                 <label for="InputElegirImagenes" id="LabelElegirImagenes">
-                                    <i class="bi bi-images fa-lg"></i>
+                                    <i class="btn btn-primary bi bi-images fa-lg ColorAzul"></i>
                                 </label>
                                 <textarea name="description" id="description" rows="1" class="form-control mb-3 mx-3" style="resize: none;" placeholder="Descripción..." required></textarea>
-                                <button class="btn btn-primary mb-3" type="button" name="btn-new-post-photo-no-icon" id="btn-new-post-photo"><i class="bi bi-upload"></i></button>
+                                <button class="btn btn-primary mb-3 ColorAzul" type="button" name="btn-new-post-photo-no-icon" id="btn-new-post-photo"><i class="bi bi-upload"></i></button>
                             </div>
                         </form>
+                    </div>
+
+                    <button class="fab" id="fab">
+                        <i class="bi bi-gear fa-lg"></i>
+                    </button>
+
+                    <div class="fab-menu" id="fab-menu">
+                        <div class="fab-menu-content">
+                            <button class="fab-menu-btn download-button"><i class="bi bi-download"></i></button>
+                            <button class="fab-menu-btn EliminarVarios"><i class="bi bi-trash3 fa-6x"></i></button>
+                            <button class="fab-menu-btn btn-publicar"><i class="bi bi-eye"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -213,5 +225,6 @@ $stmt->execute();
 <script src="ImagenesSueltas/eliminar_imagen.js"></script>
 <script src="NavBar/navbar2.js"></script>
 <script src="login/ScriptTipoUsuario.js"></script> 
+<script src="scriptPrueba.js"></script>
 </body>
 </html>
