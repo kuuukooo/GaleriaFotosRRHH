@@ -12,6 +12,8 @@ determina si el diálogo debe mostrarse o cerrarse. Si show es true, el diálogo
 
 y si show es false, el diálogo se cerrará.
 */
+
+
 const dialog = document.querySelector('dialog');
 const wrapper = document.querySelector('.wrapper');
 
@@ -26,51 +28,51 @@ show ? dialog.showModal() : dialog.close(), limpiar();
 }
 
 const CargadeImagenes = () => {
-// Crear el div de my_nanogallery2 con los atributos data necesarios
-let galleryDiv = $('<div id="my_nanogallery2" data-nanogallery2=\'{}\'></div>');
-let galeriaContainer = document.getElementById('galeriaContainer');
-// Agregar el div al cuerpo del documento
-$(galeriaContainer).append(galleryDiv);
+    // Crear el div de my_nanogallery2 con los atributos data necesarios
+    let galleryDiv = $('<div id="my_nanogallery2" data-nanogallery2=\'{}\'></div>');
+    let galeriaContainer = document.getElementById('galeriaContainer');
+    // Agregar el div al cuerpo del documento
+    $(galeriaContainer).append(galleryDiv);
 
-// Realizar petición AJAX para obtener los datos de los álbumes e imágenes
-$.ajax({
-    url: 'datosImagenes.php',
-    dataType: 'json',
-    success: function(data) {
-        // Convertir el objeto en un array
-        var dataArray = Object.values(data);
+    // Realizar petición AJAX para obtener los datos de los álbumes e imágenes
+    $.ajax({
+        url: 'datosImagenes.php',
+        dataType: 'json',
+        success: function(data) {
+            // Convertir el objeto en un array
+            var dataArray = Object.values(data);
 
-        // Toda la fé puesta.
-        dataArray.reverse();
+            // Toda la fé puesta.
+            dataArray.reverse();
 
-        let items = [];
+            let items = [];
 
-        console.log(dataArray)
+            console.log(dataArray);
 
-         // Iterar sobre los datos y construir los objetos de la galería
-        $.each(dataArray, function(index, album) {
-            // Añadir el álbum
-            items.push({
-            src: "fotos/" + album.miniatura,
-                srct: "fotos/" + album.miniatura,
-                title: album.descripcion,
-                ID: album.id_album,
-                kind: 'album',
-                customData: {
-                    date: album.fecha_creacion,
-                    AlbumID: album.id_album,
-                }
-            });
-
-            // Añadir las imágenes del álbum
-            $.each(album.imagenes, function(index, imagen) {
+            // Iterar sobre los datos y construir los objetos de la galería
+            $.each(dataArray, function(index, album) {
+                // Añadir el álbum
                 items.push({
-                    src: "fotos/" + imagen.imagen,
-                    albumID: album.id_album
+                    src: "fotos/" + album.miniatura,
+                    srct: "fotos/" + album.miniatura,
+                    title: album.descripcion,
+                    ID: album.id_album,
+                    kind: 'album',
+                    customData: {
+                        date: album.fecha_creacion,
+                        AlbumID: album.id_album,
+                    }
                 });
-            });
 
-        });
+                // Añadir las imágenes del álbum
+                $.each(album.imagenes, function(index, imagen) {
+                    items.push({
+                        src: "fotos/" + imagen.imagen,
+                        albumID: album.id_album
+                    });
+                });
+
+            });
 
      // Inicializar la galería nanogallery2 con los items obtenidos
     $("#my_nanogallery2").nanogallery2({
@@ -106,6 +108,146 @@ $.ajax({
     }); 
 }
 
+const CargaParaSeleccion = () => {
+    // Crear el div de my_nanogallery2 con los atributos data necesarios
+    let galleryDiv = $('<div id="my_nanogallery2" data-nanogallery2=\'{}\'></div>');
+    let galeriaContainer = document.getElementById('galeriaContainer');
+    // Agregar el div al cuerpo del documento
+    $(galeriaContainer).append(galleryDiv);
+
+    // Realizar petición AJAX para obtener los datos de los álbumes e imágenes
+    $.ajax({
+        url: 'datosImagenes.php',
+        dataType: 'json',
+        success: function(data) {
+            // Convertir el objeto en un array
+            var dataArray = Object.values(data);
+
+            // Toda la fé puesta.
+            dataArray.reverse();
+
+            let items = [];
+
+            console.log(dataArray);
+
+            // Iterar sobre los datos y construir los objetos de la galería
+            $.each(dataArray, function(index, album) {
+                // Añadir el álbum
+                items.push({
+                    src: "fotos/" + album.miniatura,
+                    srct: "fotos/" + album.miniatura,
+                    title: album.descripcion,
+                    ID: album.id_album,
+                    kind: 'album',
+                    customData: {
+                        date: album.fecha_creacion,
+                        AlbumID: album.id_album,
+                    }
+                });
+
+                // Añadir las imágenes del álbum
+                $.each(album.imagenes, function(index, imagen) {
+                    items.push({
+                        src: "fotos/" + imagen.imagen,
+                        albumID: album.id_album
+                    });
+                });
+
+            });
+
+            // Inicializar la galería nanogallery2 con los items obtenidos
+            $("#my_nanogallery2").nanogallery2({
+                thumbnailSelectable: true, // Habilitar selección
+                items: items,
+                thumbnailWidth: 300,
+                thumbnailHeight: 300,
+                thumbnailAlignment: 'center',
+                thumbnailGutterWidth: 70,
+                thumbnailGutterHeight: 50,
+                galleryMaxRows: 30,
+                galleryDisplayMode: 'pagination',
+                galleryPaginationMode: 'numbers',
+                locationHash: false,
+            });
+
+            let BotonEliminarAlbumes = document.createElement("button");
+            BotonEliminarAlbumes.id = "btnEliminar";
+            BotonEliminarAlbumes.classList.add("btn", "btn-danger"); // Añade clases de Bootstrap si es necesario
+            const icono = document.createElement("i");
+            icono.classList.add("bi", "bi-trash"); // Clases del icono de Bootstrap
+            BotonEliminarAlbumes.appendChild(icono);
+            galeriaContainer.append(BotonEliminarAlbumes);
+
+            let eventAttached = false;
+
+            $("#my_nanogallery2").on('itemSelected.nanogallery2 itemUnSelected.nanogallery2', function() {
+                var ngy2data = $("#my_nanogallery2").nanogallery2('data');
+
+                if (!eventAttached) {
+                    BotonEliminarAlbumes.addEventListener("click", () => {
+                        let albumIDs = [];
+                        ngy2data.items.forEach(function(item) {
+                            if (item.selected) {
+                                albumIDs.push(item.GetID());
+                                console.log("Selected Albums", albumIDs);
+                            }
+                        });
+                        $.ajax({
+                            url: 'EliminarMultiplesAlbums.php',
+                            type: 'POST',
+                            data: { albumIDs: albumIDs },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (response.success) {
+                                    alert('Álbumes eliminados correctamente');
+                                    $(galeriaContainer).empty();
+                                    CargaParaSeleccion();
+                                } else if (response.error) {
+                                    alert('Error: ' + response.error);
+                                } else {
+                                    alert('Respuesta inesperada del servidor');
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert('Error en la solicitud AJAX: ' + textStatus);
+                                console.log("Hola", jqXHR, textStatus, errorThrown);
+                            }
+                        });
+                    });
+
+                    eventAttached = true;
+                }
+            });
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
+        }
+    });
+}
+
+
+
+let isCargaParaSeleccion = true;
+
+const BotonSeleccion = document.getElementById('BotonSelector');
+BotonSeleccion.addEventListener("click", () => {
+    BotonSeleccion.classList.toggle('btn-pressed');
+    const galeriaContainer = document.getElementById('galeriaContainer');
+    $(galeriaContainer).empty();
+    
+    // Alternar entre las funciones dependiendo del estado
+    if (isCargaParaSeleccion) {
+        CargaParaSeleccion();
+    } else {
+        CargadeImagenes();
+    }
+
+    // Invertir el estado para el próximo clic
+    isCargaParaSeleccion = !isCargaParaSeleccion;
+});
+
+
 // Función para manejar acciones personalizadas en la herramienta de miniaturas
 /**
 
@@ -125,24 +267,7 @@ información sobre un álbum. Podría incluir detalles como el nombre del álbum
 
 lista de pistas, etc.
 */
-function myTnTool(action, item) {
-console.dir(item);
 
-    switch (action) {
-        case 'custom1':
-            BorrarAlbum(item);
-            break;
-        case 'custom2':
-            EditarDescripcionAlbum(item);
-            break;
-        case 'custom3':
-            descargarAlbum(item); 
-            break;
-        case 'custom4':
-            PublicarAlbum(item);
-            break;
-    }
-}
 
 /**
 
@@ -160,63 +285,69 @@ función.
 */
 //Función para crear el álbum
 const crearAlbum = () => {
-let descripcion = $('#imagenInput').val();
-let imagenes = $('#imagenInputDialogAlbum').prop('files');
+    let descripcion = $('#imagenInput').val();
+    let imagenes = $('#imagenInputDialogAlbum').prop('files');
 
- // Validar si el formulario está vacío
-if(descripcion.trim() === '' && imagenes.length === 0) {
-    alert("Por favor, ingresa al menos una descripción o selecciona al menos una imagen.");
-    return; 
-}
-
-// Crear un objeto FormData para enviar los datos al servidor
-let formData = new FormData();
-formData.append('description', descripcion); 
-
- let imagenesExcedidas = false; // Bandera para verificar si se superó el límite de imágenes
-
- // Agregar cada archivo al objeto FormData
-for (let i = 0; i < imagenes.length; i++) {
-    if(imagenes.length <= 50){
-        formData.append('files[]', imagenes[i]);
-    } else {
-        imagenesExcedidas = true;
-        break; 
+    // Validar si el formulario está vacío
+    if (descripcion.trim() === '' && imagenes.length === 0) {
+        alert("Por favor, ingresa al menos una descripción o selecciona al menos una imagen.");
+        return;
     }
-}
 
-// Verificar si se superó el límite de imágenes
-if(imagenesExcedidas) {
-    alert("No se pueden subir más de 50 imágenes");
-    return;
-}
+    // Crear un objeto FormData para enviar los datos al servidor
+    let formData = new FormData();
+    formData.append('description', descripcion);
 
- // Si no hay errores, enviar la solicitud AJAX
-$.ajax({
-    url: 'upload.php', 
-    type: 'POST',
-    data: formData,
-    processData: false,
-    contentType: false,
-    success: function(response) {
-        console.log("respuesta exitosa:", response);
-        console.log(formData)
-        if(response.success) {
-        $(galeriaContainer).empty();
-        CargadeImagenes();
-        limpiar();
-        alert(response.success); 
+    let imagenesExcedidas = false; // Bandera para verificar si se superó el límite de imágenes
+
+    // Agregar cada archivo al objeto FormData
+    for (let i = 0; i < imagenes.length; i++) {
+        if (imagenes.length <= 50) {
+            formData.append('files[]', imagenes[i]);
         } else {
-            alert(response.error); 
+            imagenesExcedidas = true;
+            break;
         }
-    },
-    error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-        console.log(formData);
-        alert("Error en la solicitud AJAX. Consulta la consola para más detalles.");
     }
-});
+
+    // Verificar si se superó el límite de imágenes
+    if (imagenesExcedidas) {
+        alert("No se pueden subir más de 50 imágenes");
+        return;
+    }
+
+    // Si no hay errores, enviar la solicitud AJAX
+    $.ajax({
+        url: 'upload.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            console.log("respuesta exitosa:", response);
+            console.log(formData);
+            if (response.success) {
+                // Restablecer el estado del botón y la variable de estado
+                const BotonSeleccion = document.getElementById('BotonSelector');
+                BotonSeleccion.classList.remove('btn-pressed');
+                isCargaParaSeleccion = true;
+
+                $(galeriaContainer).empty();
+                CargadeImagenes();
+                limpiar();
+                alert(response.success);
+            } else {
+                alert(response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            console.log(formData);
+            alert("Error en la solicitud AJAX. Consulta la consola para más detalles.");
+        }
+    });
 }
+
 
 /**
 

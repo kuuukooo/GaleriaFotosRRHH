@@ -179,11 +179,12 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </dialog>
 <div class="main-content">
     <!-- Formulario para la subida de las imágenes -->
-    <div class="container justify-content-center">
-                <div class="mt-5 mx-auto">
+    <div id = "Container1" class="container justify-content-center">                <div class="mt-5 mx-auto">
                     <h5 class="mb-3">Album de imágenes</h5>
                         <button class="btn btn-primary mb-3 show-modal ColorAzul" onclick=showDialog(true)>Crear un álbum</button>
                 </div>
+                <button type="button" id= "BotonSelector" class="BotonError">Seleccionar Albums</button>
+
                 <p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
     </div>
 
