@@ -84,6 +84,10 @@ $.ajax({
             galleryDisplayMode: 'pagination',
             galleryPaginationMode: 'numbers',
             locationHash: false,
+            galleryTheme: {
+                navigationPagination :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' },
+                navigationBreadcrumb :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' }
+            },
             //Custom1: Borrar Album, Custom2: Cambiar el título del Album, custom3: Descargar Album, Custom 4: Publicar Album
             thumbnailToolbarAlbum: { topLeft: 'custom1, custom2, custom3, custom4'}, 
             thumbnailToolbarImage: { topLeft: 'download' }, //Herramienta de descarga dentro de las imágenes
@@ -287,7 +291,11 @@ e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
                     galleryMaxRows: 30,
                     galleryDisplayMode: 'pagination',
                     galleryPaginationMode: 'numbers',
-                    locationHash: false
+                    locationHash: false,
+                    galleryTheme: {
+                        navigationPagination :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' },
+                        navigationBreadcrumb :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' }
+                    }
                 });
             }
         },
