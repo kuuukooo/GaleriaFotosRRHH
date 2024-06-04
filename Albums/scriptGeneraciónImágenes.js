@@ -74,33 +74,49 @@ const CargadeImagenes = () => {
 
             });
 
-     // Inicializar la galería nanogallery2 con los items obtenidos
-    $("#my_nanogallery2").nanogallery2({
-            items: items,
-            thumbnailWidth: 300,
-            thumbnailHeight: 300,
-            thumbnailAlignment: 'center',
-            thumbnailGutterWidth: 70,
-            thumbnailGutterHeight: 50,
-            galleryMaxRows: 30,
-            galleryDisplayMode: 'pagination',
-            galleryPaginationMode: 'numbers',
-            locationHash: false,
-            galleryTheme: {
-                navigationPagination :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' },
-                navigationBreadcrumb :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' }
-            },
-            //Custom1: Borrar Album, Custom2: Cambiar el título del Album, custom3: Descargar Album, Custom 4: Publicar Album
-            thumbnailToolbarAlbum: { topLeft: 'custom1, custom2, custom3, custom4'}, 
-            thumbnailToolbarImage: { topLeft: 'download' }, //Herramienta de descarga dentro de las imágenes
-            icons: {
-            thumbnailCustomTool1: '<i class="bi bi-trash" style="color: white"></i>', //Borrar Album
-            thumbnailCustomTool2: '<i class="bi bi-pencil-square"></i>', //Cambiar el título del Album
-            thumbnailCustomTool3: '<i class="bi bi-download" style="color: white"></i>', //Descargar Album
-            thumbnailCustomTool4: '<i class="bi bi-eye-slash"></i>' //Publicar Album
-        },
-         fnThumbnailToolCustAction: myTnTool // Cambiar la función que maneja las acciones personalizadas
-        });
+            // Inicializar la galería nanogallery2 con los items obtenidos
+            $("#my_nanogallery2").nanogallery2({
+                items: items,
+                thumbnailWidth: 300,
+                thumbnailHeight: 300,
+                thumbnailAlignment: 'center',
+                thumbnailGutterWidth: 70,
+                thumbnailGutterHeight: 50,
+                galleryMaxRows: 30,
+                galleryDisplayMode: 'pagination',
+                galleryPaginationMode: 'numbers',
+                locationHash: false,
+                // Custom1: Borrar Album, Custom2: Cambiar el título del Album, Custom3: Descargar Album, Custom 4: Publicar Album
+                thumbnailToolbarAlbum: { topLeft: 'custom1, custom2, custom3, custom4' }, 
+                thumbnailToolbarImage: { topLeft: 'download' }, // Herramienta de descarga dentro de las imágenes
+                icons: {
+                    thumbnailCustomTool1: '<i class="bi bi-trash" style="color: white"></i>', // Borrar Album
+                    thumbnailCustomTool2: '<i class="bi bi-pencil-square"></i>', // Cambiar el título del Album
+                    thumbnailCustomTool3: '<i class="bi bi-download" style="color: white"></i>', // Descargar Album
+                    thumbnailCustomTool4: '<i class="bi bi-eye-slash"></i>' // Publicar Album
+                },
+                fnThumbnailToolCustAction: myTnTool // Cambiar la función que maneja las acciones personalizadas
+            });
+            
+            function myTnTool(action, item) {
+                console.dir(item);
+                
+                    switch (action) {
+                        case 'custom1':
+                            BorrarAlbum(item);
+                            break;
+                        case 'custom2':
+                            EditarDescripcionAlbum(item);
+                            break;
+                        case 'custom3':
+                            descargarAlbum(item); 
+                            break;
+                        case 'custom4':
+                            PublicarAlbum(item);
+                            break;
+                    }
+                }
+           
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
@@ -422,11 +438,7 @@ e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
                     galleryMaxRows: 30,
                     galleryDisplayMode: 'pagination',
                     galleryPaginationMode: 'numbers',
-                    locationHash: false,
-                    galleryTheme: {
-                        navigationPagination :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' },
-                        navigationBreadcrumb :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' }
-                    }
+                    locationHash: false
                 });
             }
         },
