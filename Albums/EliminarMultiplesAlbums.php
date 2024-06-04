@@ -25,14 +25,16 @@ try {
                 $stmt->execute();
                 $imagesString = $stmt->fetchColumn();
 
-                $images = explode(",", $imagesString);
+                if ($imagesString !== false) {
+                    $images = explode(",", $imagesString);
 
-                foreach ($images as $image) {
-                    $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/Albums/fotos/' . trim($image);
+                    foreach ($images as $image) {
+                        $imagePath = $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/Albums/fotos/' . trim($image);
 
-                    if (!empty(trim($image)) && file_exists($imagePath) && !is_dir($imagePath)) {
-                        if (!unlink($imagePath)) {
-                            throw new Exception("Error al eliminar la imagen: " . $imagePath);
+                        if (!empty(trim($image)) && file_exists($imagePath) && !is_dir($imagePath)) {
+                            if (!unlink($imagePath)) {
+                                throw new Exception("Error al eliminar la imagen: " . $imagePath);
+                            }
                         }
                     }
                 }
@@ -61,4 +63,4 @@ try {
 }
 
 echo json_encode($response);
-
+?>
