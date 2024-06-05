@@ -97,7 +97,6 @@ const CargadeImagenes = () => {
                 },
                 fnThumbnailToolCustAction: myTnTool // Cambiar la función que maneja las acciones personalizadas
             });
-            
             function myTnTool(action, item) {
                 console.dir(item);
                 
@@ -301,69 +300,63 @@ función.
 */
 //Función para crear el álbum
 const crearAlbum = () => {
-    let descripcion = $('#imagenInput').val();
-    let imagenes = $('#imagenInputDialogAlbum').prop('files');
+let descripcion = $('#imagenInput').val();
+let imagenes = $('#imagenInputDialogAlbum').prop('files');
 
-    // Validar si el formulario está vacío
-    if (descripcion.trim() === '' && imagenes.length === 0) {
-        alert("Por favor, ingresa al menos una descripción o selecciona al menos una imagen.");
-        return;
-    }
-
-    // Crear un objeto FormData para enviar los datos al servidor
-    let formData = new FormData();
-    formData.append('description', descripcion);
-
-    let imagenesExcedidas = false; // Bandera para verificar si se superó el límite de imágenes
-
-    // Agregar cada archivo al objeto FormData
-    for (let i = 0; i < imagenes.length; i++) {
-        if (imagenes.length <= 50) {
-            formData.append('files[]', imagenes[i]);
-        } else {
-            imagenesExcedidas = true;
-            break;
-        }
-    }
-
-    // Verificar si se superó el límite de imágenes
-    if (imagenesExcedidas) {
-        alert("No se pueden subir más de 50 imágenes");
-        return;
-    }
-
-    // Si no hay errores, enviar la solicitud AJAX
-    $.ajax({
-        url: 'upload.php',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            console.log("respuesta exitosa:", response);
-            console.log(formData);
-            if (response.success) {
-                // Restablecer el estado del botón y la variable de estado
-                const BotonSeleccion = document.getElementById('BotonSelector');
-                BotonSeleccion.classList.remove('btn-pressed');
-                isCargaParaSeleccion = true;
-
-                $(galeriaContainer).empty();
-                CargadeImagenes();
-                limpiar();
-                alert(response.success);
-            } else {
-                alert(response.error);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-            console.log(formData);
-            alert("Error en la solicitud AJAX. Consulta la consola para más detalles.");
-        }
-    });
+ // Validar si el formulario está vacío
+if(descripcion.trim() === '' && imagenes.length === 0) {
+    alert("Por favor, ingresa al menos una descripción o selecciona al menos una imagen.");
+    return; 
 }
 
+// Crear un objeto FormData para enviar los datos al servidor
+let formData = new FormData();
+formData.append('description', descripcion); 
+
+ let imagenesExcedidas = false; // Bandera para verificar si se superó el límite de imágenes
+
+ // Agregar cada archivo al objeto FormData
+for (let i = 0; i < imagenes.length; i++) {
+    if(imagenes.length <= 50){
+        formData.append('files[]', imagenes[i]);
+    } else {
+        imagenesExcedidas = true;
+        break; 
+    }
+}
+
+// Verificar si se superó el límite de imágenes
+if(imagenesExcedidas) {
+    alert("No se pueden subir más de 50 imágenes");
+    return;
+}
+
+ // Si no hay errores, enviar la solicitud AJAX
+$.ajax({
+    url: 'upload.php', 
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(response) {
+        console.log("respuesta exitosa:", response);
+        console.log(formData)
+        if(response.success) {
+        $(galeriaContainer).empty();
+        CargadeImagenes();
+        limpiar();
+        alert(response.success); 
+        } else {
+            alert(response.error); 
+        }
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        console.log(formData);
+        alert("Error en la solicitud AJAX. Consulta la consola para más detalles.");
+    }
+});
+}
 
 /**
 

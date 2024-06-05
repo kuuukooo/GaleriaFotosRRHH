@@ -8,6 +8,16 @@ $description = "";
 $date = date('Y-m-d H:i:s');
 $response = array();
 
+// Verificar si el ID de usuario está presente en la sesión
+if (!isset($_SESSION['user_id'])) {
+    $response['error'] = "Usuario no autenticado.";
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
+}
+
+$userId = $_SESSION['user_id'];
+
 if (isset($_POST['description'])) {
     $description = $_POST['description'];
 }
@@ -80,21 +90,29 @@ try {
                     $imagesList = implode(",", $images);
             
                     if ($description != '') {
-                        $userId = $_SESSION['user_id']; // Obtener el ID de usuario de la sesión
-            
-                        // Crear la consulta para la inserción de imágenes
-                        $sql = 'INSERT INTO imagenes_sueltas (id_usuario, imagen, descripcion, fecha_carga) VALUES (:id_usuario, :imagen, :descripcion, :fecha_carga)';
-                        $stmt = $conn->prepare($sql);
-            
-                        $stmt->bindParam(':id_usuario', $userId);
-                        $stmt->bindParam(':imagen', $imagesList); // Usar la cadena de imágenes directamente
-                        $stmt->bindParam(':descripcion', $description);
-                        $stmt->bindParam(':fecha_carga', $date);
-            
-                        if ($stmt->execute()) {
-                            $response['success'] = "Post publicado correctamente";
+                        // Verificar que el ID de usuario existe en la tabla usuarios
+                        $checkUserSql = 'SELECT id_usuario FROM usuarios WHERE id_usuario = :id_usuario';
+                        $checkUserStmt = $conn->prepare($checkUserSql);
+                        $checkUserStmt->bindParam(':id_usuario', $userId, PDO::PARAM_INT);
+                        $checkUserStmt->execute();
+                        
+                        if ($checkUserStmt->rowCount() > 0) {
+                            // Crear la consulta para la inserción de imágenes
+                            $sql = 'INSERT INTO imagenes_sueltas (id_usuario, imagen, descripcion, fecha_carga) VALUES (:id_usuario, :imagen, :descripcion, :fecha_carga)';
+                            $stmt = $conn->prepare($sql);
+                
+                            $stmt->bindParam(':id_usuario', $userId);
+                            $stmt->bindParam(':imagen', $imagesList); // Usar la cadena de imágenes directamente
+                            $stmt->bindParam(':descripcion', $description);
+                            $stmt->bindParam(':fecha_carga', $date);
+                
+                            if ($stmt->execute()) {
+                                $response['success'] = "Post publicado correctamente";
+                            } else {
+                                $response['error'] = "No ha sido posible publicar el post";
+                            }
                         } else {
-                            $response['error'] = "No ha sido posible publicar el post";
+                            $response['error'] = "ID de usuario no válido.";
                         }
                     } else {
                         // La descripción está vacía, por lo que no se pueden insertar los datos
