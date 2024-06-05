@@ -3,7 +3,7 @@ session_start();
 
 require "../database/database.php";
 
-// Incluye la función de autenticación LDAP
+// Incluye la funciÃ³n de autenticaciÃ³n LDAP
 function login($user, $pass){
     $DOMINIO = 'ajvierci.com.py';
     //$DOMINIO = 'AJVOLAP';
@@ -14,8 +14,14 @@ function login($user, $pass){
 
     $puertoldap = 389; 
     $ldapconn = ldap_connect($ds, $puertoldap);
+    if (!$ldapconn) {
+        return false;
+    }
+
     ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3); 
     ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0); 
+    ldap_set_option($ldapconn, LDAP_OPT_NETWORK_TIMEOUT, 10); // 10 seconds timeout
+
     $ldapbind = @ldap_bind($ldapconn, $ldaprdn, $ldappass); 
 
     ldap_close($ldapconn); 
@@ -37,7 +43,7 @@ if (!empty($_POST["btningresar"])) {
             // Autenticación LDAP exitosa
             $_SESSION["user_id"] = $usuario; // Almacena el usuario en la sesión
 
-            $tipo_usuario = "Usuario";
+            $tipo_usuario = "Admin";
             $_SESSION["tipo_usuario"] = $tipo_usuario;
 
             // Almacena el tipo de usuario en una cookie
