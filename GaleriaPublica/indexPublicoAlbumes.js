@@ -58,6 +58,10 @@ const CargadeImagenes = () => {
                 galleryDisplayMode: 'pagination',
                 galleryPaginationMode: 'numbers',
                 locationHash: false,
+                galleryTheme: {
+                    navigationPagination :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' },
+                    navigationBreadcrumb :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' }
+                }
             });
             },
             error: function(jqXHR, textStatus, errorThrown) {

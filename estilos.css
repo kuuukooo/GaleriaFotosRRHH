@@ -46,26 +46,28 @@
 .image-container {
     position: relative;
 }
-.bi-download,
-.bi-pencil-square,
-.bi-trash3,
-.bi-eye-slash {
+.botones-utilidades .bi-download,
+.botones-utilidades .bi-pencil-square,
+.botones-utilidades .bi-trash3,
+.botones-utilidades .bi-eye-slash,
+.botones-utilidades .checkboxHerramienta {
     margin-left: 3px;
 }
 .botones-utilidades a,
-.botones-utilidades button {
+.botones-utilidades button,
+.botones-utilidades input {
     padding: 0.2rem;
 }
-.btn-edit-description {
+.botones-utilidades .btn-edit-description {
     color: gray;
 }
-.bi-trash3 {
+.botones-utilidades .bi-trash3 {
     color: red;
 }
-.bi-download {
+.botones-utilidades .bi-download {
     color: green;
 }
-.bi-eye, .bi-eye-slash{
+.botones-utilidades .bi-eye, .bi-eye-slash{
     color: lightblue;
 }
 .original-description {
@@ -313,6 +315,9 @@ select {
 .btn-primary{
     border-color: unset;
 }
+.btn-primary:hover{
+    background-color: #334ec4 !important;
+}
 
 .checkbox-container {
     text-align: center;
@@ -343,5 +348,85 @@ select {
 }
 .btn-pressed:hover {
     background-color: #00ff37; /* Cambia esto al color que desees */
-    border-color: #00ff73;     /* Cambia esto al color que desees */
+    border-color: #00ff73; 
+}
+/* Estilos para el botón flotante */
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #FFF;
+    color: #707070;
+    border: none;
+    border-radius: 30%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.1s ease-in-out;
+    z-index: 1000;
+}
+
+/* Estilos para el menú flotante */
+.fab-menu {
+    display: flex;
+    background-color: #FFF;
+    position: fixed;
+    bottom: 20px; /* Alineado con el botón */
+    right: 20px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    border-bottom-left-radius: 37px;
+    border-bottom-right-radius: 37px;
+    z-index: 999;
+    width: 60px;
+    height: 0; /* Altura inicial 0 */
+    overflow: hidden; /* Oculta el contenido */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: height 0.1s ease-in-out; /* Transición de la altura */
+}
+
+.fab-menu.show {
+    height: 17rem; /* Altura final del menú */
+}
+
+.fab-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0.3rem;
+    gap: 1.6rem;
+}
+
+.fab-menu-btn {
+    background-color: transparent;
+    color: #707070;
+    border: none;
+    padding: 0.2rem 0;
+    border-radius: 20px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-content: space-between;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+}
+
+.fab-menu-btn i {
+    color: #707070; /* Color por defecto de los íconos */
+}
+
+.fab-menu-btn:hover, .fab:hover {
+    background-color: #20327e;
+    color: #FFF;
+}
+
+.fab-menu-btn:hover i {
+    color: #FFF; /* Color de los íconos al hacer hover */
 }

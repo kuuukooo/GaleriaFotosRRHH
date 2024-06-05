@@ -55,7 +55,9 @@ const CargaImagenesSueltas = () => {
                     description: 'title',
                 },
                 galleryTheme: {
-                    thumbnail: { borderRadius: '10px' }
+                    thumbnail: { borderRadius: '10px' },
+                    navigationPagination :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' },
+                    navigationBreadcrumb :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' }
                 },
             });
 
@@ -136,7 +138,9 @@ function BuscarImg() {
                             description: 'title',
                         },
                         galleryTheme: {
-                            thumbnail: { borderRadius: '10px' }
+                            thumbnail: { borderRadius: '10px' },
+                            navigationPagination :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' },
+                            navigationBreadcrumb :  { background: '#20327e', color: '#fff', colorHover: '#ccc', borderRadius: '4px' }
                         },
                     });
                 }

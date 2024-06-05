@@ -94,18 +94,16 @@ $(document).ready(function() {
     
             let botonesUtilidadesContainer = $('<div>').addClass('botones-utilidades');
             let iconClass = imagen.es_publico ? 'bi bi-eye' : 'bi bi-eye-slash';
+            let checkbox =  $('<input>').attr('type', 'checkbox').addClass('image-checkbox checkboxHerramienta').attr('data-image-id', imagen.id_imagen);
+
+            botonesUtilidadesContainer.append(checkbox)
             botonesUtilidadesContainer.append('<button class="btn-publicar" data-image-id="' + imagen.id_imagen + '"><i class="' + iconClass + '"></i></button>');
             botonesUtilidadesContainer.append('<button class="delete-button" data-image-id="' + imagen.id_imagen + '"><i class="bi bi-trash3 fa-6x"></i></button>');
             botonesUtilidadesContainer.append('<button class="btn-edit-description" data-image-id="' + imagen.id_imagen +'"><i class="bi bi-pencil-square"></i></button>');
             botonesUtilidadesContainer.append('<a class="download-button" href="#" data-images="' + imagen.imagenes.join(',') + '" data-description="' + imagen.descripcion + '" data-descriptions="' + imagen.descripcion + '"><i class="bi bi-download"></i></a>');
-    
+
             cardBodyElement.append(botonesUtilidadesContainer); 
     
-            // Agregar checkbox al card body
-            let checkboxContainer = $('<div>').addClass('checkbox-container mt-2');
-            let checkbox = $('<input>').attr('type', 'checkbox').addClass('image-checkbox').attr('data-image-id', imagen.id_imagen);
-            checkboxContainer.append(checkbox);
-            cardBodyElement.append(checkboxContainer);
     
             carouselElement.append(carouselInner);
             cardElement.append(carouselElement, cardBodyElement);
@@ -118,7 +116,7 @@ $(document).ready(function() {
             let hiddenInputEditDescription = $("<input>").attr("type", "hidden").attr("name", "edit-description").val(imagen.descripcion || ''); 
             let hiddenInputPaginaActual = $("<input>").attr("type", "hidden").attr("name", "pagina_actual").val(imagen.pagina_actual); 
     
-            let saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary").attr("id","guardar-btn").text("Guardar");
+            let saveButton = $("<button>").attr("type", "submit").addClass("btn btn-primary ColorAzul").attr("id","guardar-btn").text("Guardar");
             let cancelButton = $("<a>").attr("href", "#").addClass("btn btn-secondary cancel-edit").attr("data-image-id", imagen.id_imagen).text("Cancelar"); 
     
             formElement.append(textareaElement, hiddenInputId, hiddenInputEditDescription, hiddenInputPaginaActual, saveButton, cancelButton);
@@ -133,18 +131,15 @@ $(document).ready(function() {
         console.log("Botón de eliminar correctamente activado");
         ModoOscuro();
         BotonPublicar(); 
-       
-      
     };
     
     $(document).ready(function() {
         // Crear el contenedor de botones de acción una vez al cargar la página
-        let actionButtonContainer = $('<div>').addClass('action-button-container mt-3');
-        let actionButton = $('<button>').addClass('btn btn-danger');
-        let trashIcon = $('<i>').addClass('bi bi-trash');
-        actionButton.append(trashIcon);
+        let actionButton = document.getElementsByClassName("EliminarVarios")[0];
+
+        let $actionButton = $(actionButton);
         
-        actionButton.on('click', function() {
+        $actionButton.on('click', function() {
             let selectedImages = $('.image-checkbox:checked').map(function() {
                 return $(this).data('image-id');
             }).get();
@@ -172,12 +167,6 @@ $(document).ready(function() {
                 }
             });
         });        
-    
-        actionButtonContainer.append(actionButton);
-        $('#image-container').before(actionButtonContainer);
-    
-        // Cargar las imágenes y activar la edición al cargar la página
-       
     });
     
     // Función para cargar las imágenes y luego activar la edición
@@ -255,7 +244,7 @@ $(document).ready(function() {
     cargarImagenesYActivarEdicion(1);  
 
     // Llama a la función para adjuntar el manejador de eventos
-     GuardarDescripcionAJAX(); 
+    GuardarDescripcionAJAX(); 
 
 
 //Función para el modo oscuro de la página
