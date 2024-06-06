@@ -276,12 +276,28 @@ function ModoOscuro() {
                     $(".mode-text").text("Modo Oscuro");
                     $(".LogoVierciBlanco").css("display", "block");
                     $(".LogoVierciAzul").css("display", "none");
+                    $(".fab").css("background-color", "#242526");
+                    $(".fab-menu").css("background-color", "#242526");
+                    $(".fab-menu-btn").css("background-color", "#242526");
+                    $(".fab").css("color", "white");
+                    $(".fab-menu").css("color", "white");
+                    $(".fab-menu-btn").css("color", "white");
                     $(".page-link").css("background-color", "#18191a");
                     $(".page-link").css("color", "white");
                     $(".page-link").hover(function() {
                         $(this).css("background-color", "#0D6EFD");
                     }, function() {
                         $(this).css("background-color", "#18191a");
+                    });
+                    $(".fab").hover(function() {
+                        $(this).css("background-color", "#3a3b3c");
+                    }, function() {
+                        $(this).css("background-color", "#242526");
+                    });
+                    $(".fab-menu-btn").hover(function() {
+                        $(this).css("background-color", "#3a3b3c");
+                    }, function() {
+                        $(this).css("background-color", "#242526");
                     });
                 }
             
@@ -294,6 +310,12 @@ function ModoOscuro() {
                     $(".mode-text").text("Modo Claro");
                     $(".LogoVierciBlanco").css("display", "none");
                     $(".LogoVierciAzul").css("display", "block");
+                    $(".fab").css("background-color", "#FFF");
+                    $(".fab-menu").css("background-color", "#FFF");
+                    $(".fab-menu-btn").css("background-color", "#FFF");
+                    $(".fab").css("color", "#707070");
+                    $(".fab-menu").css("color", "#707070");
+                    $(".fab-menu-btn").css("color", "#707070");
                     $(".page-link").css("background-color", "white");
                     $(".page-link").css("color", "#0D6EFD");
                     $(".page-link").hover(function() {
@@ -302,6 +324,16 @@ function ModoOscuro() {
                     }, function() {
                         $(this).css("background-color", "#FFF");
                         $(this).css("color", "#0D6EFD");
+                    });
+                    $(".fab").hover(function() {
+                        $(this).css("background-color", "#20327e");
+                    }, function() {
+                        $(this).css("background-color", "white");
+                    });
+                    $(".fab-menu-btn").hover(function() {
+                        $(this).css("background-color", "#20327e");
+                    }, function() {
+                        $(this).css("background-color", "#FFF");
                     });
                 }
             
