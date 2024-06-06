@@ -94,7 +94,7 @@ $(document).ready(function() {
     
             let botonesUtilidadesContainer = $('<div>').addClass('botones-utilidades');
             let iconClass = imagen.es_publico ? 'bi bi-eye' : 'bi bi-eye-slash';
-            let checkbox =  $('<input>').attr('type', 'checkbox').addClass('image-checkbox checkboxHerramienta').attr('data-image-id', imagen.id_imagen);
+            let checkbox =  $('<input>').attr('type', 'checkbox').addClass('image-checkbox checkboxHerramienta').attr('data-image-id', imagen.id_imagen).attr('data-description', imagen.descripcion);
 
             botonesUtilidadesContainer.append(checkbox)
             botonesUtilidadesContainer.append('<button class="btn-publicar" data-image-id="' + imagen.id_imagen + '"><i class="' + iconClass + '"></i></button>');
@@ -157,7 +157,7 @@ $(document).ready(function() {
                 type: 'POST',
                 data: { selectedImages: selectedImages },
                 success: function(response) {
-                    alert(response);
+                    alert("Imágenes eliminadas exitosamente.");
                     
                     cargarImagenesYActivarEdicion(1);
                 },
@@ -384,6 +384,155 @@ $(document).ready(function () {
     });
 });
 
+//Publicar Varias imágenes al seleccionar
+// Función para manejar la publicación de imágenes seleccionadas
+$(document).ready(function() {
+    // Crear el contenedor de botones de acción una vez al cargar la página
+    let actionButton = document.getElementsByClassName("PublicarVarios")[0];
+
+    let $actionButton = $(actionButton);
+    
+    $actionButton.on('click', function() {
+        let selectedImages = $('.image-checkbox:checked').map(function() {
+            return $(this).data('image-id');
+        }).get();
+
+        if (selectedImages.length === 0) {
+            alert('No has seleccionado ninguna imagen.');
+            return;
+        }
+
+        console.log('Imágenes seleccionadas:', selectedImages);
+
+        // Realizar la solicitud AJAX para publicar las imágenes seleccionadas
+        $.ajax({
+            url: 'ImagenesSueltas/publicarVariasImg.php',
+            type: 'POST',
+            data: { selectedImages: selectedImages },
+            success: function(response) {
+                alert("Estado Público de las Imágenes Actualizadas");
+                // Actualizar el estado de las imágenes en la interfaz de usuario
+                selectedImages.forEach(function(imageId) {
+                    let $button = $(`[data-image-id="${imageId}"]`);
+                    let $icon = $button.find('i');
+                    if ($icon.hasClass('bi-eye-slash')) {
+                        $icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                    } else {
+                        $icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                    }
+
+                    $("#image-container").empty(); 
+                    cargarImagenesYActivarEdicion(1);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en la solicitud AJAX:', error);
+                alert('Hubo un error al intentar publicar las imágenes.');
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
+    let actionButton = document.getElementsByClassName("DescargarVarios")[0];
+    let $actionButton = $(actionButton);
+
+    $actionButton.on('click', async function() {
+        let selectedImages = $('.image-checkbox:checked').map(function() {
+            return $(this).data('image-id');
+        }).get();
+
+        if (selectedImages.length === 0) {
+            alert('No has seleccionado ninguna imagen.');
+            return;
+        }
+
+        // Registrar los IDs de las imágenes seleccionadas en la consola
+        console.log('IDs de las imágenes seleccionadas:', selectedImages);
+
+        // Realizar la solicitud AJAX para obtener los detalles de las imágenes seleccionadas
+        $.ajax({
+            url: 'ImagenesSueltas/DescargarVariasImagenes.php',
+            type: 'POST',
+            data: { selectedImages: selectedImages },
+            success: async function(response) {
+                let imagesDetails = JSON.parse(response);
+
+                if (imagesDetails.error) {
+                    alert(imagesDetails.error);
+                    return;
+                }
+
+                // Crea un nuevo archivo ZIP usando JSZip
+                let zip = new JSZip();
+
+                // Contador para las imágenes
+                let imageCounter = 1;
+
+                // Mapea las imágenes a promesas que se resolverán al descargar cada imagen
+                let imagePromises = imagesDetails.map(async function (imageDetail) {
+                    let description = imageDetail.descripcion;
+                    let imageUrl = `./assets/images/posts/${imageDetail.imagen}`;
+                    let imageName = imageUrl.split('/').pop();
+
+                    // Nuevo nombre para la imagen usando la descripción y el contador
+                    let newImageName = `${description}_Imagen ${imageCounter}.${imageName.split('.').pop()}`;
+                    console.log("Nuevo nombre de la imagen:", newImageName);
+
+                    // Incrementa el contador de imágenes
+                    imageCounter++;
+
+                    // Carga la imagen desde la ruta especificada
+                    console.log(`Cargando imagen: ${imageUrl}`);
+
+                    let imageBlob = await fetch(imageUrl).then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`No se pudo cargar la imagen ${imageUrl}: ${response.statusText}`);
+                        }
+                        console.log(`Imagen cargada: ${imageUrl}`);
+                        return response.blob();
+                    }).catch(error => {
+                        console.error(error);
+                        return null;
+                    });
+
+                    if (imageBlob) {
+                        // Añade la imagen al archivo ZIP
+                        zip.file(newImageName, imageBlob);
+                        console.log(`Imagen agregada al ZIP: ${newImageName}`);
+                    }
+                });
+
+                // Espera a que todas las imágenes se hayan descargado y añadido al ZIP
+                await Promise.all(imagePromises);
+
+                // Genera el archivo ZIP y lo descarga
+                zip.generateAsync({ type: "blob" }).then(function (zipBlob) {
+                    // Crea un enlace temporal para descargar el archivo ZIP
+                    let tempLink = document.createElement("a");
+                    let zipUrl = window.URL.createObjectURL(zipBlob);
+
+                    tempLink.href = zipUrl;
+                    tempLink.download = `imagenes_seleccionadas.zip`;
+                    console.log("Nombre de archivo descargado: imagenes_seleccionadas.zip");
+
+                    tempLink.click();
+
+                    // Revoca el objeto URL temporal
+                    window.URL.revokeObjectURL(zipUrl);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error en la solicitud AJAX:', error);
+                alert('Hubo un error al intentar descargar las imágenes.');
+            }
+        });
+    });
+});
+
+
+
+
 
 $("#search-form").on("submit", function(e) {
   e.preventDefault(); // Evita que el formulario se envíe de manera tradicional
@@ -466,7 +615,6 @@ function BotonEliminar() {
 }
 });
 
-//Cambios revisados con el repo de Lucas.
 
 
 function GuardarDescripcionAJAX() {
@@ -551,6 +699,7 @@ $(document).ready(function() {
 });
 
 }
+
 function BotonPublicar(){
     // Manejar el evento de clic
     $(document).on('click', '.btn-publicar', function() {
