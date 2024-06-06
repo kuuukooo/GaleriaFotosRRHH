@@ -197,9 +197,9 @@ $stmt->execute();
 
                     <div class="fab-menu" id="fab-menu">
                         <div class="fab-menu-content">
-                            <button class="fab-menu-btn download-button"><i class="bi bi-download"></i></button>
+                            <button class="fab-menu-btn DescargarVarios"><i class="bi bi-download"></i></button>
                             <button class="fab-menu-btn EliminarVarios"><i class="bi bi-trash3 fa-6x"></i></button>
-                            <button class="fab-menu-btn btn-publicar"><i class="bi bi-eye"></i></button>
+                            <button class="fab-menu-btn PublicarVarios"><i class="bi bi-eye"></i></button>
                         </div>
                     </div>
                 </div>
