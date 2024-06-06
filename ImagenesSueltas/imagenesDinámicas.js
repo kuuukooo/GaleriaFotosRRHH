@@ -291,13 +291,17 @@ function ModoOscuro() {
                     });
                     $(".fab").hover(function() {
                         $(this).css("background-color", "#3a3b3c");
+                        $(this).css("color", "white");
                     }, function() {
                         $(this).css("background-color", "#242526");
+                        $(this).css("color", "white");
                     });
                     $(".fab-menu-btn").hover(function() {
                         $(this).css("background-color", "#3a3b3c");
+                        $(this).css("color", "white");
                     }, function() {
                         $(this).css("background-color", "#242526");
+                        $(this).css("color", "white");
                     });
                 }
             
@@ -327,8 +331,10 @@ function ModoOscuro() {
                     });
                     $(".fab").hover(function() {
                         $(this).css("background-color", "#20327e");
+                        $(this).css("color", "white");
                     }, function() {
                         $(this).css("background-color", "white");
+                        $(this).css("color", "#707070");
                     });
                     $(".fab-menu-btn").hover(function() {
                         $(this).css("background-color", "#20327e");
