@@ -740,3 +740,26 @@ function BotonPublicar(){
         console.log('Botón clickeado');
     });
 }
+
+//Código para abrir y cerrar el menú de opciones
+document.getElementById('fab').addEventListener('click', function() {
+    var fabMenu = document.getElementById('fab-menu');
+
+    if (fabMenu.classList.contains('show')) {
+        fabMenu.classList.remove('show');
+
+        // Usar un timeout para esperar la duración de la animación antes de ocultar el display
+        setTimeout(function() {
+            fabMenu.style.display = 'none';
+            fabMenu.style.visibility = 'hidden';
+        }, 10); // La duración de la animación en milisegundos
+    } else {
+        fabMenu.style.display = 'flex';
+        fabMenu.style.visibility = 'visible';
+
+        // Usar un timeout para permitir que el display: flex; se aplique antes de agregar la clase de animación
+        setTimeout(function() {
+            fabMenu.classList.add('show');
+        }, 5); // Un pequeño retraso para permitir que el navegador procese el cambio de display
+    }
+});

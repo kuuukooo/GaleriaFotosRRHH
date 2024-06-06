@@ -225,6 +225,5 @@ $stmt->execute();
 <script src="ImagenesSueltas/eliminar_imagen.js"></script>
 <script src="NavBar/navbar2.js"></script>
 <script src="login/ScriptTipoUsuario.js"></script> 
-<script src="scriptPrueba.js"></script>
 </body>
 </html>
