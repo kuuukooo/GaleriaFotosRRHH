@@ -191,15 +191,16 @@ $stmt->execute();
                         </form>
                     </div>
 
+                    <!-- Menú de Herramientas -->
                     <button class="fab" id="fab">
                         <i class="bi bi-gear fa-lg"></i>
                     </button>
 
-                    <div class="fab-menu" id="fab-menu">
+                    <div class="fab-menu fab-menu-3-btns" id="fab-menu">
                         <div class="fab-menu-content">
-                            <button class="fab-menu-btn DescargarVarios"><i class="bi bi-download"></i></button>
-                            <button class="fab-menu-btn EliminarVarios"><i class="bi bi-trash3 fa-6x"></i></button>
-                            <button class="fab-menu-btn PublicarVarios"><i class="bi bi-eye"></i></button>
+                            <button class="fab-menu-btn DescargarVarios" data-tooltip="Descargar imágenes seleccionadas"><i class="bi bi-download"></i></button>
+                            <button class="fab-menu-btn EliminarVarios" id="btnEliminar" data-tooltip="Eliminar imágenes seleccionadas"><i class="bi bi-trash3"></i></button>
+                            <button class="fab-menu-btn PublicarVarios" data-tooltip="Publicar imágenes seleccionadas"><i class="bi bi-eye"></i></button>
                         </div>
                     </div>
                 </div>
