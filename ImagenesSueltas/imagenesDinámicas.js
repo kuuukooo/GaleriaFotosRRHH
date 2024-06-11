@@ -285,9 +285,10 @@ function ModoOscuro() {
                     $(".page-link").css("background-color", "#18191a");
                     $(".page-link").css("color", "white");
                     $(".page-link").hover(function() {
-                        $(this).css("background-color", "#0D6EFD");
+                        $(this).css("background-color", "#20327e");
                     }, function() {
                         $(this).css("background-color", "#18191a");
+                        $(this).css("color", "white");
                     });
                     $(".fab").hover(function() {
                         $(this).css("background-color", "#3a3b3c");
@@ -321,14 +322,14 @@ function ModoOscuro() {
                     $(".fab-menu").css("color", "#707070");
                     $(".fab-menu-btn").css("color", "#707070");
                     $(".page-link").css("background-color", "white");
-                    $(".page-link").css("color", "#0D6EFD");
+                    $(".page-link").css("color", "#20327e");
                     $(".page-link").hover(function() {
-                        $(this).css("background-color", "#0D6EFD");
+                        $(this).css("background-color", "#20327e");
                         $(this).css("color", "white");
                     }, function() {
                         $(this).css("background-color", "#FFF");
-                        $(this).css("color", "#0D6EFD");
-                    });
+                        $(this).css("color", "#20327e");
+                    }); 
                     $(".fab").hover(function() {
                         $(this).css("background-color", "#20327e");
                         $(this).css("color", "white");
@@ -779,25 +780,46 @@ function BotonPublicar(){
     });
 }
 
-//Código para abrir y cerrar el menú de opciones
-document.getElementById('fab').addEventListener('click', function() {
-    var fabMenu = document.getElementById('fab-menu');
+document.addEventListener('DOMContentLoaded', function() {
+    const fabButton = document.getElementById('fab');
+    const fabMenu = document.getElementById('fab-menu');
 
-    if (fabMenu.classList.contains('show')) {
-        fabMenu.classList.remove('show');
+    fabButton.addEventListener('click', function() {
+        fabMenu.classList.toggle('show');
+    });
 
-        // Usar un timeout para esperar la duración de la animación antes de ocultar el display
-        setTimeout(function() {
-            fabMenu.style.display = 'none';
-            fabMenu.style.visibility = 'hidden';
-        }, 10); // La duración de la animación en milisegundos
-    } else {
-        fabMenu.style.display = 'flex';
-        fabMenu.style.visibility = 'visible';
+    // Crear el elemento tooltip
+    const tooltip = document.createElement('div');
+    tooltip.classList.add('tooltip');
+    document.body.appendChild(tooltip);
 
-        // Usar un timeout para permitir que el display: flex; se aplique antes de agregar la clase de animación
-        setTimeout(function() {
-            fabMenu.classList.add('show');
-        }, 5); // Un pequeño retraso para permitir que el navegador procese el cambio de display
+    // Función para mostrar el tooltip
+    function showTooltip(event) {
+        const tooltipText = event.target.closest('.fab-menu-btn').getAttribute('data-tooltip');
+        tooltip.textContent = tooltipText;
+        tooltip.style.left = `${event.pageX - tooltip.offsetWidth - 10}px`;
+        tooltip.style.top = `${event.pageY + 10}px`;
+        tooltip.classList.add('visible');
     }
+
+    // Función para ocultar el tooltip
+    function hideTooltip() {
+        tooltip.classList.remove('visible');
+    }
+
+    // Función para mover el tooltip con el mouse
+    function moveTooltip(event) {
+        tooltip.style.left = `${event.pageX - tooltip.offsetWidth - 10}px`;
+        tooltip.style.top = `${event.pageY + 10}px`;
+    }
+
+    // Seleccionar todos los botones con tooltips
+    const buttons = document.querySelectorAll('.fab-menu-btn[data-tooltip]');
+
+    // Añadir eventos de mouseover, mouseout y mousemove a cada botón
+    buttons.forEach(button => {
+        button.addEventListener('mouseover', showTooltip);
+        button.addEventListener('mouseout', hideTooltip);
+        button.addEventListener('mousemove', moveTooltip);
+    });
 });
