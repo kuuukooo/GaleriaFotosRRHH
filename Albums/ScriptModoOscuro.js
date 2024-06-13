@@ -48,9 +48,28 @@ function ModoOscuro() {
             $(".footerDialogAlbum").css("background-color", "rgb(97, 97, 97)");
             $(".cancelFooterDialogAlbum").css("background-color", "rgb(97, 97, 97)");
             $(".texto-principal").css("color", "white");
-            //add a hover to the page-link
+            $(".fab").css("background-color", "#242526");
+            $(".fab-menu").css("background-color", "#242526");
+            $(".fab-menu-btn").css("background-color", "#242526");
+            $(".fab").css("color", "white");
+            $(".fab-menu").css("color", "white");
+            $(".fab-menu-btn").css("color", "white");
+            $(".fab").hover(function() {
+                $(this).css("background-color", "#3a3b3c");
+                $(this).css("color", "white");
+            }, function() {
+                $(this).css("background-color", "#242526");
+                $(this).css("color", "white");
+            });
+            $(".fab-menu-btn").hover(function() {
+                $(this).css("background-color", "#3a3b3c");
+                $(this).css("color", "white");
+            }, function() {
+                $(this).css("background-color", "#242526");
+                $(this).css("color", "white");
+            });
             $(".page-link").hover(function() {
-                $(this).css("background-color", "#0D6EFD");
+                $(this).css("background-color", "#20327e");
             }, function() {
                 $(this).css("background-color", "#18191a");
             });
@@ -77,12 +96,30 @@ function ModoOscuro() {
             $(".cancelFooterDialogAlbum").css("background-color", "rgb(243, 244, 246)");
             $(".cancelFooterDialogAlbum").css("color", "rgb(156, 163, 175)");
             $(".texto-principal").css("color", "#20327e");
+            $(".fab").css("background-color", "#FFF");
+            $(".fab-menu").css("background-color", "#FFF");
+            $(".fab-menu-btn").css("background-color", "#FFF");
+            $(".fab").css("color", "#707070");
+            $(".fab-menu").css("color", "#707070");
+            $(".fab-menu-btn").css("color", "#707070");
+            $(".fab").hover(function() {
+                $(this).css("background-color", "#20327e");
+                $(this).css("color", "white");
+            }, function() {
+                $(this).css("background-color", "white");
+                $(this).css("color", "#707070");
+            });
+            $(".fab-menu-btn").hover(function() {
+                $(this).css("background-color", "#20327e");
+            }, function() {
+                $(this).css("background-color", "#FFF");
+            });
             $(".page-link").hover(function() {
-                $(this).css("background-color", "#0D6EFD");
+                $(this).css("background-color", "#20327e");
                 $(this).css("color", "white");
             }, function() {
                 $(this).css("background-color", "#FFF");
-                $(this).css("color", "#0D6EFD");
+                $(this).css("color", "#20327e");
             });
         }
     
