@@ -177,113 +177,92 @@ const CargaParaSeleccion = () => {
                 locationHash: false,
             });
 
-            // Para eliminar álbumes
-            let BotonEliminarAlbumes = document.querySelector("#btnEliminar");
-
-            let eventAttachedEliminar = false;
-
-            $("#my_nanogallery2").on('itemSelected.nanogallery2 itemUnSelected.nanogallery2', function() {
-                var ngy2data = $("#my_nanogallery2").nanogallery2('data');
-
-                if (!eventAttachedEliminar) {
-                    BotonEliminarAlbumes.addEventListener("click", () => {
-                        let albumIDs = [];
-                        ngy2data.items.forEach(function(item) {
-                            if (item.selected) {
-                                albumIDs.push(item.GetID());
-                                console.log("Selected Albums", albumIDs);
-                            }
-                        });
-                        $.ajax({
-                            url: 'EliminarMultiplesAlbums.php',
-                            type: 'POST',
-                            data: { albumIDs: albumIDs },
-                            dataType: 'json',
-                            success: function(response) {
-                                if (response.success) {
-                                    alert('Álbumes eliminados correctamente');
-                                    $(galeriaContainer).empty();
-                                    console.log(isCargaParaSeleccion);
-                                    CargaParaSeleccion();
-                                } else if (response.error) {
-                                    alert('Error: ' + response.error);
-                                } else {
-                                    alert('Respuesta inesperada del servidor');
-                                }
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                alert('Error en la solicitud AJAX: ' + textStatus);
-                                console.log("Hola", jqXHR, textStatus, errorThrown);
-                            }
-                        });
-                    });
-
-                    eventAttachedEliminar = true;
-                }
-            });
-
-            // Manejador para publicar álbumes
-            let BotonPublicarAlbumes = document.querySelector("#btnPublicar");
-            let eventAttachedPublicar = false;
-
-            $("#my_nanogallery2").on('itemSelected.nanogallery2 itemUnSelected.nanogallery2', function() {
-                var ngy2data = $("#my_nanogallery2").nanogallery2('data');
-
-                if (!eventAttachedPublicar) {
-                    BotonPublicarAlbumes.addEventListener("click", () => {
-                        let albumIDs = [];
-                        let nuevoEstado = null;
-                        ngy2data.items.forEach(function(item) {
-                            if (item.selected) {
-                                albumIDs.push(item.GetID());
-                                if (nuevoEstado === null) {
-                                    nuevoEstado = item.customData.es_publico ? 0 : 1;
-                                }
-                            }
-                        });
-
-                        if (albumIDs.length > 0 && nuevoEstado !== null) {
-                            $.ajax({
-                                url: 'PublicarMultiplesAlbumes.php',
-                                type: 'POST',
-                                data: {
-                                    albumIDs: albumIDs,
-                                    es_publico: nuevoEstado
-                                },
-                                dataType: 'json',
-                                success: function(response) {
-                                    if (response.success) {
-                                        alert('Álbumes actualizados correctamente');
-                                        $(galeriaContainer).empty();
-                                        CargaParaSeleccion();
-                                        isCargaParaSeleccion = false;
-                                        console.log(isCargaParaSeleccion);
-                                        console.log("Albumes actualizados: ", albumIDs);
-                                        console.log("Estado: ", nuevoEstado);
-                                    } else if (response.error) {
-                                        alert('Error: ' + response.error);
-                                    } else {
-                                        alert('Respuesta inesperada del servidor');
-                                    }
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-                                    alert('Error en la solicitud AJAX: ' + textStatus);
-                                    console.log("Error en la solicitud AJAX: ", jqXHR, textStatus, errorThrown);
-                                }
-                            });
-                        }
-                    });
-                    isCargaParaSeleccion = false;
-                    console.log("Estado: ", isCargaParaSeleccion);
-                    eventAttachedPublicar = true;
-                }
-            });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
         }
     });
 };
+
+// Para eliminar álbumes
+let BotonEliminarAlbumes = document.querySelector("#btnEliminar");
+
+BotonEliminarAlbumes.addEventListener("click", () => {
+    var ngy2data = $("#my_nanogallery2").nanogallery2('data');
+    let albumIDs = [];
+    ngy2data.items.forEach(function(item) {
+        if (item.selected) {
+            albumIDs.push(item.GetID());
+            console.log("Selected Albums", albumIDs);
+        }
+    });
+    $.ajax({
+        url: 'EliminarMultiplesAlbums.php',
+        type: 'POST',
+        data: { albumIDs: albumIDs },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                alert('Álbumes eliminados correctamente');
+                $('#galeriaContainer').empty();
+                CargaParaSeleccion();
+            } else if (response.error) {
+                alert('Error: ' + response.error);
+            } else {
+                alert('Respuesta inesperada del servidor');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('Error en la solicitud AJAX: ' + textStatus);
+            console.log("Hola", jqXHR, textStatus, errorThrown);
+        }
+    });
+});
+
+// Manejador para publicar álbumes
+let BotonPublicarAlbumes = document.querySelector("#btnPublicar");
+
+BotonPublicarAlbumes.addEventListener("click", () => {
+    var ngy2data = $("#my_nanogallery2").nanogallery2('data');
+    let albumIDs = [];
+    let nuevoEstado = null;
+    ngy2data.items.forEach(function(item) {
+        if (item.selected) {
+            albumIDs.push(item.GetID());
+            if (nuevoEstado === null) {
+                nuevoEstado = item.customData.es_publico ? 0 : 1;
+            }
+        }
+    });
+
+    if (albumIDs.length > 0 && nuevoEstado !== null) {
+        $.ajax({
+            url: 'PublicarMultiplesAlbumes.php',
+            type: 'POST',
+            data: {
+                albumIDs: albumIDs,
+                es_publico: nuevoEstado
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert('Álbumes actualizados correctamente');
+                    $('#galeriaContainer').empty();
+                    CargaParaSeleccion();
+                } else if (response.error) {
+                    alert('Error: ' + response.error);
+                } else {
+                    alert('Respuesta inesperada del servidor');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error en la solicitud AJAX: ' + textStatus);
+                console.log("Error en la solicitud AJAX: ", jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+});
+
 
 
 
