@@ -3,11 +3,12 @@
 if (!class_exists('Database')) {
     class Database
     {
-        private $server = '192.168.217.76';
-        private $username = 'lucas';
+        private $server = '10.0.8.41';
+        private $username = 'lucas3';
         private $password = 'lucaslucas';
         private $database = 'galeria';
         private $conn;
+
 
         public function __construct()
         {

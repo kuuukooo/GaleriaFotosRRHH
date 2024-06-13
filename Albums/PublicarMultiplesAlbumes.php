@@ -4,9 +4,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/Galeria5-AJAX/database/database.php';
 header('Content-Type: application/json');
 $response = [];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['albumIDs']) && isset($_POST['es_publico'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['albumIDs'])) {
     $albumIDs = $_POST['albumIDs'];
-    $es_publico = $_POST['es_publico'];
 
     try {
         $database = new Database();
@@ -14,16 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['albumIDs']) && isset($
 
         // Crear la consulta con parámetros posicionales
         $placeholders = implode(',', array_fill(0, count($albumIDs), '?'));
-        $query = "UPDATE albumes SET es_publico = ? WHERE id_album IN ($placeholders)";
+        $query = "UPDATE albumes SET es_publico = CASE WHEN es_publico = 1 THEN 0 ELSE 1 END WHERE id_album IN ($placeholders)";
         $stmt = $conn->prepare($query);
 
-        // Añadir el valor de es_publico al principio del array de parámetros
-        $params = array_merge([$es_publico], $albumIDs);
-
         // Ejecutar la consulta con los parámetros
-        if ($stmt->execute($params)) {
+        if ($stmt->execute($albumIDs)) {
             $response['success'] = true;
-            $response['message'] = 'Estado de los álbumes actualizado correctamente.';
+            $response['message'] = 'Estado de los álbumes invertido correctamente.';
         } else {
             $response['success'] = false;
             $response['error'] = 'Error al actualizar el estado de los álbumes.';
@@ -38,4 +34,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['albumIDs']) && isset($
 }
 
 echo json_encode($response);
-
+?>
