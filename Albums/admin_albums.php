@@ -179,18 +179,32 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </dialog>
 <div class="main-content">
     <!-- Formulario para la subida de las imágenes -->
-    <div id = "Container1" class="container justify-content-center">                <div class="mt-5 mx-auto">
-                    <h5 class="mb-3">Album de imágenes</h5>
-                        <button class="btn btn-primary mb-3 show-modal ColorAzul" onclick=showDialog(true)>Crear un álbum</button>
-                </div>
-                <button type="button" id= "BotonSelector" class="BotonError">Seleccionar Albums</button>
-
+    <div id = "Container1" class="container justify-content-center">            
+            <div class="mt-5 mx-auto">
+                <h5 class="mb-3">Album de imágenes</h5>
+                <button class="btn btn-primary mb-3 show-modal ColorAzul" onclick=showDialog(true)>Crear un álbum</button>
+            </div>
+                
                 <p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
+    </div>
+
+    <!-- Menú de Herramientas -->
+    <button class="fab" id="fab">
+        <i class="bi bi-gear fa-lg"></i>
+    </button>
+
+    <div class="fab-menu fab-menu-4-btns" id="fab-menu">
+        <div class="fab-menu-content">
+            <button class="fab-menu-btn DescargarVarios" id="btnDescargar" data-tooltip="Descargar imágenes seleccionadas"><i class="bi bi-download"></i></button>
+            <button class="fab-menu-btn EliminarVarios" id="btnEliminar" data-tooltip="Eliminar imágenes seleccionadas"><i class="bi bi-trash3"></i></button>
+            <button class="fab-menu-btn PublicarVarios" id="btnPublicar" data-tooltip="Publicar imágenes seleccionadas"><i class="bi bi-eye"></i></button>
+            <button class="fab-menu-btn SeleccionarVarios" id="BotonSelector" data-tooltip="Seleccionar álbumes"><i class="bi bi-check2-square"></i></button>
+        </div>
     </div>
 
     <!-- Imágenes -->
     <div class="container justify-content-center mt-5 mb-5 py-2" id="galeriaContainer">
-    </div> 
+    </div>
 
 <script src="../login/ScriptTipoUsuario.js"></script> 
 <script src="../NavBar/navbar2.js"></script>

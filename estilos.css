@@ -350,6 +350,7 @@ select {
     background-color: #00ff37; /* Cambia esto al color que desees */
     border-color: #00ff73; 
 }
+
 /* Estilos para el botón flotante */
 .fab {
     position: fixed;
@@ -390,8 +391,12 @@ select {
     transition: height 0.1s ease-in-out; /* Transición de la altura */
 }
 
-.fab-menu.show {
-    height: 17rem; /* Altura final del menú */
+.fab-menu-3-btns.show {
+    height: 17rem; /* Altura final del menú con 3 botones */
+}
+
+.fab-menu-4-btns.show {
+    height: 22rem; /* Altura final del menú con 4 botones */
 }
 
 .fab-menu-content {
@@ -429,4 +434,24 @@ select {
 
 .fab-menu-btn:hover i {
     color: #FFF; /* Color de los íconos al hacer hover */
+}
+
+/* Tooltip container */
+.tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    visibility: hidden;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.tooltip.visible {
+    visibility: visible;
+    opacity: 1;
 }
