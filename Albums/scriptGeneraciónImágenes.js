@@ -82,6 +82,7 @@ const CargaDeImagenes = () => {
                     thumbnailCustomTool1: '<i class="bi bi-trash" style="color: white"></i>',
                     thumbnailCustomTool2: '<i class="bi bi-pencil-square"></i>',
                     thumbnailCustomTool3: '<i class="bi bi-download" style="color: white"></i>',
+                    thumbnailCustomTool4: '<i class="bi bi-globe" style="color: white"></i>'
                 },
                 fnThumbnailToolCustAction: myTnTool
             });
