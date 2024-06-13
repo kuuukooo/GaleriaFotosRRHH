@@ -102,6 +102,8 @@ const CargaDeImagenes = () => {
                         break;
                 }
             }
+            isCargaParaSeleccion = true;
+            console.log("Estado: ", isCargaParaSeleccion);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error('Error al obtener los datos de los álbumes:', textStatus, errorThrown);
@@ -201,6 +203,7 @@ const CargaParaSeleccion = () => {
                                 if (response.success) {
                                     alert('Álbumes eliminados correctamente');
                                     $(galeriaContainer).empty();
+                                    console.log(isCargaParaSeleccion);
                                     CargaParaSeleccion();
                                 } else if (response.error) {
                                     alert('Error: ' + response.error);
@@ -252,7 +255,9 @@ const CargaParaSeleccion = () => {
                                     if (response.success) {
                                         alert('Álbumes actualizados correctamente');
                                         $(galeriaContainer).empty();
-                                        CargaDeImagenes();
+                                        CargaParaSeleccion();
+                                        isCargaParaSeleccion = false;
+                                        console.log(isCargaParaSeleccion);
                                         console.log("Albumes actualizados: ", albumIDs);
                                         console.log("Estado: ", nuevoEstado);
                                     } else if (response.error) {
@@ -268,7 +273,8 @@ const CargaParaSeleccion = () => {
                             });
                         }
                     });
-
+                    isCargaParaSeleccion = false;
+                    console.log("Estado: ", isCargaParaSeleccion);
                     eventAttachedPublicar = true;
                 }
             });
