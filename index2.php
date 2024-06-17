@@ -122,7 +122,7 @@ $stmt->execute();
                         </li>
 
                         <li class="nav-link" id="GaleriaPublica">
-                            <a href="../GaleriaPublica/IndexGaleriaPublica.php">
+                            <a href="./GaleriaPublica/IndexGaleriaPublica.php">
                                 <i class="bi bi-globe icon"></i>
                                 <span class="text nav-text">Imágenes Públicas</span>
                             </a>
