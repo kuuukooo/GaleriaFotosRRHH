@@ -33,7 +33,7 @@
         <div class="content">
             <form method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?>">  
                 <a href='https://postimg.cc/Wh7nVG7P' target='_blank'><img src='https://i.postimg.cc/Wh7nVG7P/vierci-removebg-preview.png' border='0' class="avatar" alt='vierci-removebg-preview'/></a>
-                <h1 class="title">BIENVENIDO</h1>
+                <h1 class="title">Bienvenido</h1>
                 <?php
                     if (isset($_SESSION["mensaje"])) {
                         echo '<div class="mensaje">' . $_SESSION["mensaje"] . '</div>';
@@ -55,5 +55,3 @@
         </div>
     </div>
 </body>
-</html>
-<!-- Código comparado con el repo de Lucas. -->
