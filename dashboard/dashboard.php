@@ -161,7 +161,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				</div>
 			</div>        
 		</div>
-	<!-- Add Modal HTML -->
+	<!-- Añadir el modal al HTML -->
 		<div id="addEmployeeModal" class="modal fade">
 			<div class="modal-dialog">
 				<div class="modal-content">

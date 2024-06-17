@@ -1,1 +1,149 @@
-body,html{position:relative;height:100%;width:100%;display:flex;justify-content:center;align-items:center}.content{margin-top:40px}.login-content{font-family:Oswald,sans-serif;color:#20327e;max-width:500px;width:90%;height:600px;background:linear-gradient(to right,#87ceeb,#90ee90);padding:15px;border-radius:10px;text-align:center;justify-content:center;align-items:center;position:relative}.avatar{width:250px;height:auto}.container-login100-form-btn{width:100%;display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;flex-wrap:wrap;justify-content:center;margin-top:40px}input.login100-form-btn{font-family:Oswald,sans-serif;font-size:16px;color:#fff;line-height:1.2;justify-content:center;align-items:center;width:130px;height:50px;border-radius:50px;background:-webkit-linear-gradient(right,#00f,#90ee90);-webkit-transition:background-color .4s ease-in-out .2s,color .4s ease-in-out .2s;transition:background-color .4s ease-in-out .2s,color .4s ease-in-out .2s}input.login100-form-btn:hover{background:-webkit-linear-gradient(right,purple,#90ee90);color:#000;-webkit-transition-delay:0s;transition-delay:0s}input{width:70%;height:50px;background:0 0;border:2px solid #fff;border-radius:40px;outline:0}.input100{background-color:#fff;padding:10px;margin:10px}.input100:hover{background-color:#20327e!important;color:#fff;-webkit-transition:.4s;-o-transition:.4s;-moz-transition:.4s;transition:.4s}.input100:hover::placeholder{color:#fff}.input100::placeholder{color:#20327e}#lightSwitch{transform:scale(1.8)}.custom-theme.bg-light{background-color:#20327e!important;border-radius:3px;color:#dcdcdc;text-decoration:underline}.custom-theme.bg-dark{background-color:#ffebcd!important;box-shadow:10px 5px 5px rgba(246,255,219,.5);color:#20327e;text-decoration:overline}.Switch{position:absolute;top:0;right:0;z-index:1000}.LogoVierci{width:60%;height:60%}@media (max-width:768px){.login-content{padding:10px}}
+/* Ajustes generales para responsividad */
+body,
+html {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el contenido de login */
+.content {
+    margin-top: 40px;
+}
+
+.login-content {
+    font-family: Oswald, sans-serif;
+    color: #20327e;
+    max-width: 500px;
+    width: 90%;
+    height: 600px;
+    background: linear-gradient(to right, #87ceeb, #90ee90);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.avatar {
+    width: 250px;
+    height: auto;
+}
+
+.container-login100-form-btn {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+input.login100-form-btn {
+    font-family: Oswald, sans-serif;
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    height: 50px;
+    border-radius: 50px;
+    background: linear-gradient(to right, #00f, #90ee90);
+    transition: background-color 0.4s ease-in-out 0.2s, color 0.4s ease-in-out 0.2s;
+}
+
+input.login100-form-btn:hover {
+    background: linear-gradient(to right, purple, #90ee90);
+    color: #000;
+    transition-delay: 0s;
+}
+
+input {
+    width: 70%;
+    height: 50px;
+    background: 0 0;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    outline: 0;
+}
+
+.input100 {
+    background-color: #fff;
+    padding: 10px;
+    margin: 10px;
+}
+
+.input100:hover {
+    background-color: #20327e !important;
+    color: #fff;
+    transition: 0.4s;
+}
+
+.input100:hover::placeholder {
+    color: #fff;
+}
+
+.input100::placeholder {
+    color: #20327e;
+}
+
+#lightSwitch {
+    transform: scale(1.8);
+}
+
+.custom-theme.bg-light {
+    background-color: #20327e !important;
+    border-radius: 3px;
+    color: #dcdcdc;
+    text-decoration: underline;
+}
+
+.custom-theme.bg-dark {
+    background-color: #ffebcd !important;
+    box-shadow: 10px 5px 5px rgba(246, 255, 219, 0.5);
+    color: #20327e;
+    text-decoration: overline;
+}
+
+.Switch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.LogoVierci {
+    width: 60%;
+    height: 60%;
+}
+
+@media (max-width: 768px) {
+    .login-content {
+        padding: 10px;
+    }
+}
+
+.bi-eye,
+.bi-eye-slash {
+    color: gray;
+    position: absolute;
+    right: 19%;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.Box {
+    position: relative;
+    align-items: center;
+    width: 100%;
+}
