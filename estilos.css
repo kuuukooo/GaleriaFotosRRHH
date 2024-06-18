@@ -455,3 +455,6 @@ select {
     visibility: visible;
     opacity: 1;
 }
+.TituloUsuario{
+    display: none !important;
+}

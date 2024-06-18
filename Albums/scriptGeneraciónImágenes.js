@@ -72,9 +72,12 @@ const CargaDeImagenes = () => {
                 thumbnailAlignment: 'center',
                 thumbnailGutterWidth: 70,
                 thumbnailGutterHeight: 50,
-                galleryMaxRows: 30,
-                galleryDisplayMode: 'pagination',
-                galleryPaginationMode: 'numbers',
+                galleryRenderDelay: 50,
+                galleryMaxRows: 2,
+                // galleryDisplayMode: 'pagination',
+                galleryDisplayMode: 'moreButton',
+                galleryDisplayMoreStep: 1,
+                // galleryPaginationMode: 'numbers',
                 locationHash: false,
                 thumbnailToolbarAlbum: { topLeft: 'custom1, custom2, custom3, custom4' },
                 thumbnailToolbarImage: { topLeft: 'download' },
@@ -581,7 +584,7 @@ $.ajax({
         await Promise.all(imagePromises);
 
         // Generar el archivo ZIP en el cliente y descargarlo
-        zip.generateAsync({ type: "blob" }).then(function(content) {
+        zip.generateAsync({ type: "blob" }).then(function(content) { 
             // Configurar el elemento de anclaje para descargar el archivo ZIP
             const anchor = document.createElement("a");
             const url = window.URL.createObjectURL(content);
@@ -672,9 +675,6 @@ const PublicarAlbum = (item) => {
         success: function(response) {
             if (response.success) {
                 item.customData.es_publico = nuevoEstado;
-                const newIcon = nuevoEstado ? 'bi bi-eye' : 'bi bi-eye-slash';
-                const iconElement = item.$elt.find("[data-ngy2action='custom4'] i");
-                iconElement.attr('class', newIcon);
                 console.log('Estado del álbum actualizado con éxito.');
                 console.log("Valor del álbum: ", nuevoEstado);
                 alert("El álbum se ha publicado.")
@@ -759,90 +759,95 @@ $("#my_nanogallery2").on("click", ".ngy2ThumbnailCustomTool4", function() {
     });
 
     
-    async function descargarAlbumesSeleccionados() {
-        var ngy2data = $("#my_nanogallery2").nanogallery2('data');
-        let albumIDs = [];
-        let selectedItems = [];
-    
-        // Filtrar los álbumes seleccionados
-        ngy2data.items.forEach(function(item) {
-            if (item.selected && item.kind === 'album') {
-                albumIDs.push(item.GetID());
-                selectedItems.push(item);
-            }
-        });
-    
-        if (albumIDs.length === 0) {
-            alert("Selecciona al menos un álbum para descargar.");
-            return;
-        }
-    
-        var zip = new JSZip();
-    
-        // Función auxiliar para procesar un álbum
-        async function procesarAlbum(index) {
-            if (index < selectedItems.length) {
-                const item = selectedItems[index];
-                try {
-                    // Realizar la petición AJAX para obtener las imágenes del álbum
-                    const response = await $.ajax({
-                        url: 'descargarAlbum.php',
-                        type: 'POST',
-                        data: { albumID: item.customData.AlbumID },
-                        dataType: 'json'
-                    });
-    
-                    console.log("Respuesta de obtener imágenes del álbum:", response);
-    
-                    if (response.error) {
-                        alert("Error al obtener las imágenes del álbum: " + response.error);
-                        return;
-                    }
-    
-                    const imagenes = response.imagenes[0].imagen.split(',');
-    
-                    // Procesar cada imagen del álbum y añadirla al ZIP
-                    await Promise.all(imagenes.map(async function(imagenNombre) {
-                        try {
-                            const trimmedNombre = imagenNombre.trim();
-                            const imageBlob = await fetch(`/Galeria5-AJAX/Albums/fotos/${trimmedNombre}`).then(res => res.blob());
-                            zip.file(`${response.descripcion}/${trimmedNombre}`, imageBlob);
-                            console.log(`Imagen agregada al ZIP en la carpeta ${response.descripcion}: ${trimmedNombre}`);
-                        } catch (error) {
-                            console.error(`Error al descargar la imagen: ${imagenNombre.trim()}`, error);
-                        }
-                    }));
-    
-                    // Pasar al siguiente álbum
-                    await procesarAlbum(index + 1);
-    
-                } catch (error) {
-                    console.error("Error al procesar álbum:", error);
-                }
-            } else {
-                // Todos los álbumes han sido procesados, generar el archivo ZIP
-                try {
-                    const content = await zip.generateAsync({ type: "blob" });
-                    const anchor = document.createElement("a");
-                    const url = window.URL.createObjectURL(content);
-                    anchor.href = url;
-                    anchor.download = `Albums.zip`;
-                    anchor.click();
-                    window.URL.revokeObjectURL(url);
-                    console.log('Descarga completada: Albums.zip');
-                } catch (error) {
-                    console.error('Error al generar el archivo ZIP:', error);
-                }
-            }
-        }
-    
-        // Iniciar el proceso con el primer álbum
-        await procesarAlbum(0);
-    }
-    
+/**
+ * Función asíncrona para descargar álbumes seleccionados en formato ZIP.
+ */
+async function descargarAlbumesSeleccionados() {
+    // Obtener los datos de la galería Nanogallery2
+    var ngy2data = $("#my_nanogallery2").nanogallery2('data');
+    let albumIDs = [];
+    let selectedItems = [];
 
-    
-    
-    // Añadir el manejador de eventos para el botón de descarga de álbumes seleccionados
-    document.querySelector("#btnDescargar").addEventListener("click", descargarAlbumesSeleccionados);
-    
+    // Filtrar los álbumes seleccionados
+    ngy2data.items.forEach(function(item) {
+        if (item.selected && item.kind === 'album') {
+            albumIDs.push(item.GetID());
+            selectedItems.push(item);
+        }
+    });
+
+    // Verificar si se ha seleccionado al menos un álbum
+    if (albumIDs.length === 0) {
+        alert("Selecciona al menos un álbum para descargar.");
+        return;
+    }
+
+    // Crear una nueva instancia de JSZip
+    var zip = new JSZip();
+
+    /**
+     * Función auxiliar para procesar cada álbum de forma recursiva.
+     * @param {number} index - Índice del álbum a procesar en selectedItems.
+     */
+    async function procesarAlbum(index) {
+        if (index < selectedItems.length) {
+            const item = selectedItems[index];
+            try {
+                // Realizar la petición AJAX para obtener las imágenes del álbum
+                const response = await $.ajax({
+                    url: 'descargarAlbum.php',
+                    type: 'POST',
+                    data: { albumID: item.customData.AlbumID },
+                    dataType: 'json'
+                });
+
+                console.log("Respuesta de obtener imágenes del álbum:", response);
+
+                if (response.error) {
+                    alert("Error al obtener las imágenes del álbum: " + response.error);
+                    return;
+                }
+
+                const imagenes = response.imagenes[0].imagen.split(',');
+
+                // Procesar cada imagen del álbum y añadirla al ZIP
+                await Promise.all(imagenes.map(async function(imagenNombre) {
+                    try {
+                        const trimmedNombre = imagenNombre.trim();
+                        const imageBlob = await fetch(`/Galeria5-AJAX/Albums/fotos/${trimmedNombre}`).then(res => res.blob());
+                        zip.file(`${response.descripcion}/${trimmedNombre}`, imageBlob);
+                        console.log(`Imagen agregada al ZIP en la carpeta ${response.descripcion}: ${trimmedNombre}`);
+                    } catch (error) {
+                        console.error(`Error al descargar la imagen: ${imagenNombre.trim()}`, error);
+                    }
+                }));
+
+                // Pasar al siguiente álbum
+                await procesarAlbum(index + 1);
+
+            } catch (error) {
+                console.error("Error al procesar álbum:", error);
+            }
+        } else {
+            // Todos los álbumes han sido procesados, generar el archivo ZIP
+            try {
+                const content = await zip.generateAsync({ type: "blob" });
+                const anchor = document.createElement("a");
+                const url = window.URL.createObjectURL(content);
+                anchor.href = url;
+                anchor.download = `Albums.zip`;
+                anchor.click();
+                window.URL.revokeObjectURL(url);
+                console.log('Descarga completada: Albums.zip');
+            } catch (error) {
+                console.error('Error al generar el archivo ZIP:', error);
+            }
+        }
+    }
+
+    // Iniciar el proceso con el primer álbum
+    await procesarAlbum(0);
+}
+
+// Añadir el manejador de eventos para el botón de descarga de álbumes seleccionados
+document.querySelector("#btnDescargar").addEventListener("click", descargarAlbumesSeleccionados);

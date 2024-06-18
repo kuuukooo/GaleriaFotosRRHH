@@ -160,8 +160,11 @@ $stmt->execute();
 
         
         <div class="main-content">
+            <div class="container justify-content-center" id="TituloUsuario">
+                <h1 class="text-center mt-5">Imágenes</h1>
+            </div>
             <!-- formulario -->
-            <div class="container justify-content-center">
+            <div class="container justify-content-center FormularioSubirImg">
                 <div class="mt-5 mx-auto">
                     <div>
                         <?php if (isset($_SESSION['error'])) { ?>
@@ -225,6 +228,6 @@ $stmt->execute();
 <script src="ImagenesSueltas/descarga_imágenes.js"></script>
 <script src="ImagenesSueltas/eliminar_imagen.js"></script>
 <script src="NavBar/navbar2.js"></script>
-<script src="login/ScriptTipoUsuario.js"></script> 
+<script src="login/ScriptTipoUsuario.js" async></script> 
 </body>
 </html>

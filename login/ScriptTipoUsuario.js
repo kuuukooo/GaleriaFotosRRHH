@@ -53,6 +53,18 @@ async function checkCookie() {
             for (let i = 0; i < herramientasAdminCheckbox.length; i++){
                 herramientasAdminCheckbox[i].style.display = "none";
             }
+
+            let CrearAlbumBtn = document.getElementsByClassName('CrearAlbum')
+            for (let i = 0; i < CrearAlbumBtn.length; i++){
+                CrearAlbumBtn[i].style.display = "none";
+
+            }
+
+            let SubirImagenDiv = document.getElementsByClassName('FormularioSubirImg')
+            for (let i = 0; i < SubirImagenDiv.length; i++){
+                SubirImagenDiv[i].style.display = "none";
+            }
+
         } else {
             $("#DashboardMenu").show();
             $("#GaleriaPublica").show();

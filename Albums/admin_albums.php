@@ -181,8 +181,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Formulario para la subida de las imágenes -->
     <div id = "Container1" class="container justify-content-center">            
             <div class="mt-5 mx-auto">
-                <h5 class="mb-3">Album de imágenes</h5>
-                <button class="btn btn-primary mb-3 show-modal ColorAzul" onclick=showDialog(true)>Crear un álbum</button>
+                <h2 class="text-center mb-3">Album de imágenes</h2>
+                <button id="CrearAlbum" class="btn btn-primary mb-3 show-modal ColorAzul CrearAlbum" onclick=showDialog(true)>Crear un álbum</button>
             </div>
                 
                 <p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
@@ -206,7 +206,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container justify-content-center mt-5 mb-5 py-2" id="galeriaContainer">
     </div>
 
-<script src="../login/ScriptTipoUsuario.js"></script> 
+<script src="../login/ScriptTipoUsuario.js" async></script> 
 <script src="../NavBar/navbar2.js"></script>
 <script src="ScriptModoOscuro.js"></script>
 <script src="ScriptGeneraciónImágenes.js"></script>

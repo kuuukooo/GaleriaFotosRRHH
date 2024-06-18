@@ -12,7 +12,7 @@ date_default_timezone_set('America/Asuncion');
 $response = array();
 
 // Número máximo de imágenes permitidas
-$maxImages = 50;
+$maxImages = 25;
 
 // Verificar si se ha enviado algún archivo
 if (!isset($_FILES['files']) || !is_array($_FILES['files']['name']) || empty($_FILES['files']['name'][0])) {
