@@ -181,7 +181,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Formulario para la subida de las imágenes -->
     <div id = "Container1" class="container justify-content-center">            
             <div class="mt-5 mx-auto">
-                <h2 class="text-center mb-3">Album de imágenes</h2>
+                <span class="titulo">Albumes</span>
                 <button id="CrearAlbum" class="btn btn-primary mb-3 show-modal ColorAzul CrearAlbum" onclick=showDialog(true)>Crear un álbum</button>
             </div>
                 
