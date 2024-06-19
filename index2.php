@@ -161,7 +161,7 @@ $stmt->execute();
         
         <div class="main-content">
             <div class="container justify-content-center" id="TituloUsuario">
-                <h1 class="text-center mt-5">Imágenes</h1>
+                <span class="titulo">Imágenes</span>
             </div>
             <!-- formulario -->
             <div class="container justify-content-center FormularioSubirImg">

@@ -276,6 +276,7 @@ function ModoOscuro() {
                     $(".mode-text").text("Modo Oscuro");
                     $(".LogoVierciBlanco").css("display", "block");
                     $(".LogoVierciAzul").css("display", "none");
+                    $(".titulo").css("color", "white");
                     $(".fab").css("background-color", "#242526");
                     $(".fab-menu").css("background-color", "#242526");
                     $(".fab-menu-btn").css("background-color", "#242526");
@@ -315,6 +316,7 @@ function ModoOscuro() {
                     $(".mode-text").text("Modo Claro");
                     $(".LogoVierciBlanco").css("display", "none");
                     $(".LogoVierciAzul").css("display", "block");
+                    $(".titulo").css("color", "#20327e");
                     $(".fab").css("background-color", "#FFF");
                     $(".fab-menu").css("background-color", "#FFF");
                     $(".fab-menu-btn").css("background-color", "#FFF");

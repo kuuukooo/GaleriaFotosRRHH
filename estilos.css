@@ -458,3 +458,12 @@ select {
 .TituloUsuario{
     display: none !important;
 }
+/* El color del texto del título se tiene que cambiar en el script de Modo Oscuro de ImagenesDinamicas.js  */
+.titulo {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 900;
+    padding: 20px;
+}
