@@ -273,3 +273,59 @@ table.table .avatar {
         margin-left: 1rem;
     }
 }
+@media only screen and (min-width: 1080px) {
+    .table-wrapper {
+        min-width: 1080px;
+    }
+
+    .modal-dialog {
+        max-width: 500px;
+    }
+
+    .sidebar {
+        width: 300px;
+    }
+
+    .sidebar.open + .main-content {
+        margin-left: 300px;
+    }
+
+    .table-title h2 {
+        font-size: 28px;
+    }
+
+    .table-title .btn {
+        font-size: 14px;
+        min-width: 60px;
+    }
+
+    table.table tr th:first-child {
+        width: 70px;
+    }
+
+    table.table tr th:last-child {
+        width: 120px;
+    }
+
+    .container-lg {
+        margin-left: 2rem;
+    }
+
+    .modal .modal-dialog {
+        max-width: 450px;
+    }
+
+    .modal .modal-title {
+        font-size: 20px;
+    }
+
+    .modal .form-control {
+        font-size: 16px;
+    }
+
+    .modal .btn {
+        min-width: 110px;
+        font-size: 14px;
+    }
+}
+
