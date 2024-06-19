@@ -80,7 +80,7 @@ function BuscarImg() {
         let searchTerm = $("#search-input").val();
     
         $.ajax({
-            url: "../Albums/buscarAlbum.php",
+            url: "buscarAlbumPublico.php",
             method: "POST",
             data: { search: searchTerm },
             dataType: "json",
