@@ -6,6 +6,11 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 require "../database/database.php";
+
+// Guardar la URL actual en la sesión
+$_SESSION['prev_url'] = $_SERVER['REQUEST_URI'];
+$_SESSION['initial_page'] = 'admin_albums.php';
+
 // Instancia la clase Database
 $database = new Database();
 
@@ -38,8 +43,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <!-- CSS -->
+    <script  type="text/javascript"  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!-- nanogallery2 -->
+    <link rel="stylesheet" href="../node_modules/nanogallery2/src/css/nanogallery2.css"  type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nanogallery2/3.0.5/css/nanogallery2.min.css" integrity="sha512-6sOT9zKSKq1CYgNMqtcY84tFPDnG1yX5mxwdGQiAVpAomVr2kUKJ//pFeU/KfaZDVCOru5iFOVswpT4RWWF2dQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css'>
     <link rel="stylesheet" type="text/css" href="../estilos.css">
     <link rel="stylesheet" type="text/css" href="../NavBar/navbar2.css">
@@ -48,7 +55,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/nanogallery2/3.0.5/jquery.nanogallery2.min.js" integrity="sha512-tvpLVnZrWnnNzV2921XEMx4xkFTUF8xg3s+Mi6cvC/R7A6X1FkpBUXPJFa3Xh5uD9BvOZ2tHeYq/5ZqrweW86Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 <div class="container">
@@ -89,16 +95,23 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li class="nav-link">
                             <a href="../index2.php">
                                 <i class='bx bx-home-alt icon'></i>
-                                <span class="text nav-text">Galería</span>
+                                <span class="text nav-text">Imágenes</span>
                             </a>
                         </li>
 
-                        <li class="nav-link">
-                            <a href="admin_albums.php">
-                                <i class='bx bx-photo-album icon'></i>
-                                <span class="text nav-text">Albumes</span>
+                        <li class="nav-link" id="navAlbumes">
+                            <a href="admin_albums.php" id="hrefAlbumes">
+                                <i class='bx bx-photo-album icon' id="iconoAlbumes"></i>
+                                <span class="text nav-text" id="textoAlbumes">Albumes</span>
                             </a>
                         </li>
+                        <style>
+                        #hrefAlbumes, #iconoAlbumes, #textoAlbumes {
+                            background-color: #20327e;
+                            color: white !important;
+                        }
+
+                        </style>
 
                         <li class="nav-link" id="DashboardMenu">
                             <a href="../dashboard/dashboard.php">
@@ -108,9 +121,9 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </li>
 
                         <li class="nav-link" id="GaleriaPublica">
-                            <a href="../GaleriaPublica/IndexGaleriaPublicaAlbumes.php">
+                            <a href="../indexGaleriaPublicaAlbumes.php">
                                 <i class="bi bi-globe icon"></i>
-                                <span class="text nav-text">Album Público</span>
+                                <span class="text nav-text">Albumes Publicos</span>
                             </a>
                         </li>
                     </ul>
@@ -145,10 +158,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </nav>
 
 
-    <!-- Dialog para agregar un álbum -->    
+    <!-- Dialog para agregar un Album -->    
     <dialog class="dialogAlbum">
         <div class="wrapper">
-            <form enctype="multipart/form-data" method="POST">
+            <form enctype="multipart/form-data" method="POST" id="albumForm">
             <header class="headerDialogAlbum">
                 <h1 class="headerTextoDialogAlbum">Elige las imágenes</h1>
                 <button onclick=showDialog(false) type="button" class="botonHeader">
@@ -163,14 +176,14 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="imagenDivDialogAlbum">
                 <label class="imagenLabelDialogAlbum">Descripción</label>
-                <input class="imagenInputDialogAlbum" id="imagenInput" type="text" name="description" required>
+                <input class="imagenInputDialogAlbum" id="imagenInput" type="text" name="description" maxlength="20" required>
                 </div>
             </main>
             <footer class="footerDialogAlbum">
                 <button onclick=showDialog(false) class="cancelFooterDialogAlbum" value="cancel">
                 Cancelar
                 </button>
-                <button class="saveFooterDialogAlbum" formMethod="dialog" value="submit">
+                <button class="saveFooterDialogAlbum" formMethod="dialog" value="submit" type="submit">
                 Subir Album
                 </button>
             </footer>
@@ -183,9 +196,8 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="mt-5 mx-auto">
                 <span class="titulo">Albumes</span>
                 <button id="CrearAlbum" class="btn btn-primary mb-3 show-modal ColorAzul CrearAlbum" onclick=showDialog(true)>Crear un álbum</button>
-            </div>
-                
-                <p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
+            </div>  
+            <p id="noResultsMessage" style="display: none;">No se ha encontrado nada.</p>
     </div>
 
     <!-- Menú de Herramientas -->
@@ -198,7 +210,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <button class="fab-menu-btn DescargarVarios" id="btnDescargar" data-tooltip="Descargar imágenes seleccionadas"><i class="bi bi-download"></i></button>
             <button class="fab-menu-btn EliminarVarios" id="btnEliminar" data-tooltip="Eliminar imágenes seleccionadas"><i class="bi bi-trash3"></i></button>
             <button class="fab-menu-btn PublicarVarios" id="btnPublicar" data-tooltip="Publicar imágenes seleccionadas"><i class="bi bi-eye"></i></button>
-            <button class="fab-menu-btn SeleccionarVarios" id="BotonSelector" data-tooltip="Seleccionar álbumes"><i class="bi bi-check2-square"></i></button>
+            <button class="fab-menu-btn SeleccionarVarios" id="BotonSelector" data-tooltip="Seleccionar Albumes"><i class="bi bi-check2-square"></i></button>
         </div>
     </div>
 
@@ -206,9 +218,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="container justify-content-center mt-5 mb-5 py-2" id="galeriaContainer">
     </div>
 
-<script src="../login/ScriptTipoUsuario.js" async></script> 
+    <script src="../node_modules/nanogallery2/dist/jquery.nanogallery2.js"></script>
+<script src="../login/ScriptTipoUsuario.js"></script> 
 <script src="../NavBar/navbar2.js"></script>
 <script src="ScriptModoOscuro.js"></script>
-<script src="ScriptGeneraciónImágenes.js"></script>
+<script src="scriptGeneracionImagenes.js"></script>
 </body>
-</html>
+</html> 

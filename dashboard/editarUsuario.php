@@ -9,20 +9,16 @@ if ($conn) {
     $id_usuario = $_POST['id_usuario'];
     $usuario = $_POST['usuario'];
     $contrasena = $_POST['contrasena'];
-    $correo = $_POST['correo'];
-    $telefono = $_POST['telefono'];
     $tipousuario = $_POST['tipousuario'];
 
     //Preparar la consulta para actualizar los cambios y editarlos
-    $query = "UPDATE usuarios SET Usuario = :usuario, contrasena = :contrasena, correo = :correo, numerotel = :telefono, tipo_usuario = :tipousuario WHERE id_usuario = :id_usuario";
+    $query = "UPDATE usuarios SET Usuario = :usuario, contrasena = :contrasena, tipo_usuario = :tipousuario WHERE id_usuario = :id_usuario";
     $stmt = $conn->prepare($query);
 
     //Asociar los parámetros
     $stmt->bindParam(':id_usuario', $id_usuario);
     $stmt->bindParam(':usuario', $usuario);
     $stmt->bindParam(':contrasena', $contrasena);
-    $stmt->bindParam(':correo', $correo);
-    $stmt->bindParam(':telefono', $telefono);
     $stmt->bindParam(':tipousuario', $tipousuario);
 
     //Ejecutar la consulta

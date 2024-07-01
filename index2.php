@@ -8,6 +8,12 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Guardar la URL actual en la sesión
+$_SESSION['prev_url'] = $_SERVER['REQUEST_URI'];
+$_SESSION['initial_page'] = 'index2.php';
+// Indicar que el usuario ha accedido desde index2.php
+$_SESSION['logged_from_initial_page'] = true;
+
 require "database/database.php";
 $user_id = $_SESSION['user_id'];
 $query = "SELECT Usuario FROM usuarios WHERE id_usuario = :user_id";
@@ -21,9 +27,9 @@ if ($stmt->rowCount() > 0) {
 } else {
     $nombre_usuario = "Usuario desconocido";
 }
+
 $por_pagina = 12;
 $pagina_actual = isset($_GET['pagina']) ? $_GET['pagina'] : 1;
-
 
 if ($pagina_actual > 1) {
     $empieza = ($pagina_actual - 1) * $por_pagina;
@@ -37,6 +43,7 @@ $query = "SELECT * FROM imagenes_sueltas ORDER BY id_imagen DESC LIMIT " . intva
 $stmt = $conn->prepare($query);
 $stmt->execute();
 ?>
+
 <!-- Inicio del Html -->
 <!DOCTYPE html>
 <html lang="en">
@@ -100,29 +107,34 @@ $stmt->execute();
                 <!-- Iconos de la navbar -->
 
                     <ul class="menu-links">
-                        <li class="nav-link">
-                            <a href="index2.php">
-                                <i class='bx bx-home-alt icon'></i>
-                                <span class="text nav-text">Inicio</span>
+                        <li class="nav-link" id="navInicio">
+                            <a href="index2.php" id="hrefInicio">
+                                <i class='bx bx-home-alt icon' id="iconoInicio"></i>
+                                <span class="text nav-text" id="textoInicio">Imágenes</span>
+                            </a>
+                        </li>
+                        <style>
+                                #hrefInicio, #iconoInicio, #textoInicio {
+                                background-color: #20327e;
+                                color: white !important;
+                            }
+                        </style>
+                        <li class="nav-link" id="navAlbumes">
+                            <a href="Albums/admin_albums.php" id="hrefAlbumes">
+                                <i class='bx bx-photo-album icon' id="iconoAlbumes"></i>
+                                <span class="text nav-text" id="textoAlbumes">Albumes</span>
                             </a>
                         </li>
 
-                        <li class="nav-link">
-                            <a href="Albums/admin_albums.php">
-                                <i class='bx bx-photo-album icon'></i>
-                                <span class="text nav-text">Albumes</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-link" id="DashboardMenu">
-                            <a href="dashboard/dashboard.php">
-                                <i class="bi bi-menu-button-wide-fill icon"></i>
-                                <span class="text nav-text">Usuarios</span>
+                        <li class="nav-link" id="DashboardMenu" id="navDashboard">
+                            <a href="dashboard/dashboard.php" id="hrefDashboard">
+                                <i class="bi bi-menu-button-wide-fill icon" id="iconoDashboard"></i>
+                                <span class="text nav-text" id="textoDashboard">Usuarios</span>
                             </a>
                         </li>
 
                         <li class="nav-link" id="GaleriaPublica">
-                            <a href="./GaleriaPublica/IndexGaleriaPublica.php">
+                            <a href="./indexGaleriaPublica.php">
                                 <i class="bi bi-globe icon"></i>
                                 <span class="text nav-text">Imágenes Públicas</span>
                             </a>
@@ -160,8 +172,8 @@ $stmt->execute();
 
         
         <div class="main-content">
-            <div class="container justify-content-center" id="TituloUsuario">
-                <span class="titulo">Imágenes</span>
+        <div class="container justify-content-center" id="TituloUsuario">
+            <span class="titulo">Imágenes</span>
             </div>
             <!-- formulario -->
             <div class="container justify-content-center FormularioSubirImg">
@@ -229,5 +241,6 @@ $stmt->execute();
 <script src="ImagenesSueltas/eliminar_imagen.js"></script>
 <script src="NavBar/navbar2.js"></script>
 <script src="login/ScriptTipoUsuario.js" async></script> 
+
 </body>
 </html>

@@ -64,12 +64,31 @@ async function checkCookie() {
             for (let i = 0; i < SubirImagenDiv.length; i++){
                 SubirImagenDiv[i].style.display = "none";
             }
-
+        
         } else {
             $("#DashboardMenu").show();
             $("#GaleriaPublica").show();
         }
 
+        if (tipo_usuario == "Publisher"){
+            $("#DashboardMenu").hide();
+            let herramientasAdmin = document.getElementsByClassName('fab')
+            for (let i = 0; i < herramientasAdmin.length; i++){
+                herramientasAdmin[i].style.display = "none";
+            }
+            let herramientasAdminMenu = document.getElementsByClassName('fab-menu')
+            for (let i = 0; i < herramientasAdminMenu.length; i++){
+                herramientasAdminMenu[i].style.display = "none";
+            }
+            let herramientasAdminCheckbox = document.getElementsByClassName('checkboxHerramienta')
+            for (let i = 0; i < herramientasAdminCheckbox.length; i++){
+                herramientasAdminCheckbox[i].style.display = "none";
+            }   
+        }
+
+        if (tipo_usuario == "Admin"){
+            $("#DashboardMenu").show();
+        }
         
     } catch (error) {
         console.error(error);

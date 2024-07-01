@@ -80,8 +80,17 @@ if ($countfiles > $maxImages) {
                 // Verificar si el archivo es una imagen válida
                 if ($imageType !== false && ($imageType == IMAGETYPE_JPEG || $imageType == IMAGETYPE_PNG || $imageType == IMAGETYPE_GIF)) {
                     if ($imageType == IMAGETYPE_GIF) {
-                        move_uploaded_file($fileTmpPath, $dest_path); 
-                        array_push($images, $image); 
+                        if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                            // Asigna permisos 777 al archivo
+                            if (!chmod($dest_path, 0777)) {
+                                $response['error'] = "Failed to assign permissions 777 to the file $fileName.";
+                                break;
+                            }
+                            array_push($images, $image); 
+                        } else {
+                            $response['error'] = "Error uploading the file $fileName.";
+                            break;
+                        }
                     } else {
                         $calidad = 40;
                         $originalImage = "";
@@ -94,7 +103,15 @@ if ($countfiles > $maxImages) {
 
                         // Comprimir y guardar la imagen JPEG con calidad reducida
                         if ($originalImage !== false && imagejpeg($originalImage, $dest_path, $calidad)) {
+                            // Asigna permisos 777 al archivo
+                            if (!chmod($dest_path, 0777)) {
+                                $response['error'] = "Failed to assign permissions 777 to the file $fileName.";
+                                break;
+                            }
                             array_push($images, $image);
+                        } else {
+                            $response['error'] = "Error processing the image $fileName.";
+                            break;
                         }
                     }
                 } else {
@@ -157,3 +174,4 @@ $response['message'] = $response_message;
 // Enviar la respuesta como JSON
 header('Content-Type: application/json');
 echo json_encode($response);
+

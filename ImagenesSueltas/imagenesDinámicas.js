@@ -130,7 +130,7 @@ $(document).ready(function() {
         BotonEliminar();
         console.log("Botón de eliminar correctamente activado");
         ModoOscuro();
-        BotonPublicar(); 
+  
     };
     
     $(document).ready(function() {
@@ -404,7 +404,7 @@ $(document).ready(function () {
                     //para despues volver a cargar las imágenes
                     console.log("Cargando imágenes...");
                     cargarImagenesYActivarEdicion(1);
-                    BotonPublicar();
+               
                     // Mostrar mensaje de éxito
                     console.log("Mensaje de éxito:", response.success);
                     alert(response.success); 
@@ -741,8 +741,8 @@ $(document).ready(function() {
 
 }
 
-function BotonPublicar(){
-    // Manejar el evento de clic
+$(document).ready(function() {
+    // Manejar el evento de clic para los botones con la clase '.btn-publicar'
     $(document).on('click', '.btn-publicar', function() {
         var $button = $(this);
         var imageId = $button.data('image-id');
@@ -750,37 +750,40 @@ function BotonPublicar(){
         // Registrar en consola el ID de la imagen
         console.log('ID de la imagen:', imageId);
 
-        // Cambiar el icono
-        var $icon = $button.find('i');
-        if ($icon.hasClass('bi-eye-slash')) {
-            $icon.removeClass('bi-eye-slash').addClass('bi-eye');
-            console.log('La imagen ahora está pública');
-        } else {
-            $icon.removeClass('bi-eye').addClass('bi-eye-slash');
-            console.log('La imagen ahora no está pública');
-        }
-
         // Realizar la solicitud AJAX
         $.ajax({
             url: 'ImagenesSueltas/publicarImagen.php',
             method: 'POST',
             data: {
-                id_imagen: imageId,
-                es_publico: $icon.hasClass('bi-eye') ? 1 : 0
+                id_imagen: imageId
             },
             success: function(response) {
                 console.log('Respuesta del servidor:', response);
+                if (response.success) {
+                    var $icon = $button.find('i');
+                    if (response.nuevo_estado == 1) {
+                        $icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                        console.log('La imagen ahora está pública');
+                    } else {
+                        $icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                        console.log('La imagen ahora no está pública');
+                    }
+                    alert("Estado de la imagen cambiado con éxito.");
+                } else {
+                    console.error('Error al cambiar el estado de la imagen:', response.error);
+                    alert("Error al cambiar el estado de la imagen: " + response.error);
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error en la solicitud AJAX:', error);
-                // Manejar el error
+                alert("Error en la solicitud AJAX: " + error);
             }
         });
 
         // Registrar en consola que el botón fue clickeado
         console.log('Botón clickeado');
     });
-}
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     const fabButton = document.getElementById('fab');

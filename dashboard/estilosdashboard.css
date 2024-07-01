@@ -227,9 +227,6 @@ table.table .avatar {
 .modal form label {
     font-weight: 400;
 }
-.container {
-    margin-right: revert;
-}
 .main-content {
     margin-left: 0;
     transition: 0.5s;

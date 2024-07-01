@@ -64,7 +64,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							<li class="nav-link">
 								<a href="../index2.php">
 									<i class='bx bx-home-alt icon'></i>
-									<span class="text nav-text">Inicio</span>
+									<span class="text nav-text">Imágenes</span>
 								</a>
 							</li>
 
@@ -75,15 +75,21 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								</a>
 							</li>
 
-							<li class="nav-link">
-								<a href="dashboard.php">
-									<i class="bi bi-menu-button-wide-fill icon"></i>
-									<span class="text nav-text">Usuarios</span>
-								</a>
-							</li>
+							<li class="nav-link" id="DashboardMenu" id="navDashboard">
+                            <a href="dashboard.php" id="hrefDashboard">
+                                <i class="bi bi-menu-button-wide-fill icon" id="iconoDashboard"></i>
+                                <span class="text nav-text" id="textoDashboard">Usuarios</span>
+                            </a>
+                        </li>
+						<style>
+						#hrefDashboard, #iconoDashboard, #textoDashboard {
+							background-color: #20327e;
+							color: white !important;
+						}
+						</style>
 
 							<li class="nav-link" id="GaleriaPublica">
-                            <a href="../GaleriaPublica/IndexGaleriaPublica.php">
+                            <a href="../indexGaleriaPublica.php">
                                 <i class="bi bi-globe icon"></i>
                                 <span class="text nav-text">Imágenes Públicas</span>
                             </a>
@@ -148,8 +154,6 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								</th>
 								<th>ID</th>
 								<th>Nombre</th>
-								<th>Correo</th>
-								<th>Teléfono</th>
 								<th>TipoUsuario</th>
 								<th>Acciones</th>
 							</tr>
@@ -181,18 +185,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								<i class='bi bi-eye-slash' id='togglePassword'></i>
 							</div>
 							<div class="form-group">
-								<label>Correo</label>
-								<input type='email' id='correo' class='form-control' placeholder='Ej: prueba@gmail.com' required >
-							</div>
-							<div class="form-group">
-								<label>Teléfono</label>
-								<input type='tel' minlength='10' maxlength='10' id='telefono' class='form-control' placeholder='Teléfono...' required>
-							</div>	
-							<div class="form-group">
 								<label for='tipousuario' class='form-label'>TipoUsuario</label> 
                                 <select id='tipousuario' class='form-select' required> 
 								<option value='Admin'>Admin</option> 
-								<option value='Usuario'>Usuario</option> 
+								<option value='Publisher'>Publisher</option>
                                 </select> 
 							</div>				
 						</div>

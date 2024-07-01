@@ -59,7 +59,7 @@ try {
 
                     if ($imageType !== false && ($imageType == IMAGETYPE_JPEG || $imageType == IMAGETYPE_PNG)) {
                         // Comprimimos la imagen
-                        $calidad = 40;
+                        $calidad = 20;
                         $originalImage = "";
 
                         if ($imageType == IMAGETYPE_PNG) {

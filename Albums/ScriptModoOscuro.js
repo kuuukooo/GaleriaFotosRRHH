@@ -48,6 +48,7 @@ function ModoOscuro() {
             $(".footerDialogAlbum").css("background-color", "rgb(97, 97, 97)");
             $(".cancelFooterDialogAlbum").css("background-color", "rgb(97, 97, 97)");
             $(".texto-principal").css("color", "white");
+            $(".titulo").css("color", "white");
             $(".fab").css("background-color", "#242526");
             $(".fab-menu").css("background-color", "#242526");
             $(".fab-menu-btn").css("background-color", "#242526");
@@ -96,6 +97,7 @@ function ModoOscuro() {
             $(".cancelFooterDialogAlbum").css("background-color", "rgb(243, 244, 246)");
             $(".cancelFooterDialogAlbum").css("color", "rgb(156, 163, 175)");
             $(".texto-principal").css("color", "#20327e");
+            $(".titulo").css("color", "#20327e");
             $(".fab").css("background-color", "#FFF");
             $(".fab-menu").css("background-color", "#FFF");
             $(".fab-menu-btn").css("background-color", "#FFF");

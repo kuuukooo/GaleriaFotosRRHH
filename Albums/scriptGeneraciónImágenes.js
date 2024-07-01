@@ -14,6 +14,7 @@ y si show es false, el diálogo se cerrará.
 */
 
 
+
 const dialog = document.querySelector('dialog');
 const wrapper = document.querySelector('.wrapper');
 
@@ -39,6 +40,7 @@ const CargaDeImagenes = () => {
             var dataArray = Object.values(data);
             dataArray.reverse();
             let items = [];
+            
 
             $.each(dataArray, function(index, album) {
                 let iconPublico = album.es_publico ? 'bi bi-eye' : 'bi bi-eye-slash';
@@ -46,7 +48,8 @@ const CargaDeImagenes = () => {
                 items.push({
                     src: "fotos/" + album.miniatura,
                     srct: "fotos/" + album.miniatura,
-                    title: album.descripcion,
+                    title: `${album.descripcion}`,
+                    description: `Subido por:  ${album.nombre_usuario}`,
                     ID: album.id_album,
                     kind: 'album',
                     customData: {
@@ -57,6 +60,8 @@ const CargaDeImagenes = () => {
                     thumbnailCustomTool4: `<i class="${iconPublico}"></i>`
                 });
 
+                console.log(album.nombre_usuario);
+                
                 $.each(album.imagenes, function(index, imagen) {
                     items.push({
                         src: "fotos/" + imagen.imagen,
@@ -67,20 +72,47 @@ const CargaDeImagenes = () => {
 
             $("#my_nanogallery2").nanogallery2({
                 items: items,
-                thumbnailWidth: 300,
+                thumbnailWidth: 'auto',
                 thumbnailHeight: 300,
                 thumbnailAlignment: 'center',
-                thumbnailGutterWidth: 70,
-                thumbnailGutterHeight: 50,
+                thumbnailGutterWidth: 5,
+                thumbnailGutterHeight: 5,
+                //Configuración para dentro de la galería
+                thumbnailL1Height:  350,              
+                thumbnailL1Width:   350,  
+                galleryL1DisplayTransition: 'slideUp',
+                thumbnailL1GutterWidth: 10,
+                thumbnailL1GutterHeight: 30 ,
                 galleryRenderDelay: 50,
                 galleryMaxRows: 2,
-                // galleryDisplayMode: 'pagination',
-                galleryDisplayMode: 'moreButton',
-                galleryDisplayMoreStep: 1,
-                // galleryPaginationMode: 'numbers',
+                galleryDisplayMode: 'pagination',
+                galleryPaginationMode: 'numbers',
                 locationHash: false,
                 thumbnailToolbarAlbum: { topLeft: 'custom1, custom2, custom3, custom4' },
                 thumbnailToolbarImage: { topLeft: 'download' },
+                thumbnailLabel:     { valign: "center", position: 'overImage', displayDescription: true },
+                galleryTheme: {
+                    thumbnail: {
+                        borderColor: '#e4e9f7',
+                        borderRadius: '10px',
+                        titleBgColor: 'transparent',
+                        descriptionBgColor: 'transparent'
+                    },
+                    navigationPagination: {
+                        background: '#20327e',
+                        color: '#fff',
+                        colorHover: '#ccc',
+                        borderRadius: '4px'
+                    },
+                    navigationBreadcrumb: {
+                        background: '#20327e',
+                        color: '#fff',
+                        colorHover: '#ccc',
+                        borderRadius: '4px'
+                    }
+                },
+                displayDescription: true,
+                display: true,
                 icons: {
                     thumbnailCustomTool1: '<i class="bi bi-trash" style="color: white"></i>',
                     thumbnailCustomTool2: '<i class="bi bi-pencil-square"></i>',
@@ -169,15 +201,43 @@ const CargaParaSeleccion = () => {
             $("#my_nanogallery2").nanogallery2({
                 thumbnailSelectable: true, // Habilitar selección
                 items: items,
-                thumbnailWidth: 300,
+                thumbnailWidth: 'auto',
                 thumbnailHeight: 300,
                 thumbnailAlignment: 'center',
-                thumbnailGutterWidth: 70,
-                thumbnailGutterHeight: 50,
-                galleryMaxRows: 30,
+                thumbnailGutterWidth: 5,
+                thumbnailGutterHeight: 5,
+                //Configuración para dentro de la galería
+                thumbnailL1Height:  350,              
+                thumbnailL1Width:   350,  
+                galleryL1DisplayTransition: 'slideUp',
+                thumbnailL1GutterWidth: 10,
+                thumbnailL1GutterHeight: 30 ,
+                galleryRenderDelay: 50,
+                galleryMaxRows: 2,
                 galleryDisplayMode: 'pagination',
                 galleryPaginationMode: 'numbers',
                 locationHash: false,
+                thumbnailLabel:     { valign: "center", position: 'overImage', displayDescription: true },
+                galleryTheme: {
+                    thumbnail: {
+                        borderColor: '#e4e9f7',
+                        borderRadius: '10px',
+                        titleBgColor: 'transparent',
+                        descriptionBgColor: 'transparent'
+                    },
+                    navigationPagination: {
+                        background: '#20327e',
+                        color: '#fff',
+                        colorHover: '#ccc',
+                        borderRadius: '4px'
+                    },
+                    navigationBreadcrumb: {
+                        background: '#20327e',
+                        color: '#fff',
+                        colorHover: '#ccc',
+                        borderRadius: '4px'
+                    }
+                }
             });
 
         },
@@ -584,7 +644,7 @@ $.ajax({
         await Promise.all(imagePromises);
 
         // Generar el archivo ZIP en el cliente y descargarlo
-        zip.generateAsync({ type: "blob" }).then(function(content) { 
+        zip.generateAsync({ type: "blob" }).then(function(content) {
             // Configurar el elemento de anclaje para descargar el archivo ZIP
             const anchor = document.createElement("a");
             const url = window.URL.createObjectURL(content);
@@ -675,9 +735,13 @@ const PublicarAlbum = (item) => {
         success: function(response) {
             if (response.success) {
                 item.customData.es_publico = nuevoEstado;
+                if(nuevoEstado === 1){
+                    alert("Estado del Album cambiado a Publico")
+                }else if(nuevoEstado === 0){
+                    alert("Estado del Album cambiado a Privado")
+                };
                 console.log('Estado del álbum actualizado con éxito.');
                 console.log("Valor del álbum: ", nuevoEstado);
-                alert("El álbum se ha publicado.")
             } else {
                 console.error('Error al actualizar el estado del álbum:', response.error);
             }
@@ -705,6 +769,15 @@ $('.saveFooterDialogAlbum').on('click', function() {
     crearAlbum();
 });
 
+$('#albumForm').on('keypress', function(event) {
+    if (event.which === 13) { // 13 es el código de tecla para Enter
+        event.preventDefault(); // Evitar el comportamiento por defecto del Enter en elementos input
+        crearAlbum(); // Llamar a la función para crear el álbum
+        dialog.close(); // Cerrar el diálogo
+    }
+});
+
+// Manejar el evento de clic en el botón personalizado dentro de la galería para publicar un álbum
 $("#my_nanogallery2").on("click", ".ngy2ThumbnailCustomTool4", function() {
     // Obtener el elemento del álbum
     const itemID = $(this).closest('.ngy2Item').data('ngy2ItemID');
@@ -712,62 +785,60 @@ $("#my_nanogallery2").on("click", ".ngy2ThumbnailCustomTool4", function() {
 
     // Llamar a la función para publicar el álbum
     PublicarAlbum(item);
-    });
+});
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const fabButton = document.getElementById('fab');
-        const fabMenu = document.getElementById('fab-menu');
+// Configurar el FAB (Floating Action Button) y su menú cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', function() {
+    const fabButton = document.getElementById('fab');
+    const fabMenu = document.getElementById('fab-menu');
     
-        fabButton.addEventListener('click', function() {
-            fabMenu.classList.toggle('show');
-        });
-    
-        // Crear el elemento tooltip
-        const tooltip = document.createElement('div');
-        tooltip.classList.add('tooltip');
-        document.body.appendChild(tooltip);
-    
-        // Función para mostrar el tooltip
-        function showTooltip(event) {
-            const tooltipText = event.target.closest('.fab-menu-btn').getAttribute('data-tooltip');
-            tooltip.textContent = tooltipText;
-            tooltip.style.left = `${event.pageX - tooltip.offsetWidth - 10}px`;
-            tooltip.style.top = `${event.pageY + 10}px`;
-            tooltip.classList.add('visible');
-        }
-    
-        // Función para ocultar el tooltip
-        function hideTooltip() {
-            tooltip.classList.remove('visible');
-        }
-    
-        // Función para mover el tooltip con el mouse
-        function moveTooltip(event) {
-            tooltip.style.left = `${event.pageX - tooltip.offsetWidth - 10}px`;
-            tooltip.style.top = `${event.pageY + 10}px`;
-        }
-    
-        // Seleccionar todos los botones con tooltips
-        const buttons = document.querySelectorAll('.fab-menu-btn[data-tooltip]');
-    
-        // Añadir eventos de mouseover, mouseout y mousemove a cada botón
-        buttons.forEach(button => {
-            button.addEventListener('mouseover', showTooltip);
-            button.addEventListener('mouseout', hideTooltip);
-            button.addEventListener('mousemove', moveTooltip);
-        });
+    // Alternar la visibilidad del menú FAB al hacer clic en el botón FAB
+    fabButton.addEventListener('click', function() {
+        fabMenu.classList.toggle('show');
     });
-
     
-/**
- * Función asíncrona para descargar álbumes seleccionados en formato ZIP.
- */
+    // Crear el elemento tooltip
+    const tooltip = document.createElement('div');
+    tooltip.classList.add('tooltip');
+    document.body.appendChild(tooltip);
+    
+    // Función para mostrar el tooltip
+    function showTooltip(event) {
+        const tooltipText = event.target.closest('.fab-menu-btn').getAttribute('data-tooltip');
+        tooltip.textContent = tooltipText;
+        tooltip.style.left = `${event.pageX - tooltip.offsetWidth - 10}px`;
+        tooltip.style.top = `${event.pageY + 10}px`;
+        tooltip.classList.add('visible');
+    }
+    
+    // Función para ocultar el tooltip
+    function hideTooltip() {
+        tooltip.classList.remove('visible');
+    }
+    
+    // Función para mover el tooltip con el mouse
+    function moveTooltip(event) {
+        tooltip.style.left = `${event.pageX - tooltip.offsetWidth - 10}px`;
+        tooltip.style.top = `${event.pageY + 10}px`;
+    }
+    
+    // Seleccionar todos los botones con tooltips
+    const buttons = document.querySelectorAll('.fab-menu-btn[data-tooltip]');
+    
+    // Añadir eventos de mouseover, mouseout y mousemove a cada botón
+    buttons.forEach(button => {
+        button.addEventListener('mouseover', showTooltip);
+        button.addEventListener('mouseout', hideTooltip);
+        button.addEventListener('mousemove', moveTooltip);
+    });
+});
+
+// Función para descargar álbumes seleccionados
 async function descargarAlbumesSeleccionados() {
-    // Obtener los datos de la galería Nanogallery2
     var ngy2data = $("#my_nanogallery2").nanogallery2('data');
     let albumIDs = [];
     let selectedItems = [];
-
+    
     // Filtrar los álbumes seleccionados
     ngy2data.items.forEach(function(item) {
         if (item.selected && item.kind === 'album') {
@@ -775,20 +846,15 @@ async function descargarAlbumesSeleccionados() {
             selectedItems.push(item);
         }
     });
-
-    // Verificar si se ha seleccionado al menos un álbum
+    
     if (albumIDs.length === 0) {
         alert("Selecciona al menos un álbum para descargar.");
         return;
     }
-
-    // Crear una nueva instancia de JSZip
+    
     var zip = new JSZip();
-
-    /**
-     * Función auxiliar para procesar cada álbum de forma recursiva.
-     * @param {number} index - Índice del álbum a procesar en selectedItems.
-     */
+    
+    // Función auxiliar para procesar un álbum
     async function procesarAlbum(index) {
         if (index < selectedItems.length) {
             const item = selectedItems[index];
@@ -800,16 +866,16 @@ async function descargarAlbumesSeleccionados() {
                     data: { albumID: item.customData.AlbumID },
                     dataType: 'json'
                 });
-
+    
                 console.log("Respuesta de obtener imágenes del álbum:", response);
-
+    
                 if (response.error) {
                     alert("Error al obtener las imágenes del álbum: " + response.error);
                     return;
                 }
-
+    
                 const imagenes = response.imagenes[0].imagen.split(',');
-
+    
                 // Procesar cada imagen del álbum y añadirla al ZIP
                 await Promise.all(imagenes.map(async function(imagenNombre) {
                     try {
@@ -821,10 +887,10 @@ async function descargarAlbumesSeleccionados() {
                         console.error(`Error al descargar la imagen: ${imagenNombre.trim()}`, error);
                     }
                 }));
-
+    
                 // Pasar al siguiente álbum
                 await procesarAlbum(index + 1);
-
+    
             } catch (error) {
                 console.error("Error al procesar álbum:", error);
             }
@@ -844,10 +910,11 @@ async function descargarAlbumesSeleccionados() {
             }
         }
     }
-
+    
     // Iniciar el proceso con el primer álbum
     await procesarAlbum(0);
 }
 
 // Añadir el manejador de eventos para el botón de descarga de álbumes seleccionados
 document.querySelector("#btnDescargar").addEventListener("click", descargarAlbumesSeleccionados);
+

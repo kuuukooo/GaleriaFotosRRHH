@@ -7,7 +7,7 @@ $conn = $database->getConnection();
 
 if ($conn) {
     // Realizar la consulta a la base de datos utilizando PDO
-    $query = "SELECT id_usuario, Usuario, contrasena, correo, numerotel, tipo_usuario FROM usuarios";
+    $query = "SELECT id_usuario, Usuario, contrasena, tipo_usuario FROM usuarios";
     $stmt = $conn->prepare($query);
     $stmt->execute();
 
